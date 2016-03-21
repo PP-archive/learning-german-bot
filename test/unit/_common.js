@@ -1,0 +1,1 @@
+require('local-modules')('plugins/core', 'plugins/application');

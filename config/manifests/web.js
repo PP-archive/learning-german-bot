@@ -15,6 +15,9 @@ module.exports = (function () {
         registrations: [
             {
                 plugin: './app/web/index'
+            },
+            {
+                plugin: './app/web/test'
             }
         ]
     };
