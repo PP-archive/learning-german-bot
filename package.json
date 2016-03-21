@@ -1,0 +1,20 @@
+{
+  "name": "learning-german-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "config": "^1.19.0",
+    "debug": "^2.2.0",
+    "glue": "^3.2.0",
+    "hapi": "^13.2.1",
+    "js-yaml": "^3.5.5",
+    "local-modules": "^1.0.1"
+  }
+}
