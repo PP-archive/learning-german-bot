@@ -3,8 +3,7 @@ const config = require('config');
 
 module.exports = (function () {
     return {
-        server: {
-        },
+        server: {},
         connections: [
             {
                 uri: config.get('baseUrl'),
@@ -13,6 +12,9 @@ module.exports = (function () {
             }
         ],
         registrations: [
+            {
+                plugin: './app/bot'
+            },
             {
                 plugin: './app/web/index'
             },

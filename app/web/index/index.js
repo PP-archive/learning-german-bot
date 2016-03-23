@@ -20,6 +20,18 @@ exports.register = function (server, options, next) {
         }
     });
 
+    server.route({
+        method: 'POST',
+        path: '/',
+        handler: function (request, reply) {
+            debug(request.payload.message);
+            let msg = request.payload.message;
+            var chatId = msg.chat.id;
+            server.bot.sendMessage(chatId, `hello`);
+            return reply(request.payload);
+        }
+    });
+
     next();
 };
 

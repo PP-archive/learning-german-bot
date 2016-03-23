@@ -1,0 +1,6 @@
+{
+  "name": "bot",
+  "description": "the actual bot",
+  "version": "0.0.1",
+  "dependencies": "vision"
+}
