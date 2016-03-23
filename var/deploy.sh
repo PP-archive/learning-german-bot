@@ -5,7 +5,7 @@ npm prune
 
 # pm2 launch or restart
 currentlyActive=$(pm2 list | grep "bot" | grep online)
-echo $currentlyActive
+echo "Currently active: ${currentlyActive}"
 
 # do the start if the length is 0
 if [ -z "$currentlyActive" ]
