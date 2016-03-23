@@ -6,7 +6,12 @@ const config = require('config');
 
 exports.register = function (server, options, next) {
     let bot = new TelegramBot(config.get('token'));
-    bot.setWebHook(config.get('baseUrl'), config.has('crt') ? config.get('crt') : undefined);
+
+    let url = config.get('baseUrl');
+    let crt = config.has('crt') ? config.get('crt') : undefined;
+
+    debug(`Setting the webHook: url: ${url}, crt: ${crt}`);
+    bot.setWebHook(url, crt);
 
     server.decorate('server', 'bot', bot);
 
