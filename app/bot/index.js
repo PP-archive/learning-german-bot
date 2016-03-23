@@ -2,7 +2,7 @@
 
 const TelegramBot = require('node-telegram-bot-api');
 const config = require('config');
-
+const debug = require('debug')('bot');
 
 exports.register = function (server, options, next) {
     let bot = new TelegramBot(config.get('token'));
