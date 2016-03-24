@@ -15,7 +15,8 @@ let KB = {}
 KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
 
 exports.register = function (server, options, next) {
-    let bot = new TelegramBot(config.get('token'));
+    let bot = new TelegramBot(config.get('tokens.telegram'));
+    const botan = require('botanio')(config.get('tokens.botan'));
 
     let url = config.get('baseUrl');
     let crt = config.has('crt') ? config.get('crt') : undefined;
@@ -24,6 +25,12 @@ exports.register = function (server, options, next) {
     bot.setWebHook(url, crt);
 
     server.decorate('server', 'bot', bot);
+    
+    // setting up the tracking by botan
+    bot.on('message', (message) => {
+        debug('sending the message to botan');
+       botan.track(message); 
+    });
 
     bot.onText(/\/verb (.+)/, function (msg, match) {
         let query = match[1];

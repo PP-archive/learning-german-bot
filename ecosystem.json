@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "bot",
+      "script": "index.js",
+      "env": {
+        "DEBUG": "*"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+  }
+}

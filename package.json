@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.4",
+    "botanio": "0.0.6",
     "code": "^2.1.1",
     "config": "^1.19.0",
     "debug": "^2.2.0",
