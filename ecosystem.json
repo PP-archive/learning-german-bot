@@ -3,6 +3,7 @@
     {
       "name": "bot",
       "script": "index.js",
+      "node_args"   : "--harmony",
       "env": {
         "DEBUG": "*"
       },
