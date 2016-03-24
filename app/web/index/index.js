@@ -24,13 +24,8 @@ exports.register = function (server, options, next) {
         method: 'POST',
         path: '/',
         handler: function (request, reply) {
-            debug('---');
-            debug(request.payload);
-            debug('---');
-            let msg = request.payload.message;
-            var chatId = msg.chat.id;
-            server.bot.sendMessage(chatId, `hello`);
-            return reply(request.payload);
+            server.bot.processUpdate(request.payload);
+            return reply();
         }
     });
 

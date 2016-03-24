@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ngrok": "ngrok http -subdomain=lgb-dev 3000",
+    "app": "DEBUG=* node index.js",
     "test": "lab ./test/ --pattern \"^[^_]\" --verbose",
     "test-unit": "lab ./test/unit --pattern \"^[^_]\" --verbose",
     "test-integration": "lab ./test/integration --pattern \"^[^_]\" --verbose",
@@ -22,7 +23,7 @@
     "js-yaml": "^3.5.5",
     "lab": "^10.3.0",
     "local-modules": "^1.0.1",
-    "node-telegram-bot": "^0.1.9",
+    "lodash": "^4.6.1",
     "node-telegram-bot-api": "^0.21.1"
   }
 }

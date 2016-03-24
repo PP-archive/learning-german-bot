@@ -1,0 +1,23 @@
+bestehen:
+  translation: существовать, сохраняться
+  case government:
+    bestehen aus + D:
+      translation: состоять
+      example: aus Holz bestehen
+helfen:
+  translation: помогать
+  case government:
+    helfen bei + D:
+      translation: помочь кому
+anfangen:
+  translation: узначать, справляться
+  case government:
+    anfangen mit + D:
+      translation: узначать о <i>ком-то</i>
+sprechen:
+  translation: говорить
+  case government:
+    sprechen mit + D:
+      translation: говорить с <i>кем-то</i>
+    sprechen über + A:
+      translation: говорить о <i>ком-то</i>
