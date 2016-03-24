@@ -56,7 +56,7 @@ exports.register = function (server, options, next) {
                 });
             }
         } else {
-            response = `Увы, глагола "${query}" не найдено`;
+            response = `Увы, глагола <code>${query}</code> не найдено`;
         }
 
         var chatId = msg.chat.id;
