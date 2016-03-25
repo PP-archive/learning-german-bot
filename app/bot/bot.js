@@ -19,6 +19,8 @@ class Bot {
      * @private
      */
     _getVerbSuggestions(query) {
+        query = query.toLowerCase();
+        
         let distances = [];
         _.forEach(_.keys(this.KB.VERBS), (value) => {
             distances.push({ key: value, distance: (new Levenshtein(value, query)).distance });
@@ -40,6 +42,8 @@ class Bot {
      * @private
      */
     _testForVerb(query) {
+        query = query.toLowerCase();
+
         if (_.has(this.KB.VERBS, query)) {
             return true;
         } else {
@@ -62,6 +66,8 @@ class Bot {
               return self.commands.help();
             },
             verb(query) {
+                query = query.toLowerCase();
+
                 let response = '', options = {
                     parse_mode: 'HTML',
                     reply_markup: {
