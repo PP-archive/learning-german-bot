@@ -1,23 +1,475 @@
 bestehen:
-  translation: существовать, сохраняться
+  translation:
   case government:
-    bestehen aus + D:
-      translation: состоять
-      example: aus Holz bestehen
+    bestehen aus:
+      case: D
+      translation:
+      example:
 helfen:
-  translation: помогать
+  translation:
   case government:
-    helfen bei + D:
-      translation: помочь кому
+    helfen bei:
+      case: D
+      translation:
+      example:
 anfangen:
-  translation: узначать, справляться
+  translation:
   case government:
-    anfangen mit + D:
-      translation: узначать о <i>ком-то</i>
+    anfangen mit:
+      case: D
+      translation:
+      example:
+aufhören:
+  translation:
+  case government:
+    aufhören mit:
+      case: D
+      translation:
+      example:
+beginnen:
+  translation:
+  case government:
+    beginnen mit:
+      case: D
+      translation:
+      example:
+sich beschäftigen:
+  translation:
+  case government:
+    sich beschäftigen mit:
+      case: D
+      translation:
+      example:
+spielen:
+  translation:
+  case government:
+    spielen mit:
+      case: D
+      translation:
+      example:
 sprechen:
-  translation: говорить
+  translation:
   case government:
-    sprechen mit + D:
-      translation: говорить с <i>кем-то</i>
-    sprechen über + A:
-      translation: говорить о <i>ком-то</i>
+    sprechen mit:
+      case: D
+      translation:
+      example:
+    sprechen über:
+      case: A
+      translation:
+      example:
+telefonieren:
+  translation:
+  case government:
+    telefonieren mit:
+      case: D
+      translation:
+      example:
+vergleichen:
+  translation:
+  case government:
+    vergleichen mit:
+      case: D
+      translation:
+      example:
+fragen:
+  translation:
+  case government:
+    fragen bei:
+      case: D
+      translation:
+      example:
+    fragen nach:
+      case: D
+      translation:
+      example:
+riechen:
+  translation:
+  case government:
+    riechen nach:
+      case: D
+      translation:
+      example:
+schauen:
+  translation:
+  case government:
+    schauen nach:
+      case: D
+      translation:
+      example:
+schmeken:
+  translation:
+  case government:
+    schmeken nach:
+      case: D
+      translation:
+      example:
+suchen:
+  translation:
+  case government:
+    suchen nach:
+      case: D
+      translation:
+      example:
+erzählen:
+  translation:
+  case government:
+    erzählen von:
+      case: D
+      translation:
+      example:
+träumen:
+  translation:
+  case government:
+    träumen von:
+      case: D
+      translation:
+      example:
+sich verabschieden:
+  translation:
+  case government:
+    sich verabschieden von:
+      case: D
+      translation:
+      example:
+sich anmelden:
+  translation:
+  case government:
+    sich anmelden zu:
+      case: D
+      translation:
+      example:
+benutzen:
+  translation:
+  case government:
+    benutzen zu:
+      case: D
+      translation:
+      example:
+einladen:
+  translation:
+  case government:
+    einladen zu:
+      case: D
+      translation:
+      example:
+sich entschließen:
+  translation:
+  case government:
+    sich entschließen zu:
+      case: D
+      translation:
+      example:
+gratulieren:
+  translation:
+  case government:
+    gratulieren zu:
+      case: D
+      translation:
+      example:
+passen:
+  translation:
+  case government:
+    passen zu:
+      case: D
+      translation:
+      example:
+verwenden:
+  translation:
+  case government:
+    verwenden zu:
+      case: D
+      translation:
+      example:
+teilnehmen:
+  translation:
+  case government:
+    teilnehmen an:
+      case: D
+      translation:
+      example:
+schützen:
+  translation:
+  case government:
+    schützen vor:
+      case: D
+      translation:
+      example:
+Angst haben:
+  translation:
+  case government:
+    Angst haben vor:
+      case: D
+      translation:
+      example:
+halten:
+  translation:
+  case government:
+    halten für:
+      case: A
+      translation:
+      example:
+sich interessieren:
+  translation:
+  case government:
+    sich interessieren für:
+      case: A
+      translation:
+      example:
+sich entscheiden:
+  translation:
+  case government:
+    sich entscheiden gegen:
+      case: A
+      translation:
+      example:
+sich bemühen:
+  translation:
+  case government:
+    sich bemühen um:
+      case: A
+      translation:
+      example:
+sich bewerben:
+  translation:
+  case government:
+    sich bewerben bei:
+      case: D
+      translation:
+      example:
+    sich bewerben um:
+      case: A
+      translation:
+      example:
+sich kümmern:
+  translation:
+  case government:
+    sich kümmern um:
+      case: A
+      translation:
+      example:
+weinen:
+  translation:
+  case government:
+    weinen um:
+      case: A
+      translation:
+      example:
+sich verlieben:
+  translation:
+  case government:
+    sich verlieben in:
+      case: A
+      translation:
+      example:
+sich erinnern:
+  translation:
+  case government:
+    sich erinnern an:
+      case: A
+      translation:
+      example:
+glauben:
+  translation:
+  case government:
+    glauben an:
+      case: A
+      translation:
+      example:
+schicken:
+  translation:
+  case government:
+    schicken an:
+      case: A
+      translation:
+      example:
+schreiben:
+  translation:
+  case government:
+    schreiben an:
+      case: A
+      translation:
+      example:
+achten:
+  translation:
+  case government:
+    achten auf:
+      case: A
+      translation:
+      example:
+antworten:
+  translation:
+  case government:
+    antworten auf:
+      case: A
+      translation:
+      example:
+hoffen:
+  translation:
+  case government:
+    hoffen auf:
+      case: A
+      translation:
+      example:
+hören:
+  translation:
+  case government:
+    hören auf:
+      case: A
+      translation:
+      example:
+sich vorbereiten:
+  translation:
+  case government:
+    sich vorbereiten auf:
+      case: A
+      translation:
+      example:
+warten:
+  translation:
+  case government:
+    warten auf:
+      case: A
+      translation:
+      example:
+sich ärgern:
+  translation:
+  case government:
+    sich ärgern über:
+      case: A
+      translation:
+      example:
+sich aufregen:
+  translation:
+  case government:
+    sich aufregen über:
+      case: A
+      translation:
+      example:
+sich beschweren:
+  translation:
+  case government:
+    sich beschweren über:
+      case: A
+      translation:
+      example:
+diskutieren:
+  translation:
+  case government:
+    diskutieren über:
+      case: A
+      translation:
+      example:
+lachen:
+  translation:
+  case government:
+    lachen über:
+      case: A
+      translation:
+      example:
+berichten:
+  translation:
+  case government:
+    berichten über:
+      case: A
+      translation:
+      example:
+    berichten von:
+      case: D
+      translation:
+      example:
+demonstrieren:
+  translation:
+  case government:
+    demonstrieren für:
+      case: A
+      translation:
+      example:
+    demonstrieren gegen:
+      case: A
+      translation:
+      example:
+denken:
+  translation:
+  case government:
+    denken an:
+      case: A
+      translation:
+      example:
+reden:
+  translation:
+  case government:
+    reden über:
+      case: A
+      translation:
+      example:
+    reden von:
+      case: D
+      translation:
+      example:
+schimpfen:
+  translation:
+  case government:
+    schimpfen mit:
+      case: D
+      translation:
+      example:
+    schimpfen über:
+      case: A
+      translation:
+      example:
+sein:
+  translation:
+  case government:
+    sein für:
+      case: A
+      translation:
+      example:
+    sein gegen:
+      case: A
+      translation:
+      example:
+sich entschuldigen:
+  translation:
+  case government:
+    sich entschuldigen bei:
+      case: D
+      translation:
+      example:
+    sich entschuldigen für:
+      case: A
+      translation:
+      example:
+sich erkundigen:
+  translation:
+  case government:
+    sich erkundigen bei:
+      case: D
+      translation:
+      example:
+    sich erkundigen nach:
+      case: D
+      translation:
+      example:
+sich freuen:
+  translation:
+  case government:
+    sich freuen auf:
+      case: A
+      translation:
+      example:
+    sich freuen über:
+      case: A
+      translation:
+      example:
+sich unterhalten:
+  translation:
+  case government:
+    sich unterhalten mit:
+      case: D
+      translation:
+      example:
+    sich unterhalten über:
+      case: A
+      translation:
+      example:

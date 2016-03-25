@@ -20,7 +20,7 @@ class Bot {
      */
     _getVerbSuggestions(query) {
         query = query.toLowerCase();
-        
+
         let distances = [];
         _.forEach(_.keys(this.KB.VERBS), (value) => {
             distances.push({ key: value, distance: (new Levenshtein(value, query)).distance });
@@ -84,7 +84,7 @@ class Bot {
 
                         let i = 1;
                         _.forEach(_.get(verb, 'case government'), (value, key) => {
-                            response += `${i}. <b>${key}</b>`;
+                            response += `${i}. <b>${key} + ${value.case}</b>`;
 
                             // translation
                             response += value.translation ? ` (${value.translation})` : '';
