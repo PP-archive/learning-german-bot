@@ -110,6 +110,34 @@ class Bot {
                 }
 
                 return [response, options];
+            },
+            help() {
+                let response, options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                response = `Пользоваться ботом можно так:
+1. <code>[что-то]</code> - бот попробует сам догадаться о чем вы его спросили
+2. /verb [глагол] - все про глагол
+3. /help - расскажет как пользоваться ботом
+4. /about - про бота в целом`;
+
+                return [response, options];
+            },
+            about() {
+                let response, options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                response = 'Бот который поможет вам в изучении немецкого. Пожелания отправляйте на me@pavelpolyakov.com';
+
+                return [response, options];
             }
         }
     }
