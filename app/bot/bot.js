@@ -40,11 +40,18 @@ class Bot {
             }
         });
 
-        let suggestions = _(distances).filter((record) => {
-            return record.distance <= 3;
-        }).sortBy((record)=> {
-            return record.key;
-        }).value();
+        let suggestions = _(distances)
+            .filter((record) => {
+                return record.distance <= 3;
+            })
+            .sortBy((record)=> {
+                return record.distance;
+            })
+            .slice(0, 5)
+            .sortBy((record)=> {
+                return record.key;
+            })
+            .value();
 
         return suggestions;
     }
