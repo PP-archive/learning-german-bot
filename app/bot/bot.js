@@ -58,6 +58,9 @@ class Bot {
     get commands() {
         let self = this;
         return {
+            start() {
+              return self.commands.help();
+            },
             verb(query) {
                 let response = '', options = {
                     parse_mode: 'HTML',
