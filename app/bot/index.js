@@ -5,64 +5,40 @@ const _ = require('lodash');
 const config = require('config');
 const debug = require('debug')('bot');
 
-const yaml = require('js-yaml');
-const fs = require('fs');
+// bot logic
+let Bot = require('./bot');
+// telegram bot
+let bot = new TelegramBot(config.get('tokens.telegram'));
+const botan = require('botanio')(config.get('tokens.botan'));
 
-/**
- * Gathering the knowledge base
- */
-let KB = {}
-KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
+let url = config.get('baseUrl');
+let crt = config.has('crt') ? config.get('crt') : undefined;
+
+debug(`Setting the webHook: url: ${url}, crt: ${crt}`);
+bot.setWebHook(url, crt);
 
 exports.register = function (server, options, next) {
-    let bot = new TelegramBot(config.get('tokens.telegram'));
-    const botan = require('botanio')(config.get('tokens.botan'));
-
-    let url = config.get('baseUrl');
-    let crt = config.has('crt') ? config.get('crt') : undefined;
-
-    debug(`Setting the webHook: url: ${url}, crt: ${crt}`);
-    bot.setWebHook(url, crt);
-
     server.decorate('server', 'bot', bot);
-    
+
     // setting up the tracking by botan
     bot.on('message', (message) => {
         debug('sending the message to botan');
-       botan.track(message); 
+        botan.track(message);
+
+        const chatId = message.chat.id;
+        
+        // processing the message
+        let [response, options] = Bot.process(message);
+
+        bot.sendMessage(chatId, response, options);
     });
 
-    bot.onText(/\/verb (.+)/, function (msg, match) {
-        let query = match[1];
-        let response = '';
-
-        if (_.has(KB.VERBS, query)) {
-            let verb = KB.VERBS[query];
-            response += `Глагол <code>${query}</code>.\n\n`;
-
-            if (_.has(verb, 'case government')) {
-                response += `Управление: \n`;
-
-                let i = 1;
-                _.forEach(_.get(verb, 'case government'), (value, key) => {
-                    response += `${i}. <b>${key}</b>`;
-
-                    // translation
-                    response += value.translation ? ` (${value.translation})` : '';
-                    response += value.example ? `\n<i>Пример: ${value.example}</i>` : ``;
-                    response += `\n`;
-
-                    i++;
-                });
-            }
-        } else {
-            response = `Увы, глагола <code>${query}</code> не найдено`;
-        }
-
-        var chatId = msg.chat.id;
-        var resp = match[1];
-        bot.sendMessage(chatId, response, { parse_mode: 'HTML' });
-    });
+    // bot.onText(/\/verb (.+)/, function (msg, match) {
+    //     let query = match[1];
+    //     let response = Bot.commands.verb(query);
+    //     var chatId = msg.chat.id;
+    //     bot.sendMessage(chatId, response, { parse_mode: 'HTML' });
+    // });
 
     next();
 };
