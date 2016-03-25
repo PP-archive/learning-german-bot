@@ -12,11 +12,56 @@ class Bot {
         this.KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
     }
 
+    /**
+     * Gather the suggestions for the particular verb
+     * @param query
+     * @returns {*}
+     * @private
+     */
+    _getVerbSuggestions(query) {
+        let distances = [];
+        _.forEach(_.keys(this.KB.VERBS), (value) => {
+            distances.push({ key: value, distance: (new Levenshtein(value, query)).distance });
+        });
+
+        let suggestions = _.chain(distances).filter((record) => {
+            return record.distance <= 3;
+        }).sortBy((record)=> {
+            return record.key;
+        }).value();
+
+        return suggestions;
+    }
+
+    /**
+     * Test if query looks like the verb
+     * @param query
+     * @returns {boolean}
+     * @private
+     */
+    _testForVerb(query) {
+        if (_.has(this.KB.VERBS, query)) {
+            return true;
+        } else {
+            let suggestions = this._getVerbSuggestions(query);
+
+            return !!suggestions.length;
+        }
+
+        return false;
+    }
+
     get commands() {
         let self = this;
         return {
             verb(query) {
-                let response = '';
+                let response = '', options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
                 if (_.has(self.KB.VERBS, query)) {
                     let verb = self.KB.VERBS[query];
                     response += `Глагол <code>${query}</code>.\n\n`;
@@ -37,15 +82,30 @@ class Bot {
                         });
                     }
                 } else {
-                    response = `Увы, глагола <code>${query}</code> не найдено`;
+                    let suggestions = self._getVerbSuggestions(query);
+
+                    if (suggestions.length) {
+                        response = 'Мы не нашли такой глагол, но вот похожие';
+                        options = {
+                            reply_markup: {
+                                keyboard: ((suggestions) => {
+                                    let keyboard = [];
+                                    _.forEach(suggestions, (record) => {
+                                        keyboard.push([record.key]);
+                                    });
+
+                                    return keyboard;
+                                })(suggestions),
+                                resize_keyboard: true,
+                                one_time_keyboard: true
+                            }
+                        };
+                    } else {
+                        response = 'Ничего не найдено';
+                    }
                 }
 
-                return [response, {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                }];
+                return [response, options];
             }
         }
     }
@@ -69,48 +129,34 @@ class Bot {
                 if (_.isFunction(_.get(this, `commands.${command}`))) {
                     debug(`calling the command ${command}`);
                     return _.get(this, `commands.${command}`)(query);
-                }
-            }
-
-            /**
-             * Trying to find the most similar verb
-             */
-            if (_.has(this.KB.VERBS, message.text)) {
-                return _.get(this, 'commands.verb')(message.text);
-            } else {
-                let distances = [];
-                _.forEach(_.keys(this.KB.VERBS), (value) => {
-                    distances.push({ key: value, distance: (new Levenshtein(value, message.text)).distance });
-                });
-
-                let suggestions = _.chain(distances).filter((record) => {
-                    return record.distance <= 3;
-                }).sortBy((record)=> {
-                    return record.key;
-                }).value();
-
-                if (suggestions.length) {
-                    return ['Мы не нашли такой глагол, но вот похожие', {
-                        reply_markup: {
-                            keyboard: ((suggestions) => {
-                                let keyboard = [];
-                                _.forEach(suggestions, (record) => {
-                                    keyboard.push([record.key]);
-                                });
-
-                                return keyboard;
-                            })(suggestions),
-                            resize_keyboard: true,
-                            one_time_keyboard: true
-                        }
-                    }];
                 } else {
-                    return [`Что-то ничего вообще не нашлось \u{1F604}`, {
+                    return ['Такой команды нет', {
+                        parse_mode: 'HTML',
                         reply_markup: {
                             hide_keyboard: true
                         }
                     }];
                 }
+            }
+
+            /**
+             * If this was not a command, then we need to process it like regular query
+             */
+
+            /**
+             * Test if query looks like the verb
+             */
+            let query = message.text;
+
+            if(this._testForVerb(query)) {
+                return _.get(this, 'commands.verb')(query);
+            } else {
+                return ['Ничего не нашли на этот случай', {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                }];
             }
         }
     }
