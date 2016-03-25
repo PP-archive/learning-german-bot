@@ -23,10 +23,24 @@ class Bot {
 
         let distances = [];
         _.forEach(_.keys(this.KB.VERBS), (value) => {
-            distances.push({ key: value, distance: (new Levenshtein(value, query)).distance });
+            // in case it's not one word
+            if (value.indexOf(' ') !== -1) {
+                let words = value.split(' ');
+                // find the min distance all in all
+                let distance = _(words)
+                    .map((word) => {
+                        return (new Levenshtein(word, query)).distance
+                    })
+                    .push((new Levenshtein(value, query)).distance)
+                    .min();
+
+                distances.push({ key: value, distance: distance });
+            } else {
+                distances.push({ key: value, distance: (new Levenshtein(value, query)).distance });
+            }
         });
 
-        let suggestions = _.chain(distances).filter((record) => {
+        let suggestions = _(distances).filter((record) => {
             return record.distance <= 3;
         }).sortBy((record)=> {
             return record.key;
@@ -63,7 +77,7 @@ class Bot {
         let self = this;
         return {
             start() {
-              return self.commands.help();
+                return self.commands.help();
             },
             verb(query) {
                 query = query.toLowerCase();
@@ -163,7 +177,7 @@ class Bot {
 1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>`;
 
                 // adding the lastupdate information, if available
-                if(fs.existsSync('./.lastupdate')) {
+                if (fs.existsSync('./.lastupdate')) {
                     response += `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
                 }
 
@@ -204,7 +218,7 @@ class Bot {
             let query = message.text;
 
             // Test if query looks like the verb
-            if(this._testForVerb(query)) {
+            if (this._testForVerb(query)) {
                 return _.get(this, 'commands.verb')(query);
             }
 

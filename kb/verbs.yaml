@@ -195,10 +195,10 @@ schützen:
       case: D
       translation:
       example:
-Angst haben:
+angst haben:
   translation:
   case government:
-    Angst haben vor:
+    angst haben vor:
       case: D
       translation:
       example:

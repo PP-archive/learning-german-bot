@@ -7,7 +7,7 @@ $('#appos_dictation_settings tr:not(.appos_dictation_settings_header)').each(fun
     var verb = $(v).find('.appos_dictation_settings_term_pretxt').text();
     var caseGovernment = $(v).find('.appos_dictation_settings_term_value').text().split(',');
 
-    result += verb+':\n';
+    result += verb.toLowerCase()+':\n';
     result += '  '.repeat(1)+'translation:\n';
 
     result += '  '.repeat(1)+'case government:\n';
@@ -16,7 +16,7 @@ $('#appos_dictation_settings tr:not(.appos_dictation_settings_header)').each(fun
         var tmp = value.split('+');
         var verbPlusPreposition = tmp[0].trim();
         var verbCase = tmp[1].trim();
-        result += '  '.repeat(2)+verbPlusPreposition+':\n';
+        result += '  '.repeat(2)+verbPlusPreposition.toLowerCase()+':\n';
         result += '  '.repeat(3)+'case: '+verbCase+'\n';
         result += '  '.repeat(3)+'translation:'+'\n';
         result += '  '.repeat(3)+'example:'+'\n';
