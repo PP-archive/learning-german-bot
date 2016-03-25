@@ -144,7 +144,23 @@ class Bot {
                     }
                 };
 
-                response = 'Бот который поможет вам в изучении немецкого. Пожелания отправляйте на me@pavelpolyakov.com .';
+                response = `Бот который поможет вам в изучении немецкого.
+Пожелания отправляйте на me@pavelpolyakov.com .
+Исходники бота: https://github.com/PavelPolyakov/learning-german-bot`;
+
+                return [response, options];
+            },
+            stats() {
+                let response, options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                response = `Статистика:
+1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>
+2. Последнее обновление <i>${fs.statSync('./package.json').mtime}</i>`;
 
                 return [response, options];
             }
