@@ -51,6 +51,10 @@ class Bot {
         return false;
     }
 
+    /**
+     * Incapsulation of the command processors
+     * @returns {Object}
+     */
     get commands() {
         let self = this;
         return {
@@ -110,54 +114,43 @@ class Bot {
         }
     }
 
+    /**
+     * Incoming messages processor
+     * @param message
+     * @returns []
+     */
     process(message) {
-        /**
-         * In case incomming message is text one
-         */
+        // In case incomming message is text one
         if (message.text) {
+            let response = 'Ничего не найдено', options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
+
             let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
 
-            /**
-             * In case the message looks something like command
-             */
+            // In case the message looks something like command
             if (matches) {
                 let [,command,,query] = matches;
 
-                /**
-                 * Trying to process the message, if such command is already defined
-                 */
+                // Trying to process the message, if such command is already defined
                 if (_.isFunction(_.get(this, `commands.${command}`))) {
                     debug(`calling the command ${command}`);
                     return _.get(this, `commands.${command}`)(query);
-                } else {
-                    return ['Такой команды нет', {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            hide_keyboard: true
-                        }
-                    }];
                 }
             }
 
-            /**
-             * If this was not a command, then we need to process it like regular query
-             */
-
-            /**
-             * Test if query looks like the verb
-             */
+            // If this was not a command, then we need to process it like regular query
             let query = message.text;
 
+            // Test if query looks like the verb
             if(this._testForVerb(query)) {
                 return _.get(this, 'commands.verb')(query);
-            } else {
-                return ['Ничего не нашли на этот случай', {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                }];
             }
+
+            return [response, options];
         }
     }
 }

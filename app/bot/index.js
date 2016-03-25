@@ -33,13 +33,6 @@ exports.register = function (server, options, next) {
         bot.sendMessage(chatId, response, options);
     });
 
-    // bot.onText(/\/verb (.+)/, function (msg, match) {
-    //     let query = match[1];
-    //     let response = Bot.commands.verb(query);
-    //     var chatId = msg.chat.id;
-    //     bot.sendMessage(chatId, response, { parse_mode: 'HTML' });
-    // });
-
     next();
 };
 
