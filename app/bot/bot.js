@@ -105,7 +105,11 @@ class Bot {
                         }
                     }];
                 } else {
-                    return [`Что-то ничего вообще не нашлось \u{1F604}`];
+                    return [`Что-то ничего вообще не нашлось \u{1F604}`, {
+                        reply_markup: {
+                            hide_keyboard: true
+                        }
+                    }];
                 }
             }
         }
