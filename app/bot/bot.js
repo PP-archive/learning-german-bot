@@ -135,7 +135,7 @@ class Bot {
                     }
                 };
 
-                response = 'Бот который поможет вам в изучении немецкого. Пожелания отправляйте на me@pavelpolyakov.com';
+                response = 'Бот который поможет вам в изучении немецкого. Пожелания отправляйте на me@pavelpolyakov.com .';
 
                 return [response, options];
             }
