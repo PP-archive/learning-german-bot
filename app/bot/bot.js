@@ -160,8 +160,10 @@ class Bot {
 
                 response = `Статистика:
 1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>`;
+
+                // adding the lastupdate information, if available
                 if(fs.existsSync('./.lastupdate')) {
-                    response = `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
+                    response += `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
                 }
 
                 return [response, options];
