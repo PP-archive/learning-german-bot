@@ -159,8 +159,10 @@ class Bot {
                 };
 
                 response = `Статистика:
-1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>
-2. Последнее обновление <i>${fs.statSync('./package.json').mtime}</i>`;
+1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>`;
+                if(fs.existsSync('./.lastupdate')) {
+                    response = `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
+                }
 
                 return [response, options];
             }
