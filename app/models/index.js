@@ -5,9 +5,11 @@ const config = require('config');
 const mongoose = require('mongoose');
 const debug = require('debug')('models-loader');
 
+// redefining the promise library
+mongoose.Promise = require('bluebird');
+
 // setting up the connection
 mongoose.connect(config.get('mongodb'));
-
 
 /**
  *

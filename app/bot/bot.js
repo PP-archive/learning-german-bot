@@ -7,25 +7,41 @@ const Levenshtein = require('levenshtein');
 const debug = require('debug')('bot');
 const config = require('config');
 
-// telegram bot
+// telegram bot preparation
 const TelegramBot = require('node-telegram-bot-api');
 let telegramBot = new TelegramBot(config.get('tokens.telegram'));
-const botan = require('botanio')(config.get('tokens.botan'));
-
 let url = config.get('baseUrl');
 let crt = config.has('crt') ? config.get('crt') : undefined;
 
 debug(`Setting the webHook: url: ${url}, crt: ${crt}`);
 telegramBot.setWebHook(url, crt);
 
+// init of the botan analytics
+const botan = require('botanio')(config.get('tokens.botan'));
+
 module.exports = function (server, options) {
 
     class Bot {
-        get TYPES() {
-            return {
+        /**
+         * Defining the static TYPES list
+         * @returns {{MESSAGE: string, PHOTO: string}}
+         * @constructor
+         */
+        static get TYPES() {
+            delete Bot.MY_CONST;
+            return Bot.MY_CONST = {
                 MESSAGE: 'MESSAGE',
                 PHOTO: 'PHOTO'
-            }
+            };
+        }
+
+        /**
+         * Defining the TYPES list for usage inside the instance
+         * @returns {{MESSAGE: string, PHOTO: string}}
+         * @constructor
+         */
+        get TYPES() {
+            return this.constructor.TYPES;
         }
 
         /**
@@ -147,6 +163,19 @@ module.exports = function (server, options) {
                     return self.commands.help();
                 },
                 train() {
+                    let text = `Выберите тип тренировки:
+1. <code>Управление</code> - тренируем управление глаголов
+2. <code>ТОП 100</code> - тренируем топ 100 слов в немецком языке`;
+                    let options = {
+                        parse_mode: 'HTML',
+                        reply_markup: {
+                            keyboard: [['Управление', 'ТОП 100']],
+                            resize_keyboard: true,
+                            one_time_keyboard: true
+                        }
+                    };
+
+                    return [{type: self.TYPES.MESSAGE, text: text, options: options }]
 
                 },
                 verb(query) {
