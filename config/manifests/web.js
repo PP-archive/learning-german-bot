@@ -13,6 +13,9 @@ module.exports = (function () {
         ],
         registrations: [
             {
+                plugin: './app/models'
+            },
+            {
                 plugin: './app/bot'
             },
             {
