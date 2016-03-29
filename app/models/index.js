@@ -7,6 +7,7 @@ const debug = require('debug')('models-loader');
 
 // redefining the promise library
 mongoose.Promise = require('bluebird');
+mongoose.set('debug', true)
 
 // setting up the connection
 mongoose.connect(config.get('mongodb'));

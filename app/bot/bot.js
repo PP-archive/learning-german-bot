@@ -1,5 +1,6 @@
 'use strict';
 
+const Promise = require('bluebird');
 const _ = require('lodash');
 const yaml = require('js-yaml');
 const fs = require('fs');
@@ -19,31 +20,12 @@ telegramBot.setWebHook(url, crt);
 // init of the botan analytics
 const botan = require('botanio')(config.get('tokens.botan'));
 
+// defines
+const MessageTypes = require('./message-types');
+
 module.exports = function (server, options) {
 
     class Bot {
-        /**
-         * Defining the static TYPES list
-         * @returns {{MESSAGE: string, PHOTO: string}}
-         * @constructor
-         */
-        static get TYPES() {
-            delete Bot.MY_CONST;
-            return Bot.MY_CONST = {
-                MESSAGE: 'MESSAGE',
-                PHOTO: 'PHOTO'
-            };
-        }
-
-        /**
-         * Defining the TYPES list for usage inside the instance
-         * @returns {{MESSAGE: string, PHOTO: string}}
-         * @constructor
-         */
-        get TYPES() {
-            return this.constructor.TYPES;
-        }
-
         /**
          * constructor
          * @param bot
@@ -52,6 +34,23 @@ module.exports = function (server, options) {
         constructor(bot, botan) {
             this.KB = {};
             this.KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
+
+            // load trainings
+            let trainingsPath = __dirname + '/trainings';
+            this.trainings = {};
+            fs.readdirSync(trainingsPath).forEach((value) => {
+                if (fs.lstatSync(trainingsPath + '/' + value).isFile() && (value.charAt(0) !== '_')) {
+
+                    let file = value;
+
+                    /*Get model name for Sequalize from file name*/
+                    let training = require('./trainings/' + file)(this.KB);
+
+                    if(training.ACTIVE) {
+                        this.trainings[training.TYPE] = training;
+                    }
+                }
+            });
 
             this.bot = bot;
             this.botan = botan;
@@ -68,18 +67,17 @@ module.exports = function (server, options) {
                 const chatId = message.chat.id;
 
                 // processing the message
-                _.forEach(this.process(message), (reply) => {
-                    console.log('---');
-                    console.log(reply);
-                    console.log('---');
-                    switch (reply.type) {
-                        case this.TYPES.MESSAGE:
-                            this.bot.sendMessage(chatId, reply.text, reply.options || {});
-                            break;
-                        default:
-                            debug('Undefined')
-                            break;
-                    }
+                this.process(message).then((messages) => {
+                    _.forEach(messages, (reply) => {
+                        switch (reply.type) {
+                            case MessageTypes.MESSAGE:
+                                this.bot.sendMessage(chatId, reply.text, reply.options || {});
+                                break;
+                            default:
+                                debug('Undefined')
+                                break;
+                        }
+                    });
                 });
             });
         }
@@ -128,10 +126,6 @@ module.exports = function (server, options) {
             return suggestions;
         }
 
-        _testForTrainingSelection() {
-            return true;
-        }
-
         /**
          * Test if query looks like the verb
          * @param query
@@ -157,130 +151,211 @@ module.exports = function (server, options) {
          * @returns {Object}
          */
         get commands() {
-            let self = this;
             return {
-                start() {
-                    return self.commands.help();
+                start: (query, message) => {
+                    return Promise.coroutine(function *() {
+                        let chatId = message.chat.id;
+                        let Chats = server.getModel('Chats');
+                        let chat = yield Chats.findOne({ chatId: chatId });
+
+                        if (!chat) {
+                            yield (new Chats({ chatId: chatId, status: Chats.STATES.IDLE })).save();
+                        }
+
+                        return this.commands.help();
+                    }).bind(this)();
                 },
-                train() {
-                    let text = `Выберите тип тренировки:
+                training: (query, message) => {
+                    return Promise.coroutine(function *() {
+                        if (!query) {
+                            let Chats = server.getModel('Chats');
+                            let chat = yield Chats.findOne({ chatId: message.chat.id });
+
+                            let text, options;
+
+                            // in case user is not yet registered
+                            if (!chat) {
+                                text = `По какой-то причине вы еще не зарегистриованы. Вы можете зарегистрироваться этой командой: /start`;
+                                return [{ type: MessageTypes.MESSAGE, text: text }];
+                            }
+
+                            chat.setState(Chats.STATES.TRAINING);
+
+                            text = `Выберите тип тренировки:
 1. <code>Управление</code> - тренируем управление глаголов
 2. <code>ТОП 100</code> - тренируем топ 100 слов в немецком языке`;
-                    let options = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            keyboard: [['Управление', 'ТОП 100']],
-                            resize_keyboard: true,
-                            one_time_keyboard: true
-                        }
-                    };
-
-                    return [{type: self.TYPES.MESSAGE, text: text, options: options }]
-
-                },
-                verb(query) {
-                    query = query.toLowerCase();
-
-                    let text = '', options = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            hide_keyboard: true
-                        }
-                    };
-
-                    if (_.has(self.KB.VERBS, query)) {
-                        let verb = self.KB.VERBS[query];
-                        text += `Глагол <code>${query}</code>.\n\n`;
-
-                        if (_.has(verb, 'case government')) {
-                            text += `Управление: \n`;
-
-                            let i = 1;
-                            _.forEach(_.get(verb, 'case government'), (value, key) => {
-                                text += `${i}. <b>${key} + ${value.case}</b>`;
-
-                                // translation
-                                text += value.translation ? ` (${value.translation})` : '';
-                                text += value.example ? `\n<i>Пример: ${value.example}</i>` : ``;
-                                text += `\n`;
-
-                                i++;
-                            });
-                        }
-                    } else {
-                        let suggestions = self._getVerbSuggestions(query);
-
-                        if (suggestions.length) {
-                            text = 'Мы не нашли такой глагол, но вот похожие';
                             options = {
+                                parse_mode: 'HTML',
                                 reply_markup: {
-                                    keyboard: ((suggestions) => {
+                                    keyboard: (() => {
                                         let keyboard = [];
-                                        _.forEach(suggestions, (record) => {
-                                            keyboard.push([record.key]);
+                                        _.forEach(this.trainings, (training) => {
+                                            keyboard.push([training.LABEL]);
                                         });
 
                                         return keyboard;
-                                    })(suggestions),
+                                    })(),
                                     resize_keyboard: true,
                                     one_time_keyboard: true
                                 }
                             };
+
+                            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
                         } else {
-                            text = 'Ничего не найдено';
-                        }
-                    }
+                            let Trainings = server.getModel('Trainings');
+                            let activeTraining = yield Trainings.getActiveByChatId(message.chat.id);
 
-                    return [{ type: self.TYPES.MESSAGE, text: text, options: options }];
+                            // probably this should be an attempt to choose the training
+                            if (!activeTraining) {
+                                let trainingModel = _.find(this.trainings, (training, key) => {
+                                    return query === training.LABEL;
+                                });
+
+                                if (trainingModel) {
+                                    let text = `Начинаем тренировку <code>${trainingModel.LABEL}</code>, вас ждет ${trainingModel.ITERATIONS} заданий.`;
+                                    let options = {
+                                        parse_mode: 'HTML',
+                                        reply_markup: {
+                                            hide_keyboard: true
+                                        }
+                                    };
+
+                                    let training = new Trainings({
+                                        chatId: message.chat.id,
+                                        type: trainingModel.TYPE,
+                                        status: Trainings.STATUSES.IN_PROGRESS
+                                    });
+                                    training.save();
+                                    return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                                } else {
+                                    let text = `Увы такой тренировки мы не нашли, попробуйте еще разок.`;
+                                    return [{ type: MessageTypes.MESSAGE, text: text }];
+                                }
+                            } else {
+                                console.log(this.trainings);
+                                let trainingModel = _.find(this.trainings, (training, key) => {
+                                    console.log('---');
+                                    console.log(activeTraining.type, training.TYPE);
+                                    console.log('---');
+                                   return activeTraining.type = training.TYPE;
+                                });
+
+                                return trainingModel.getTask();
+                            }
+                        }
+                    }).bind(this)();
                 },
-                help() {
-                    let text, options = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            hide_keyboard: true
-                        }
-                    };
+                verb: (query) => {
+                    return Promise.coroutine(function *() {
+                        query = query.toLowerCase();
 
-                    text = `Пользоваться ботом можно так:
+                        let text = '', options = {
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                hide_keyboard: true
+                            }
+                        };
+
+                        if (_.has(this.KB.VERBS, query)) {
+                            let verb = this.KB.VERBS[query];
+                            text += `Глагол <code>${query}</code>.\n\n`;
+
+                            if (_.has(verb, 'case government')) {
+                                text += `Управление: \n`;
+
+                                let i = 1;
+                                _.forEach(_.get(verb, 'case government'), (value, key) => {
+                                    text += `${i}. <b>${key} + ${value.case}</b>`;
+
+                                    // translation
+                                    text += value.translation ? ` (${value.translation})` : '';
+                                    text += value.example ? `\n<i>Пример: ${value.example}</i>` : ``;
+                                    text += `\n`;
+
+                                    i++;
+                                });
+                            }
+                        } else {
+                            let suggestions = this._getVerbSuggestions(query);
+
+                            if (suggestions.length) {
+                                text = 'Мы не нашли такой глагол, но вот похожие';
+                                options = {
+                                    reply_markup: {
+                                        keyboard: ((suggestions) => {
+                                            let keyboard = [];
+                                            _.forEach(suggestions, (record) => {
+                                                keyboard.push([record.key]);
+                                            });
+
+                                            return keyboard;
+                                        })(suggestions),
+                                        resize_keyboard: true,
+                                        one_time_keyboard: true
+                                    }
+                                };
+                            } else {
+                                text = 'Ничего не найдено';
+                            }
+                        }
+
+                        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                    }).bind(this)();
+                },
+                help: () => {
+                    return Promise.coroutine(function *() {
+                        let text, options = {
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                hide_keyboard: true
+                            }
+                        };
+
+                        text = `Пользоваться ботом можно так:
 1. <code>[что-то]</code> - бот попробует сам догадаться о чем вы его спросили. Например: <pre>sprechen</pre>.
 2. /verb [глагол] - все про глагол. Например: <pre>/verb sprechen</pre>.
 3. /help - расскажет как пользоваться ботом
 4. /about - про бота в целом
 5. /stats - статистика бота`;
 
-                    return [{ type: self.TYPES.MESSAGE, text: text, options: options }];
+                        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                    }).bind(this)();
                 },
-                about() {
-                    let text, options = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            hide_keyboard: true
-                        }
-                    };
+                about: () => {
+                    return Promise.couroutine(function *() {
+                        let text, options = {
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                hide_keyboard: true
+                            }
+                        };
 
-                    text = `Бот который поможет вам в изучении немецкого.
+                        text = `Бот который поможет вам в изучении немецкого.
 Пожелания отправляйте на me@pavelpolyakov.com .
 Исходники бота: https://github.com/PavelPolyakov/learning-german-bot`;
 
-                    return [{ type: self.TYPES.MESSAGE, text: text, options: options }];
+                        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                    }).bind(this)();
                 },
-                stats() {
-                    let text, options = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            hide_keyboard: true
+                stats: () => {
+                    return Promise.coroutine(function *() {
+                        let text, options = {
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                hide_keyboard: true
+                            }
+                        };
+
+                        text = `Статистика:
+1. Глаголов в базе <i>${_.keys(this.KB.VERBS).length}</i>`;
+
+                        // adding the lastupdate information, if available
+                        if (fs.existsSync('./.lastupdate')) {
+                            text += `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
                         }
-                    };
 
-                    text = `Статистика:
-1. Глаголов в базе <i>${_.keys(self.KB.VERBS).length}</i>`;
-
-                    // adding the lastupdate information, if available
-                    if (fs.existsSync('./.lastupdate')) {
-                        text += `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
-                    }
-
-                    return [{ type: self.TYPES.MESSAGE, text: text, options: options }];
+                        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                    }).bind(this)();
                 }
             }
         }
@@ -291,38 +366,52 @@ module.exports = function (server, options) {
          * @returns []
          */
         process(message) {
-            // In case incomming message is text one
-            if (message.text) {
-                let text = 'Ничего не найдено', options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
+            return Promise.coroutine(function *() {
+                // In case incomming message is text one
+                if (message.text) {
+                    let text = 'Ничего не найдено', options = {
+                        parse_mode: 'HTML',
+                        reply_markup: {
+                            hide_keyboard: true
+                        }
+                    };
+
+                    let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
+
+                    // In case the message looks something like command
+                    if (matches) {
+                        let [,command,,query] = matches;
+
+                        // Trying to process the message, if such command is already defined
+                        if (_.isFunction(_.get(this, `commands.${command}`))) {
+                            debug(`calling the command ${command}`);
+                            return _.get(this, `commands.${command}`)(query, message);
+                        }
                     }
-                };
 
-                let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
+                    // If this was not a command, then we need to process it like regular query
+                    let query = message.text;
 
-                // In case the message looks something like command
-                if (matches) {
-                    let [,command,,query] = matches;
+                    // check if chat is in some special state
+                    let Chats = server.getModel('Chats');
+                    let chat = yield Chats.findOne({ chatId: message.chat.id });
 
-                    // Trying to process the message, if such command is already defined
-                    if (_.isFunction(_.get(this, `commands.${command}`))) {
-                        debug(`calling the command ${command}`);
-                        return _.get(this, `commands.${command}`)(query);
+                    if (chat && chat.state !== Chats.STATES.IDLE) {
+                        let command = _.lowerCase(chat.state);
+                        if (_.isFunction(_.get(this, `commands.${command}`))) {
+                            debug(`calling the command ${command}`);
+                            return _.get(this, `commands.${command}`)(query, message);
+                        }
                     }
+
+                    // Test if query looks like the verb
+                    if (this._testForVerb(query)) {
+                        return _.get(this, 'commands.verb')(query);
+                    }
+
+                    return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
                 }
-
-                // If this was not a command, then we need to process it like regular query
-                let query = message.text;
-
-                // Test if query looks like the verb
-                if (this._testForVerb(query)) {
-                    return _.get(this, 'commands.verb')(query);
-                }
-
-                return [{ type: this.TYPES.MESSAGE, text: text, options: options }];
-            }
+            }).bind(this)();
         }
     }
 
