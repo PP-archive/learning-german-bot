@@ -3,24 +3,14 @@
 const MessageTypes = require('../message-types');
 
 class CaseGovernment {
-    get ACTIVE() {
-        return true;
-    }
-    
-    get TYPE() {
-        return 'CASE_GOVERNMENT';
-    }
-
-    get LABEL() {
-        return 'Управление';
-    }
-
-    get ITERATIONS() {
-        return 5;
-    }
-
     constructor(KB) {
         this.KB = KB;
+
+        this.ACTIVE = true;
+        this.TYPE = 'CASE_GOVERNMENT';
+        this.LABEL = 'Управление';
+        this.DESCRIPTION = 'тренируем управление глаголов';
+        this.ITERATIONS = 5;
     }
 
     getTask() {
@@ -33,11 +23,22 @@ class CaseGovernment {
             }
         };
 
-        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        let variants = ['mit', 'auch', 'bis', 'bald'];
+
+        let task = {
+            messages: [
+                { type: MessageTypes.MESSAGE, text: text, options: options }
+            ],
+            question: text,
+            variants: variants,
+            answer: 'mit'
+        }
+
+        return task;
     }
 
-    validateAnswer(answer) {
-        return true;
+    validateAnswer(question, answer) {
+        return question.answer === answer;
     }
 }
 

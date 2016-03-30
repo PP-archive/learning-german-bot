@@ -8,7 +8,12 @@ module.exports = function (server, options) {
         chatId: Number,
         type: String,
         status: String,
-        history: [Schema.Types.Mixed],
+        history: [{
+            question: String,
+            variants: [String],
+            answer: String,
+            result: Boolean
+        }],
         startedAt: { type: Date, default: Date.now },
         finishedAt: { type: Date }
     });

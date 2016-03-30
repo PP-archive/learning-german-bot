@@ -7,6 +7,7 @@ const fs = require('fs');
 const Levenshtein = require('levenshtein');
 const debug = require('debug')('bot');
 const config = require('config');
+const emoji = require('node-emoji');
 
 // telegram bot preparation
 const TelegramBot = require('node-telegram-bot-api');
@@ -46,7 +47,7 @@ module.exports = function (server, options) {
                     /*Get model name for Sequalize from file name*/
                     let training = require('./trainings/' + file)(this.KB);
 
-                    if(training.ACTIVE) {
+                    if (training.ACTIVE) {
                         this.trainings[training.TYPE] = training;
                     }
                 }
@@ -68,15 +69,21 @@ module.exports = function (server, options) {
 
                 // processing the message
                 this.process(message).then((messages) => {
+                    let i = 0;
                     _.forEach(messages, (reply) => {
-                        switch (reply.type) {
-                            case MessageTypes.MESSAGE:
-                                this.bot.sendMessage(chatId, reply.text, reply.options || {});
-                                break;
-                            default:
-                                debug('Undefined')
-                                break;
-                        }
+                        setTimeout(() => {
+                            switch (reply.type) {
+                                case MessageTypes.MESSAGE:
+                                    console.log(`[${reply.text}]`);
+                                    this.bot.sendMessage(chatId, reply.text, reply.options || {});
+                                    break;
+                                default:
+                                    debug('Undefined')
+                                    break;
+                            }
+                        }, 300 * i);
+
+                        i++;
                     });
                 });
             });
@@ -165,6 +172,30 @@ module.exports = function (server, options) {
                         return this.commands.help();
                     }).bind(this)();
                 },
+                cancel: (query, message) => {
+                    return Promise.coroutine(function *() {
+                        let Chats = server.getModel('Chats');
+                        let chat = yield Chats.findOne({ chatId: message.chat.id });
+                        chat.state = Chats.STATES.IDLE;
+                        chat.save();
+
+                        let Trainings = server.getModel('Trainings');
+                        Trainings.update({ chatId: message.chat.id }, {
+                            status: Trainings.STATUSES.CLOSED,
+                            finishedAt: new Date()
+                        });
+
+                        let text = 'Сделано! Теперь с чистого листа.';
+                        let options = {
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                hide_keyboard: true
+                            }
+                        };
+
+                        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+                    }).bind(this)();
+                },
                 training: (query, message) => {
                     return Promise.coroutine(function *() {
                         if (!query) {
@@ -181,9 +212,16 @@ module.exports = function (server, options) {
 
                             chat.setState(Chats.STATES.TRAINING);
 
-                            text = `Выберите тип тренировки:
-1. <code>Управление</code> - тренируем управление глаголов
-2. <code>ТОП 100</code> - тренируем топ 100 слов в немецком языке`;
+                            text = `Выберите тип тренировки:\n`;
+
+                            let i = 1;
+                            _.forEach(this.trainings, (training) => {
+                                text += `${i}. <code>${training.LABEL}</code> - ${training.DESCRIPTION}\n`;
+                                i++;
+                            });
+
+                            text += `\nЕсли хотите прервать - /cancel\n`;
+
                             options = {
                                 parse_mode: 'HTML',
                                 reply_markup: {
@@ -212,13 +250,19 @@ module.exports = function (server, options) {
                                 });
 
                                 if (trainingModel) {
-                                    let text = `Начинаем тренировку <code>${trainingModel.LABEL}</code>, вас ждет ${trainingModel.ITERATIONS} заданий.`;
-                                    let options = {
-                                        parse_mode: 'HTML',
-                                        reply_markup: {
-                                            hide_keyboard: true
+                                    let messages = [];
+
+                                    // initial message
+                                    messages.push({
+                                        type: MessageTypes.MESSAGE,
+                                        text: `Начинаем тренировку <code>${trainingModel.LABEL}</code>, вас ждет ${trainingModel.ITERATIONS} заданий.`,
+                                        options: {
+                                            parse_mode: 'HTML',
+                                            reply_markup: {
+                                                hide_keyboard: true
+                                            }
                                         }
-                                    };
+                                    });
 
                                     let training = new Trainings({
                                         chatId: message.chat.id,
@@ -226,21 +270,98 @@ module.exports = function (server, options) {
                                         status: Trainings.STATUSES.IN_PROGRESS
                                     });
                                     training.save();
-                                    return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+
+                                    // now we need to get the first task
+                                    let task = trainingModel.getTask(training.history);
+
+                                    messages = _.union(messages, task.messages);
+
+                                    console.log('---');
+                                    console.log(messages);
+                                    console.log('---');
+
+                                    training.history.push({
+                                        question: task.question,
+                                        variants: task.variants,
+                                        answer: task.answer,
+                                        result: undefined
+                                    });
+                                    training.save();
+
+                                    //messages
+                                    return messages;
                                 } else {
-                                    let text = `Увы такой тренировки мы не нашли, попробуйте еще разок.`;
+                                    let text = `Увы такой тренировки мы не нашли, попробуйте еще разок. Либо /cancel, чтобы прервать эту операцию.`;
                                     return [{ type: MessageTypes.MESSAGE, text: text }];
                                 }
                             } else {
-                                console.log(this.trainings);
+                                let messages = [];
                                 let trainingModel = _.find(this.trainings, (training, key) => {
-                                    console.log('---');
-                                    console.log(activeTraining.type, training.TYPE);
-                                    console.log('---');
-                                   return activeTraining.type = training.TYPE;
+                                    return activeTraining.type = training.TYPE;
                                 });
 
-                                return trainingModel.getTask();
+                                let lastQuestion = activeTraining.history.pop();
+
+                                let result = trainingModel.validateAnswer(lastQuestion, query);
+                                lastQuestion.result = result;
+
+                                activeTraining.history.push(lastQuestion);
+                                activeTraining.save();
+
+                                if (result) {
+                                    messages.push({
+                                        type: MessageTypes.MESSAGE,
+                                        text: `${emoji.get(':white_check_mark:')} верно!`
+                                    });
+                                } else {
+                                    messages.push({
+                                        type: MessageTypes.MESSAGE,
+                                        text: `${emoji.get(':x:')} не очень верно :(`
+                                    });
+                                }
+
+
+                                if (activeTraining.history.length < trainingModel.ITERATIONS) {
+                                    // now we need to get the first task
+                                    let task = trainingModel.getTask(activeTraining.history);
+
+                                    activeTraining.history.push({
+                                        question: task.question,
+                                        variants: task.variants,
+                                        answer: task.answer,
+                                        result: undefined
+                                    });
+                                    activeTraining.save();
+
+                                    messages = _.union(messages, task.messages);
+
+                                    console.log('---');
+                                    console.log(messages);
+                                    console.log('---');
+                                } else {
+                                    let correctResults = _.reduce(activeTraining.history, function (sum, object) {
+                                        return sum + (object.result ? 1 : 0);
+                                    }, 0);
+
+                                    let text = `Тренировочка закончена, вы большой молодец: ${correctResults} из ${trainingModel.ITERATIONS}!`;
+
+                                    messages.push({
+                                        type: MessageTypes.MESSAGE,
+                                        text: text
+                                    });
+
+                                    let Chats = server.getModel('Chats');
+                                    let chat = yield Chats.findOne({ chatId: message.chat.id });
+
+                                    activeTraining.status = Trainings.STATUSES.FINISHED;
+                                    activeTraining.finishedAt = new Date();
+                                    activeTraining.save();
+
+                                    chat.state = Chats.STATES.IDLE;
+                                    chat.save();
+                                }
+
+                                return messages;
                             }
                         }
                     }).bind(this)();
