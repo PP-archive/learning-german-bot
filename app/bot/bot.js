@@ -8,6 +8,7 @@ const Levenshtein = require('levenshtein');
 const debug = require('debug')('bot');
 const config = require('config');
 const emoji = require('node-emoji');
+const moment = require('moment');
 
 // telegram bot preparation
 const TelegramBot = require('node-telegram-bot-api');
@@ -71,7 +72,7 @@ module.exports = function (server, options) {
                 this.process(message).then((messages) => {
                     let i = 0;
                     _.forEach(messages, (reply) => {
-                        setTimeout(() => {
+                        setTimeout(()=> {
                             switch (reply.type) {
                                 case MessageTypes.MESSAGE:
                                     console.log(`[${reply.text}]`);
@@ -81,8 +82,7 @@ module.exports = function (server, options) {
                                     debug('Undefined')
                                     break;
                             }
-                        }, 300 * i);
-
+                        }, 500 * i)
                         i++;
                     });
                 });
@@ -177,7 +177,7 @@ module.exports = function (server, options) {
                         let Chats = server.getModel('Chats');
                         let chat = yield Chats.findOne({ chatId: message.chat.id });
                         chat.state = Chats.STATES.IDLE;
-                        chat.save();
+                        yield chat.save();
 
                         let Trainings = server.getModel('Trainings');
                         Trainings.update({ chatId: message.chat.id }, {
@@ -269,7 +269,7 @@ module.exports = function (server, options) {
                                         type: trainingModel.TYPE,
                                         status: Trainings.STATUSES.IN_PROGRESS
                                     });
-                                    training.save();
+                                    yield training.save();
 
                                     // now we need to get the first task
                                     let task = trainingModel.getTask(training.history);
@@ -286,7 +286,7 @@ module.exports = function (server, options) {
                                         answer: task.answer,
                                         result: undefined
                                     });
-                                    training.save();
+                                    yield training.save();
 
                                     //messages
                                     return messages;
@@ -306,7 +306,7 @@ module.exports = function (server, options) {
                                 lastQuestion.result = result;
 
                                 activeTraining.history.push(lastQuestion);
-                                activeTraining.save();
+                                yield activeTraining.save();
 
                                 if (result) {
                                     messages.push({
@@ -331,7 +331,7 @@ module.exports = function (server, options) {
                                         answer: task.answer,
                                         result: undefined
                                     });
-                                    activeTraining.save();
+                                    yield activeTraining.save();
 
                                     messages = _.union(messages, task.messages);
 
@@ -347,7 +347,13 @@ module.exports = function (server, options) {
 
                                     messages.push({
                                         type: MessageTypes.MESSAGE,
-                                        text: text
+                                        text: text,
+                                        options: {
+                                            parse_mode: 'HTML',
+                                            reply_markup: {
+                                                hide_keyboard: true
+                                            }
+                                        }
                                     });
 
                                     let Chats = server.getModel('Chats');
@@ -355,10 +361,10 @@ module.exports = function (server, options) {
 
                                     activeTraining.status = Trainings.STATUSES.FINISHED;
                                     activeTraining.finishedAt = new Date();
-                                    activeTraining.save();
+                                    yield activeTraining.save();
 
                                     chat.state = Chats.STATES.IDLE;
-                                    chat.save();
+                                    yield chat.save();
                                 }
 
                                 return messages;
