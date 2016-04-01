@@ -11,7 +11,10 @@ module.exports = function (server, options) {
         history: [{
             question: String,
             variants: [String],
-            answer: String,
+            answer: {
+                flow: String,
+                value: Schema.Types.Mixed
+            },
             result: Boolean
         }],
         startedAt: { type: Date, default: Date.now },

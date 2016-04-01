@@ -70,21 +70,31 @@ module.exports = function (server, options) {
 
                 // processing the message
                 this.process(message).then((messages) => {
-                    let i = 0;
+                    let promises = [];
                     _.forEach(messages, (reply) => {
-                        setTimeout(()=> {
-                            switch (reply.type) {
-                                case MessageTypes.MESSAGE:
-                                    console.log(`[${reply.text}]`);
-                                    this.bot.sendMessage(chatId, reply.text, reply.options || {});
-                                    break;
-                                default:
-                                    debug('Undefined')
-                                    break;
-                            }
-                        }, 500 * i)
-                        i++;
+                        switch (reply.type) {
+                            case MessageTypes.MESSAGE:
+                                console.log(`[${reply.text}]`);
+                                promises.push({
+                                    method: this.bot.sendMessage,
+                                    context: this.bot,
+                                    args: [chatId, reply.text, reply.options || {}]
+                                });
+                                //this.bot.sendMessage(chatId, reply.text, reply.options || {});
+                                break;
+                            default:
+                                debug('Undefined')
+                                break;
+                        }
                     });
+
+                    Promise.coroutine(function *() {
+                        while (promises.length) {
+                            let promise = promises.shift();
+
+                            let result = yield promise.method.apply(promise.context, promise.args);
+                        }
+                    })();
                 });
             });
         }
@@ -180,7 +190,7 @@ module.exports = function (server, options) {
                         yield chat.save();
 
                         let Trainings = server.getModel('Trainings');
-                        Trainings.update({ chatId: message.chat.id }, {
+                        yield Trainings.update({ chatId: message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
                             status: Trainings.STATUSES.CLOSED,
                             finishedAt: new Date()
                         });
@@ -209,6 +219,16 @@ module.exports = function (server, options) {
                                 text = `По какой-то причине вы еще не зарегистриованы. Вы можете зарегистрироваться этой командой: /start`;
                                 return [{ type: MessageTypes.MESSAGE, text: text }];
                             }
+
+                            let Trainings = server.getModel('Trainings');
+                            let activeTraining = yield Trainings.getActiveByChatId(message.chat.id);
+                            if (activeTraining) {
+                                return [{
+                                    type: MessageTypes.MESSAGE,
+                                    text: `В данный момент вы уже находитесь в режиме тренировки. Отвечайте на вопрос, либо пошлите команду /cancel`
+                                }];
+                            }
+
 
                             chat.setState(Chats.STATES.TRAINING);
 
@@ -314,9 +334,16 @@ module.exports = function (server, options) {
                                         text: `${emoji.get(':white_check_mark:')} верно!`
                                     });
                                 } else {
+                                    let text = `${emoji.get(':x:')} не очень верно :(\n`;
+                                    let answer = lastQuestion.answer.value;
+
+                                    text += `Правильно: <code>${_.isArray(answer) ? answer.join(' или ') : answer }</code>`;
                                     messages.push({
                                         type: MessageTypes.MESSAGE,
-                                        text: `${emoji.get(':x:')} не очень верно :(`
+                                        text: text,
+                                        options: {
+                                            parse_mode: 'HTML'
+                                        }
                                     });
                                 }
 
