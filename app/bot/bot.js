@@ -36,6 +36,7 @@ module.exports = function (server, options) {
         constructor(bot, botan) {
             this.KB = {};
             this.KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
+            this.KB.TOP200 = yaml.safeLoad(fs.readFileSync('./kb/top200.yaml', 'utf8'));
 
             // load trainings
             let trainingsPath = __dirname + '/trainings';
@@ -317,10 +318,16 @@ module.exports = function (server, options) {
                             } else {
                                 let messages = [];
                                 let trainingModel = _.find(this.trainings, (training, key) => {
-                                    return activeTraining.type = training.TYPE;
+                                    return activeTraining.type === training.TYPE;
                                 });
 
                                 let lastQuestion = activeTraining.history.pop();
+
+                                // check if some question is already there
+                                if(!lastQuestion) {
+                                    let text = `Увы что-то пошло не так. Сделайте /cancel.`;
+                                    return [{ type: MessageTypes.MESSAGE, text: text }];
+                                }
 
                                 let result = trainingModel.validateAnswer(lastQuestion, query);
                                 lastQuestion.result = result;
@@ -501,11 +508,12 @@ module.exports = function (server, options) {
                         };
 
                         text = `Статистика:
-1. Глаголов в базе <i>${_.keys(this.KB.VERBS).length}</i>`;
+1. Глаголов в базе <i>${_.keys(this.KB.VERBS).length}</i>
+2. Топ 200: <i>${_.keys(this.KB.TOP200).length}</i>`;
 
                         // adding the lastupdate information, if available
                         if (fs.existsSync('./.lastupdate')) {
-                            text += `\n2. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
+                            text += `\n3. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
                         }
 
                         return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
