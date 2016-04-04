@@ -1,0 +1,484 @@
+das Leben:
+  translation: жизнь
+  gender: n
+lesen:
+  translation: читать
+machen:
+  translation: делать
+denken:
+  translation: думать
+reisen:
+  translation: путешествовать
+spielen:
+  translation: играть
+warten:
+  translation: ждать, дожидаться
+werden:
+  translation: становиться, делаться
+wohnen:
+  translation: жить, обитать; проживать
+das Alter:
+  translation: возраст
+  gender: n
+wollen:
+  translation: хотеть
+die Eltern:
+  translation: родители
+  gender: f
+die Familie:
+  translation: семья
+  gender: f
+die Frau:
+  translation: женщина, жена
+  gender: f
+das Kind:
+  translation: ребенок
+  gender: n
+das Jahr:
+  translation: год
+  gender: n
+der Tag:
+  translation: день
+  gender: m
+der Monat:
+  translation: месяц
+  gender: m
+ich:
+  translation: я
+die Welt:
+  translation: мир
+  gender: f
+weiter:
+  translation: дальше
+alles:
+  translation: всё
+weit:
+  translation: далеко
+bald:
+  translation: скоро
+die Seite:
+  translation: сторона; страница
+  gender: f
+durch:
+  translation: через, сквозь
+die Zahl:
+  translation: число
+  gender: f
+alt:
+  translation: старый; пожилой; древний; старинный
+die Arbeit:
+  translation: труд, работа
+  gender: f
+frei:
+  translation: свободный, независимый
+immer:
+  translation: всегда
+klein:
+  translation: маленький, малый, небольшой
+du:
+  translation: ты
+neu:
+  translation: новый; недавний
+verheiratet:
+  translation: женатый; замужняя
+verwitwet:
+  translation: овдовевший
+da:
+  translation: тут; там; здесь
+erst:
+  translation: сперва; только
+etwa:
+  translation: около, приблизительно; разве
+etwas:
+  translation: нечто; что-нибудь; немного
+hier:
+  translation: здесь, тут; вот
+jetzt:
+  translation: теперь, сейчас
+leider:
+  translation: к сожалению
+noch:
+  translation: (пока) ещё; по-прежнему; всё ещё
+kein:
+  translation: никакой
+schon:
+  translation: уже
+übrigens:
+  translation: впрочем, вообще
+aber:
+  translation: но
+aus:
+  translation: из
+das (es):
+  translation: это
+  gender: n
+dein:
+  translation: твой (твоя, твоё, твои)
+von:
+  translation: от
+was:
+  translation: что?
+wer:
+  translation: кто?
+wie:
+  translation: как?
+wieviel:
+  translation: сколько?
+ach so!:
+  translation: вот как!, значит так!, ах так!
+auf Wiedersehen!:
+  translation: до свидания!
+schön:
+  translation: красивый, прекрасный
+stehen:
+  translation: стоять
+der Abend:
+  translation: вечер
+  gender: m
+zur Zeit:
+  translation: в настоящее время
+der Mann:
+  translation: мужчина, супруг
+  gender: m
+fest:
+  translation: крепкий, прочный, твердый
+nicht:
+  translation: не, ни
+der Lehrer:
+  translation: учитель; преподаватель; наставник
+  gender: m
+und:
+  translation: и
+das Land:
+  translation: страна; край
+  gender: n
+auch:
+  translation: также, тоже; и; впрочем
+später:
+  translation: поздний; позднеe; после этого
+dort:
+  translation: там
+kaufen:
+  translation: купить; покупать
+verkaufen:
+  translation: продавать
+zusammen:
+  translation: вместе; сообща
+dann:
+  translation: тогда; потом, затем
+die Stunde:
+  translation: час
+  gender: f
+möglich:
+  translation: возможный (возможно)
+die Liebe:
+  translation: любовь
+  gender: f
+liegen:
+  translation: лежать; быть расположенным
+antworten:
+  translation: отвечать; давать ответ
+kommen:
+  translation: приходить, прибывать
+entschuldigen:
+  translation: извинять, прощать
+funktionieren:
+  translation: функционировать; действовать; работать
+kosten:
+  translation: стоить; пробовать
+sagen:
+  translation: сказать; говорить
+spülen:
+  translation: полоскать, промывать, мыть
+stimmen:
+  translation: соответствовать (истине); быть верным
+waschen:
+  translation: мыть; стирать; промывать
+wechseln:
+  translation: менять(ся); обменивать; разменивать
+die Antwort:
+  translation: ответ; отклик
+  gender: f
+das Benzin:
+  translation: бензин
+  gender: n
+das Bett:
+  translation: постель; кровать
+  gender: n
+das Bild:
+  translation: картина; рисунок
+  gender: n
+der Fehler:
+  translation: ошибка
+  gender: m
+heißen:
+  translation: называть, зваться
+das Geld:
+  translation: деньги
+  gender: n
+das Geschäft:
+  translation: дело, занятие; сделка; магазин
+  gender: n
+das Haus:
+  translation: дом, здание, строение
+  gender: n
+der Haushalt:
+  translation: домашнее хозяйство
+  gender: m
+der Herd:
+  translation: очаг, плита
+  gender: m
+die Idee:
+  translation: идея; мысль; замысел; намерение
+  gender: f
+können:
+  translation: мочь, уметь
+schnell:
+  translation: быстро
+sein:
+  translation: быть
+das Regal:
+  translation: полка; стеллаж
+  gender: n
+anders:
+  translation: по другому
+in:
+  translation: в, внутри
+haben:
+  translation: иметь
+der Stuhl:
+  translation: стул
+  gender: m
+der Tisch:
+  translation: стол
+  gender: m
+der Topf:
+  translation: горшок; кастрюля
+  gender: m
+die Uhr:
+  translation: часы
+  gender: f
+die Sonne:
+  translation: солнце
+  gender: f
+gehen:
+  translation: идти, ходить; уходить
+die Zeit:
+  translation: время
+  gender: f
+ähnlich:
+  translation: похожий; сходный; подобный
+sehen:
+  translation: смотреть, глядеть
+ehrlich:
+  translation: честный; порядочный
+kaputt:
+  translation: разбитый; сломанный; разорванный; погибший
+groß:
+  translation: большой, крупный
+lustig:
+  translation: весёлый; радостный; забавный, смешной
+originell:
+  translation: оригинальный, своеобразный; странный
+sehr:
+  translation: очень, весьма; крайне
+heute:
+  translation: сегодня
+viel:
+  translation: много; многие; многое
+oder:
+  translation: или
+sondern:
+  translation: а, но
+zu:
+  translation: к, на; в
+raus:
+  translation: наружу
+danke:
+  translation: спасибо
+bitte:
+  translation: пожалуйста
+die Lampe:
+  translation: лампа
+  gender: f
+trinken:
+  translation: пить
+essen:
+  translation: есть, кушать
+der Bleistift:
+  translation: карандаш
+  gender: m
+ordnen:
+  translation: приводить в порядок; систематизировать
+der Beruf:
+  translation: профессия; специальность
+  gender: m
+der Arzt:
+  translation: врач; доктор
+  gender: m
+der Baum:
+  translation: дерево
+  gender: m
+auf:
+  translation: на (горизонтальной пов-ти)
+gegen:
+  translation: против; около
+als:
+  translation: как, когда
+das Auto:
+  translation: автомобиль
+  gender: n
+er:
+  translation: он
+bestellen:
+  translation: заказывать
+bezahlen:
+  translation: платить; выплачивать; расплачиваться
+brauchen:
+  translation: нуждаться
+genau:
+  translation: точно, именно
+glauben:
+  translation: полагать, думать; верить
+kochen:
+  translation: варить, готовить (пищу); стряпать; кипятить
+mögen:
+  translation: любить; чувствовать расположение
+über:
+  translation: над
+üben:
+  translation: упражняться
+das Abendessen:
+  translation: ужин
+  gender: n
+die Anzeige:
+  translation: объявление; заявление, уведомление
+  gender: f
+der Apfel:
+  translation: яблоко
+  gender: m
+müssen:
+  translation: быть должным
+das Brot:
+  translation: хлеб
+  gender: n
+zwischen:
+  translation: между
+die Butter:
+  translation: масло (животное)
+  gender: f
+unter:
+  translation: под
+das Ei:
+  translation: яйцо
+  gender: n
+das Eis:
+  translation: лёд; мороженое
+  gender: n
+die Erdbeere:
+  translation: клубника, земляника
+  gender: f
+die Flasche:
+  translation: бутылка; фляжка
+  gender: f
+das Fleisch:
+  translation: мясо
+  gender: n
+die Frage:
+  translation: вопрос
+  gender: f
+selbst:
+  translation: сам
+das Frühstück:
+  translation: завтрак
+  gender: n
+die Gabel:
+  translation: вилка
+  gender: f
+die Zeitung:
+  translation: газета
+  gender: f
+das Gemüse:
+  translation: овощи, зелень
+  gender: n
+das Gericht:
+  translation: блюдо, кушанье; суд
+  gender: n
+das Gespräch:
+  translation: разговор; беседа
+  gender: n
+das Getränk:
+  translation: напиток; питьё
+  gender: n
+das Gewürz:
+  translation: пряности; приправа
+  gender: n
+das Glas:
+  translation: стекло; стакан; рюмка
+  gender: n
+das Prozent:
+  translation: процент
+  gender: n
+der Käse:
+  translation: сыр; творог
+  gender: m
+der Kuchen:
+  translation: пирог; пирожное
+  gender: m
+der Löffel:
+  translation: ложка
+  gender: m
+mehr:
+  translation: больше
+das Messer:
+  translation: нож
+  gender: n
+der Nachtisch:
+  translation: десерт
+  gender: m
+das Öl:
+  translation: масло (растительное)
+  gender: n
+der Pfeffer:
+  translation: перец
+  gender: m
+die Blume:
+  translation: цветок
+  gender: f
+der Preis:
+  translation: цена
+  gender: m
+der Reis:
+  translation: рис
+  gender: m
+der Saft:
+  translation: сок
+  gender: m
+die Sahne:
+  translation: сливки
+  gender: f
+der Schinken:
+  translation: ветчина
+  gender: m
+die Soße:
+  translation: соус, подливка
+  gender: f
+langsam:
+  translation: медленно
+das Wasser:
+  translation: вода
+  gender: n
+die Suppe:
+  translation: суп; похлёбка
+  gender: f
+die Tasse:
+  translation: чашка (чайная)
+  gender: f
+der Teller:
+  translation: тарелка
+  gender: m
+die Tomate:
+  translation: помидор
+  gender: f
+nach:
+  translation: после

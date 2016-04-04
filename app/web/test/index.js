@@ -26,6 +26,22 @@ exports.register = function (server, options, next) {
             return reply(`<pre>${JSON.stringify(request.yar._store, null, 4)}</pre>`);
         }
     });
+    
+    server.route({
+        method: 'GET',
+        path: '/test-mongoose',
+        handler: function(request, reply) {
+            let Trainings = server.getModel('Trainings');
+            
+            (new Trainings({})).save(function (err, fluffy) {
+                if (err) return console.error(err);
+
+                console.log('saved');
+            });
+            
+            return reply();
+        }
+    })
 
     next();
 };
