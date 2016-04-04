@@ -94,8 +94,9 @@ class Bot {
             verb: require('./commands/verb')(this),
             help: require('./commands/help')(this),
             about: require('./commands/about')(this),
+            thanks: require('./commands/thanks')(this),
             sources: require('./commands/sources')(this),
-            stats: require('./commands/stats')(this),
+            stats: require('./commands/stats')(this)
         }
     }
 
