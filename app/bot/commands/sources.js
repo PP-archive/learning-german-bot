@@ -4,11 +4,11 @@ const MessageTypes = require('types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class About {
+class Sources {
     constructor(bot) {
-        this.bot = bot;        
+        this.bot = bot;
     }
-    
+
     process(query, message) {
         return Promise.coroutine(function *() {
             let text, options = {
@@ -18,9 +18,7 @@ class About {
                 }
             };
 
-            text = `Бот который поможет вам в изучении немецкого.
-Пожелания отправляйте на me@pavelpolyakov.com . Используются материалы http://www.de-online.ru/ .
-Исходники бота: https://github.com/PavelPolyakov/learning-german-bot .`;
+            text = `Исходники бота: https://github.com/PavelPolyakov/learning-german-bot .`;
 
             return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
         }).bind(this)();
@@ -29,5 +27,5 @@ class About {
 
 
 module.exports = function(bot) {
-    return new About(bot);
+    return new Sources(bot);
 }

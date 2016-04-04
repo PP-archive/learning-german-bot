@@ -1,6 +1,6 @@
 'use strict';
 
-const MessageTypes = require('../message-types');
+const MessageTypes = require('types/message');
 const _ = require('lodash');
 
 class Top200 {
