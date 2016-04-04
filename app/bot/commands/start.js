@@ -15,7 +15,7 @@ class Start {
             let chat = yield Chats.findOne({ chatId: chatId });
 
             if (!chat) {
-                yield (new Chats({ chatId: chatId, status: Chats.STATES.IDLE })).save();
+                yield (new Chats({ chatId: chatId, from: message.from ,status: Chats.STATES.IDLE })).save();
             }
 
             return this.bot.commands.help.process();
