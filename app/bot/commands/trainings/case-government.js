@@ -29,7 +29,7 @@ class CaseGovernment {
                 verb = _(this.KB.VERBS).keys().sample();
                 content = this.KB.VERBS[verb];
 
-                question = `С какой приставкой употребляется глагол <code>${verb}</code> ?`;
+                question = `С каким предлогом употребляется глагол <code>${verb}</code> ?`;
                 answer = [];
                 _.forEach(content['case government'], (value, key) => {
                     answer.push(_.chain(key).trim().split(' ').last().value());
@@ -56,7 +56,7 @@ class CaseGovernment {
                 caseGovernment = content['case government'];
                 let government = _(caseGovernment).keys().sample();
 
-                question = `Какой падеж требует управление <code>${government}</code> ?`;
+                question = `Какой падеж требует <code>${government}</code> ?`;
                 answer = caseGovernment[government].case;
 
                 variants = _.shuffle(['A', 'D']);

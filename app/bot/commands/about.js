@@ -18,9 +18,9 @@ class About {
                 }
             };
 
-            text = `Бот который поможет вам в изучении немецкого.
+            text = `Бот, который поможет вам в изучении немецкого.
 Пожелания отправляйте на me@pavelpolyakov.com .
-Узнайте кому благодарен бот /thanks.
+Узнайте, кому благодарен бот /thanks.
 
 Оцените бота:
 https://telegram.me/storebot?start=LearningGermanBot`;
