@@ -12,8 +12,6 @@ class CaseGovernment {
         this.LABEL = 'Управление';
         this.DESCRIPTION = 'тренируем управление глаголов';
         this.ITERATIONS = 5;
-
-
     }
 
     getTask() {
