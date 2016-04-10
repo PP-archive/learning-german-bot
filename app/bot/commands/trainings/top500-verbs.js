@@ -3,14 +3,14 @@
 const MessageTypes = require('types/message');
 const _ = require('lodash');
 
-class Top200 {
+class Top500Verbs {
     constructor(KB) {
         this.KB = KB;
 
         this.ACTIVE = true;
-        this.TYPE = 'TOP200';
-        this.LABEL = 'ТОП 200';
-        this.DESCRIPTION = 'тренируем топ 200 немецких слов';
+        this.TYPE = 'TOP500_VERBS';
+        this.LABEL = 'ТОП 500 глаголов';
+        this.DESCRIPTION = 'тренируем топ 500 немецких глаголов';
         this.ITERATIONS = 10;
     }
 
@@ -23,11 +23,12 @@ class Top200 {
         let word, content;
         switch (flow) {
             case 'TO_RUSSIAN':
-                word = _(this.KB.TOP200).keys().sample();
-                content = this.KB.TOP200[word];
+                word = _(this.KB.TOP500_VERBS).keys().sample();
+                content = this.KB.TOP500_VERBS[word];
 
                 question = `Как на русский переводится слово <code>${word}</code> ?`;
-                answer = content.translation.split(';').map((v)=> {
+                answer = content.translation.split(',').map((v)=> {
+                    v.replace(/\(.*?\)/gi,'');
                     return v.trim();
                 });
 
@@ -35,7 +36,7 @@ class Top200 {
                 variants.push(_.head(answer));
 
                 while (variants.length < 3) {
-                    let variant = _(_.sample(this.KB.TOP200).translation.split(';')).head().trim();
+                    let variant = _(_.sample(this.KB.TOP500_VERBS).translation.split(',')).head().replace(/\(.*?\)/gi,'').trim();
 
                     if (variants.indexOf(variant) === -1) {
                         variants.push(variant);
@@ -47,8 +48,8 @@ class Top200 {
 
                 break;
             case 'TO_GERMAN':
-                word = _(this.KB.TOP200).keys().sample();
-                content = this.KB.TOP200[word];
+                word = _(this.KB.TOP500_VERBS).keys().sample();
+                content = this.KB.TOP500_VERBS[word];
 
                 question = `Как на немецкий переводится <code>${content.translation}</code> ?`;
                 answer = word;
@@ -57,7 +58,7 @@ class Top200 {
                 variants.push(answer);
 
                 while (variants.length < 3) {
-                    let variant = _(this.KB.TOP200).keys().sample();
+                    let variant = _(this.KB.TOP500_VERBS).keys().sample();
 
                     if (variants.indexOf(variant) === -1) {
                         variants.push(variant);
@@ -107,5 +108,5 @@ class Top200 {
 }
 
 module.exports = function (KB) {
-    return new Top200(KB);
+    return new Top500Verbs(KB);
 };
