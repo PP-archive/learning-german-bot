@@ -21,11 +21,12 @@ class Stats {
 
             text = `Статистика:
 1. Глаголов в базе <i>${_.keys(this.bot.KB.VERBS).length}</i>
-2. Топ 200: <i>${_.keys(this.bot.KB.TOP200).length}</i>`;
+2. Топ 200: <i>${_.keys(this.bot.KB.TOP200).length}</i>
+3. Топ 500 глаголов: <i>${_.keys(this.bot.KB.TOP500_VERBS).length}</i>`;
 
             // adding the lastupdate information, if available
             if (fs.existsSync('./.lastupdate')) {
-                text += `\n3. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
+                text += `\n4. Последнее обновление <i>${fs.readFileSync('./.lastupdate')}</i>`;
             }
 
             return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
