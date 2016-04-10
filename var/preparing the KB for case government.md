@@ -25,4 +25,4 @@ $('#appos_dictation_settings tr:not(.appos_dictation_settings_header)').each(fun
 
 console.log(result);
 ```
-3. Copy the output to the knowledge base file
+3. Copy the output to the knowledge base to the file

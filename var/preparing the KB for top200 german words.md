@@ -37,4 +37,4 @@ result += '  '.repeat(1)+'translation: после\n'
 
 console.log(result);
 ```
-3. Copy the output to the knowledge base file
+3. Copy the output to the knowledge base to the file

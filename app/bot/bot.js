@@ -28,6 +28,7 @@ class Bot {
         this.KB = {};
         this.KB.VERBS = yaml.safeLoad(fs.readFileSync('./kb/verbs.yaml', 'utf8'));
         this.KB.TOP200 = yaml.safeLoad(fs.readFileSync('./kb/top200.yaml', 'utf8'));
+        this.KB.TOP500_VERBS = yaml.safeLoad(fs.readFileSync('./kb/top500-verbs.yaml', 'utf8'));
 
         // init telegram bot
         this.bot = new TelegramBot(config.get('tokens.telegram'));
