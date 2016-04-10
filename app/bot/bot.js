@@ -4,7 +4,6 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const yaml = require('js-yaml');
 const fs = require('fs');
-const Levenshtein = require('levenshtein');
 const debug = require('debug')('bot');
 const config = require('config');
 const emoji = require('node-emoji');
