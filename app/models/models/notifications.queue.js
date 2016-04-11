@@ -6,8 +6,8 @@ const Promise = require('bluebird');
 
 module.exports = function (server, options) {
     let NotificationQueueSchema = new Schema({
-        messageId: Number,
-        chatId: String,
+        messageId: Schema.Types.ObjectId,
+        chatId: Number,
         state: String,
         createdAt: {type: Date, default: Date.now },
         sentAt: { type: Date }
@@ -15,7 +15,7 @@ module.exports = function (server, options) {
 
     NotificationQueueSchema.statics.STATES = {
         CREATED: 'CREATED',
-        FINISHED: 'SENT'
+        SENT: 'SENT'
     };
 
     NotificationQueueSchema.methods.setState = function(state) {

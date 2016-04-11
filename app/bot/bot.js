@@ -14,7 +14,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const Botan = require('botanio');
 
 // defines
-const MessageTypes = require('types/message');
+const MessageTypes = require('bot/types/message');
 
 class Bot {
     /**

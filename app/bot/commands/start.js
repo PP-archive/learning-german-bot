@@ -1,7 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
-const MessageTypes = require('types/message');
+const MessageTypes = require('bot/types/message');
 
 class Start {
     constructor(bot) {

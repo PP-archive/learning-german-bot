@@ -10,6 +10,7 @@
   "scripts": {
     "ngrok": "ngrok http -subdomain=lgb-dev 3000",
     "app": "DEBUG=* node --harmony --harmony_destructuring index.js",
+    "cli": "DEBUG=* node --harmony --harmony_destructuring cli.js",
     "test": "lab ./test/ --pattern \"^[^_]\" --verbose",
     "test-unit": "lab ./test/unit --pattern \"^[^_]\" --verbose",
     "test-integration": "lab ./test/integration --pattern \"^[^_]\" --verbose",
@@ -34,6 +35,7 @@
     "moment": "^2.12.0",
     "mongoose": "^4.4.10",
     "node-emoji": "^1.2.1",
-    "node-telegram-bot-api": "^0.21.1"
+    "node-telegram-bot-api": "^0.21.1",
+    "parsec": "^1.5.3"
   }
 }

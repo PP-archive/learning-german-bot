@@ -51,8 +51,6 @@ exports.register = function (server, options, next) {
         }
     });
 
-    //require('./models/_relations')(models);
-
     next();
 };
 

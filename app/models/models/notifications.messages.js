@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 
 module.exports = function (server, options) {
     let NotificationsMessagesSchema = new Schema({
-        messageId: Number,
+        name: String,
         text: String,
         state: String,
         createdAt: {type: Date, default: Date.now },

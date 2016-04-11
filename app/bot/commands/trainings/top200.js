@@ -1,6 +1,6 @@
 'use strict';
 
-const MessageTypes = require('types/message');
+const MessageTypes = require('bot/types/message');
 const _ = require('lodash');
 
 class Top200 {

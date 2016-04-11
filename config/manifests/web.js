@@ -19,6 +19,9 @@ module.exports = (function () {
                 plugin: './app/bot'
             },
             {
+                plugin: './app/notificator'
+            },
+            {
                 plugin: './app/web/index'
             },
             {

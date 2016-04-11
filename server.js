@@ -14,7 +14,6 @@ module.exports = (manifest) => {
          * Load all plugins declared in manifest and start web-server with specified settings.
          */
         Glue.compose(manifest, options,
-
             (err, server) => {
                 if (err) {
                     throw err;
