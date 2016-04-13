@@ -43,6 +43,7 @@ exports.register = function (server, options, next) {
 
             /*Get model name for Sequalize from file name*/
             let modelName = file.substr(0, file.lastIndexOf('.'));
+            console.log(modelName);
 
             modelSchema = require(modelsPath + '/' + file)(server, options);
 

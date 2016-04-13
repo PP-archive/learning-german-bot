@@ -14,7 +14,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const Botan = require('botanio');
 
 // defines
-const MessageTypes = require('bot/types/message');
+const MessageTypes = require('telegram/types/message');
 
 class Bot {
     /**
@@ -39,9 +39,6 @@ class Bot {
 
         // init botan
         this.botan = Botan(config.get('tokens.botan'));
-
-        // making the processUpdate method public
-        this.processUpdate = this.bot.processUpdate;
 
         // receiving each message
         this.bot.on('message', (message) => {

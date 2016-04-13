@@ -1,10 +1,10 @@
 'use strict';
 
-const MessageTypes = require('bot/types/message');
+const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-const VerbsHelper = require('helpers/verbs');
+const VerbsHelper = require('telegram/helpers/verbs');
 
 class Verb {
     constructor(bot) {

@@ -1,5 +1,5 @@
 {
-  "name": "bot",
+  "name": "telegram",
   "description": "the actual bot",
   "version": "0.0.1",
   "dependencies": "vision"

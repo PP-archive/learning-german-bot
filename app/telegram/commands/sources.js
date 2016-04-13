@@ -1,10 +1,10 @@
 'use strict';
 
-const MessageTypes = require('bot/types/message');
+const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class Thanks {
+class Sources {
     constructor(bot) {
         this.bot = bot;
     }
@@ -18,9 +18,7 @@ class Thanks {
                 }
             };
 
-            text = `Используются материалы:
-* http://www.de-online.ru/`;
-
+            text = `Исходники бота: https://github.com/PavelPolyakov/learning-german-bot .`;
 
             return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
         }).bind(this)();
@@ -29,5 +27,5 @@ class Thanks {
 
 
 module.exports = function(bot) {
-    return new Thanks(bot);
+    return new Sources(bot);
 }

@@ -24,7 +24,7 @@ exports.register = function (server, options, next) {
         method: 'POST',
         path: '/',
         handler: function (request, reply) {
-            server.bot.processUpdate(request.payload);
+            server.telegram.bot.processUpdate(request.payload);
             return reply();
         }
     });

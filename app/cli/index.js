@@ -53,7 +53,7 @@ is possible`,
                         while (notificationFiles.length > 0) {
                             let value = notificationFiles.shift();
 
-                            if (fs.lstatSync(`${notificationsPath}/${value}`).isFile() && (value.charAt(0) !== '_')) {
+                            if (fs.lstatSync(`${notificationsPath}/${value}`).isFile() && (value.charAt(0) !== '_') && (value.charAt(0) !== '.')) {
                                 let content = yaml.safeLoad(fs.readFileSync(`${notificationsPath}/${value}`, 'utf8'))
 
                                 // in this case we need to import the message to the notifications.messages

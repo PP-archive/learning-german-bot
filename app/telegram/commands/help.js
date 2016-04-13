@@ -1,6 +1,6 @@
 'use strict';
 
-const MessageTypes = require('bot/types/message');
+const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 
 class Help {

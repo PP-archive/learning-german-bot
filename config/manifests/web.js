@@ -16,7 +16,7 @@ module.exports = (function () {
                 plugin: './app/models'
             },
             {
-                plugin: './app/bot'
+                plugin: './app/telegram'
             },
             {
                 plugin: './app/notificator'

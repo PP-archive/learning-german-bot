@@ -1,7 +1,7 @@
 'use strict';
 
-const MessageTypes = require('bot/types/message');
-const VerbsHelper = require('helpers/verbs');
+const MessageTypes = require('telegram/types/message');
+const VerbsHelper = require('telegram/helpers/verbs');
 const _ = require('lodash');
 
 class Idle {
