@@ -118,10 +118,6 @@ class Training {
 
                         messages = _.union(messages, task.messages);
 
-                        console.log('---');
-                        console.log(messages);
-                        console.log('---');
-
                         training.history.push({
                             question: task.question,
                             variants: task.variants,
@@ -189,10 +185,6 @@ class Training {
                         yield activeTraining.save();
 
                         messages = _.union(messages, task.messages);
-
-                        console.log('---');
-                        console.log(messages);
-                        console.log('---');
                     } else {
                         let correctResults = _.reduce(activeTraining.history, function (sum, object) {
                             return sum + (object.result ? 1 : 0);

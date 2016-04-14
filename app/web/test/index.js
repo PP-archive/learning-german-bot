@@ -36,7 +36,7 @@ exports.register = function (server, options, next) {
             (new Trainings({})).save(function (err, fluffy) {
                 if (err) return console.error(err);
 
-                console.log('saved');
+                debug('saved');
             });
             
             return reply();

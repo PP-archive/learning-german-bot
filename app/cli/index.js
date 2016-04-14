@@ -31,9 +31,9 @@ module.exports = (server) => {
                         // default notification template
                         let template = {
                             name: _.snakeCase(args.name),
-                            text: `Please, fill the message
-multiline 
-is possible`,
+                            text: `Multi
+line
+:fire:`,
                             imported: false
                         };
 
@@ -58,7 +58,7 @@ is possible`,
 
                                 // in this case we need to import the message to the notifications.messages
                                 if (!content.imported) {
-                                    let NotificationsMessages = this.server.getModel('Notifications.messages');
+                                    let NotificationsMessages = this.server.getModel('NotificationsMessages');
 
                                     yield (new NotificationsMessages({
                                         name: content.name,
@@ -69,7 +69,7 @@ is possible`,
                                     content.imported = true;
                                     content.importedAt = moment().format();
 
-                                    fs.writeFileSync(`${notificationsPath}/${value}`, yaml.safeDump(content));
+                                    fs.writeFileSync(`${notificationsPath}/${value}`, yaml.safeDump(content).replace(/(\n){3,}/g, "\n\n\n"));
 
                                     debug(`Notification "${content.name}" was imported.`);
                                 }

@@ -4,6 +4,7 @@ const fs = require('fs');
 const config = require('config');
 const mongoose = require('mongoose');
 const debug = require('debug')('models-loader');
+const _ = require('lodash');
 
 // redefining the promise library
 mongoose.Promise = require('bluebird');
@@ -42,13 +43,13 @@ exports.register = function (server, options, next) {
             let modelSchema;
 
             /*Get model name for Sequalize from file name*/
-            let modelName = file.substr(0, file.lastIndexOf('.'));
-            console.log(modelName);
+            let table = file.substr(0, file.lastIndexOf('.'));
+            let modelName = _.camelCase(table);
+            modelName = modelName.charAt(0).toUpperCase() + modelName.slice(1);
 
             modelSchema = require(modelsPath + '/' + file)(server, options);
 
-            models[modelName.charAt(0).toUpperCase() + modelName.slice(1)] =
-                mongoose.model(modelName, modelSchema);
+            models[modelName] = mongoose.model(table, modelSchema);
         }
     });
 

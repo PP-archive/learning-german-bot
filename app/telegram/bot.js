@@ -54,7 +54,6 @@ class Bot {
                 _.forEach(messages, (reply) => {
                     switch (reply.type) {
                         case MessageTypes.MESSAGE:
-                            console.log(`[${reply.text}]`);
                             promises.push({
                                 method: this.bot.sendMessage,
                                 context: this.bot,

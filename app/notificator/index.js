@@ -15,8 +15,8 @@ const CronJob = require('cron').CronJob;
  */
 exports.register = function (server, options, next) {
     let Chats = server.getModel('Chats');
-    let NotificationsMessages = server.getModel('Notifications.messages');
-    let NotificationsQueue = server.getModel('Notifications.queue');
+    let NotificationsMessages = server.getModel('NotificationsMessages');
+    let NotificationsQueue = server.getModel('NotificationsQueue');
 
 
     let jobs = {
@@ -77,7 +77,7 @@ exports.register = function (server, options, next) {
                         message.state = NotificationsMessages.STATES.IN_PROGRESS;
                         yield message.save();
 
-                        debug(`Done spreading the message "${message.name}`);
+                        debug(`Done spreading the message "${message.name}"`);
                         break;
                     case NotificationsMessages.STATES.IN_PROGRESS:
                         let nCreated = yield NotificationsQueue.count({
@@ -125,11 +125,13 @@ exports.register = function (server, options, next) {
 
                 let queue = yield NotificationsQueue.find({ state: NotificationsMessages.STATES.CREATED }).limit(5).populate('_message');
 
-                while(queue.length) {
+                while (queue.length) {
                     let record = queue.shift();
-                    
+
                     try {
-                        yield server.bot.bot.sendMessage(record.chatId, emoji.emojify(record._message.text));
+                        yield server.telegram.bot.sendMessage(record.chatId,
+                            emoji.emojify(record._message.text),
+                            { parse_mode: 'HTML' });
 
                         debug(`Message was sent successfully to the chatId ${record.chatId}`);
 
@@ -139,7 +141,7 @@ exports.register = function (server, options, next) {
                         debug(`Exception during message sending`, e);
                         record.exceptions.push(e);
 
-                        if(record.exceptions.length >= 5) {
+                        if (record.exceptions.length >= 5) {
                             record.state = NotificationsQueue.STATES.EXCEPTION;
                         }
                     }
