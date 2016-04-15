@@ -71,7 +71,7 @@ exports.register = function (server, options, next) {
 
                             yield NotificationsQueue.collection.insert(objects);
 
-                            debug(`Inserted #${objects.lenght} objects`);
+                            debug(`Inserted #${objects.length} objects`);
                         }
 
                         message.state = NotificationsMessages.STATES.IN_PROGRESS;

@@ -43,13 +43,13 @@ exports.register = function (server, options, next) {
             let modelSchema;
 
             /*Get model name for Sequalize from file name*/
-            let table = file.substr(0, file.lastIndexOf('.'));
-            let modelName = _.camelCase(table);
+            let collection = file.substr(0, file.lastIndexOf('.'));
+            let modelName = _.camelCase(collection);
             modelName = modelName.charAt(0).toUpperCase() + modelName.slice(1);
 
             modelSchema = require(modelsPath + '/' + file)(server, options);
 
-            models[modelName] = mongoose.model(table, modelSchema);
+            models[modelName] = mongoose.model(collection, modelSchema);
         }
     });
 

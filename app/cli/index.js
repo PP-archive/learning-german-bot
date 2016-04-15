@@ -44,6 +44,9 @@ line
                     }).bind(this)();
                 },
                 import(args) {
+                    let NotificationsImported = this.server.getModel('NotificationsImported');
+                    let NotificationsMessages = this.server.getModel('NotificationsMessages');
+
                     return Promise.coroutine(function *() {
                         let notificationsPath = `${process.cwd()}/var/notifications`;
 
@@ -54,11 +57,13 @@ line
                             let value = notificationFiles.shift();
 
                             if (fs.lstatSync(`${notificationsPath}/${value}`).isFile() && (value.charAt(0) !== '_') && (value.charAt(0) !== '.')) {
-                                let content = yaml.safeLoad(fs.readFileSync(`${notificationsPath}/${value}`, 'utf8'))
-
+                                let imported = yield NotificationsImported.count({file: value});
                                 // in this case we need to import the message to the notifications.messages
-                                if (!content.imported) {
-                                    let NotificationsMessages = this.server.getModel('NotificationsMessages');
+                                if (imported === 0) {
+                                    // saving to the database, that this notification was imported
+                                    yield (new NotificationsImported({file: value})).save();
+
+                                    let content = yaml.safeLoad(fs.readFileSync(`${notificationsPath}/${value}`, 'utf8'))
 
                                     yield (new NotificationsMessages({
                                         name: content.name,
@@ -66,10 +71,7 @@ line
                                         state: NotificationsMessages.STATES.CREATED
                                     })).save();
 
-                                    content.imported = true;
-                                    content.importedAt = moment().format();
-
-                                    fs.writeFileSync(`${notificationsPath}/${value}`, yaml.safeDump(content).replace(/(\n){3,}/g, "\n\n\n"));
+                                    //fs.writeFileSync(`${notificationsPath}/${value}`, yaml.safeDump(content).replace(/(\n){3,}/g, "\n\n\n"));
 
                                     debug(`Notification "${content.name}" was imported.`);
                                 }
