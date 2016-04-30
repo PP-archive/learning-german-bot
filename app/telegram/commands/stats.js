@@ -6,8 +6,8 @@ const _ = require('lodash');
 const fs = require('fs');
 
 class Stats {
-    constructor(bot) {
-        this.bot = bot;
+    constructor(server) {
+        this.server = server;
     }
 
     process(query, message) {
@@ -20,9 +20,9 @@ class Stats {
             };
 
             text = `Статистика:
-1. Глаголов в базе <i>${_.keys(this.bot.KB.VERBS).length}</i>
-2. Топ 200: <i>${_.keys(this.bot.KB.TOP200).length}</i>
-3. Топ 500 глаголов: <i>${_.keys(this.bot.KB.TOP500_VERBS).length}</i>`;
+1. Глаголов в базе <i>${_.keys(this.server.KB.VERBS).length}</i>
+2. Топ 200: <i>${_.keys(this.server.KB.TOP200).length}</i>
+3. Топ 500 глаголов: <i>${_.keys(this.server.KB.TOP500_VERBS).length}</i>`;
 
             // adding the lastupdate information, if available
             if (fs.existsSync('./.lastupdate')) {
@@ -34,6 +34,6 @@ class Stats {
     }
 }
 
-module.exports = function(bot) {
-    return new Stats(bot);
+module.exports = function(server, bot) {
+    return new Stats(server, bot);
 }

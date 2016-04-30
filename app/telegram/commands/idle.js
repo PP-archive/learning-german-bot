@@ -5,10 +5,13 @@ const VerbsHelper = require('telegram/helpers/verbs');
 const _ = require('lodash');
 
 class Idle {
-    constructor(bot) {
+    constructor(server, bot) {
+        this.server = server;
         this.bot = bot;
 
-        this.verbsHelper = new VerbsHelper(this.bot.KB.VERBS);
+        let VerbsHelper = this.server.plugins.helpers.VerbsHelper;
+
+        this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
 
     }
     
@@ -29,6 +32,6 @@ class Idle {
     }
 }
 
-module.exports = function(bot) {
-    return new Idle(bot);
+module.exports = function(server, bot) {
+    return new Idle(server, bot);
 }

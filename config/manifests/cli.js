@@ -13,10 +13,10 @@ module.exports = (function () {
         ],
         registrations: [
             {
-                plugin: './app/models'
+                plugin: 'models'
             },
             {
-                plugin: './app/telegram'
+                plugin: 'telegram'
             }
         ]
     };

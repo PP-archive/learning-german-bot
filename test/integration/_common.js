@@ -1,1 +1,1 @@
-require('local-modules')('plugins/core', 'plugins/application');
+require('local-modules')('app');

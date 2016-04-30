@@ -5,8 +5,8 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 
 class Sources {
-    constructor(bot) {
-        this.bot = bot;
+    constructor(server) {
+        this.server = server;
     }
 
     process(query, message) {
@@ -18,7 +18,7 @@ class Sources {
                 }
             };
 
-            text = `Исходники бота: https://github.com/PavelPolyakov/learning-german-bot .`;
+            text = `Исходники бота: https://github.com/PavelPolyakov/learning-german-server .`;
 
             return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
         }).bind(this)();
@@ -26,6 +26,6 @@ class Sources {
 }
 
 
-module.exports = function(bot) {
-    return new Sources(bot);
+module.exports = function(server, bot) {
+    return new Sources(server, bot);
 }

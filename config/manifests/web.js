@@ -13,19 +13,28 @@ module.exports = (function () {
         ],
         registrations: [
             {
-                plugin: './app/models'
+                plugin: 'models'
             },
             {
-                plugin: './app/telegram'
+                plugin: 'KB'
             },
             {
-                plugin: './app/notificator'
+                plugin: 'helpers'
             },
             {
-                plugin: './app/web/index'
+                plugin: 'trainings'
             },
             {
-                plugin: './app/web/test'
+                plugin: 'telegram'
+            },
+            {
+                plugin: 'notificator'
+            },
+            {
+                plugin: 'web/index'
+            },
+            {
+                plugin: 'web/test'
             }
         ]
     };

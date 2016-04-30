@@ -5,8 +5,8 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 
 class About {
-    constructor(bot) {
-        this.bot = bot;        
+    constructor(server) {
+        this.server = server;        
     }
     
     process(query, message) {
@@ -32,6 +32,6 @@ https://telegram.me/storebot?start=LearningGermanBot`;
 }
 
 
-module.exports = function(bot) {
-    return new About(bot);
+module.exports = function(server, bot) {
+    return new About(server, bot);
 }

@@ -5,8 +5,8 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 
 class Thanks {
-    constructor(bot) {
-        this.bot = bot;
+    constructor(server) {
+        this.server = server;
     }
 
     process(query, message) {
@@ -28,6 +28,6 @@ class Thanks {
 }
 
 
-module.exports = function(bot) {
-    return new Thanks(bot);
+module.exports = function(server, bot) {
+    return new Thanks(server, bot);
 }

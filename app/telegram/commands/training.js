@@ -7,31 +7,14 @@ const emoji = require('node-emoji');
 const fs = require('fs');
 
 class Training {
-    constructor(bot) {
-        this.bot = bot;
-
-        // load trainings
-        let trainingsPath = __dirname + '/trainings';
-        this.trainings = {};
-        fs.readdirSync(trainingsPath).forEach((value) => {
-            if (fs.lstatSync(trainingsPath + '/' + value).isFile() && (value.charAt(0) !== '_')) {
-
-                let file = value;
-
-                /*Get model name for Sequalize from file name*/
-                let training = require('./trainings/' + file)(this.bot.KB);
-
-                if (training.ACTIVE) {
-                    this.trainings[training.TYPE] = training;
-                }
-            }
-        });
+    constructor(server) {
+        this.server = server;
     }
 
     process(query, message) {
         return Promise.coroutine(function *() {
             if (!query) {
-                let Chats = this.bot.server.getModel('Chats');
+                let Chats = this.server.getModel('Chats');
                 let chat = yield Chats.findOne({ chatId: message.chat.id });
 
                 let text, options;
@@ -42,7 +25,7 @@ class Training {
                     return [{ type: MessageTypes.MESSAGE, text: text }];
                 }
 
-                let Trainings = this.bot.server.getModel('Trainings');
+                let Trainings = this.server.getModel('Trainings');
                 let activeTraining = yield Trainings.getActiveByChatId(message.chat.id);
                 if (activeTraining) {
                     return [{
@@ -57,7 +40,7 @@ class Training {
                 text = `Выберите тип тренировки:\n`;
 
                 let i = 1;
-                _.forEach(this.trainings, (training) => {
+                _.forEach(this.server.plugins.trainings.engine.trainings, (training) => {
                     text += `${i}. <code>${training.LABEL}</code> - ${training.DESCRIPTION}\n`;
                     i++;
                 });
@@ -69,7 +52,7 @@ class Training {
                     reply_markup: {
                         keyboard: (() => {
                             let keyboard = [];
-                            _.forEach(this.trainings, (training) => {
+                            _.forEach(this.server.plugins.trainings.engine.trainings, (training) => {
                                 keyboard.push([training.LABEL]);
                             });
 
@@ -82,12 +65,12 @@ class Training {
 
                 return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
             } else {
-                let Trainings = this.bot.server.getModel('Trainings');
+                let Trainings = this.server.getModel('Trainings');
                 let activeTraining = yield Trainings.getActiveByChatId(message.chat.id);
 
                 // probably this should be an attempt to choose the training
                 if (!activeTraining) {
-                    let trainingModel = _.find(this.trainings, (training, key) => {
+                    let trainingModel = _.find(this.server.plugins.trainings.engine.trainings, (training, key) => {
                         return query === training.LABEL;
                     });
 
@@ -134,7 +117,7 @@ class Training {
                     }
                 } else {
                     let messages = [];
-                    let trainingModel = _.find(this.trainings, (training, key) => {
+                    let trainingModel = _.find(this.server.plugins.trainings.engine.trainings, (training, key) => {
                         return activeTraining.type === training.TYPE;
                     });
 
@@ -203,7 +186,7 @@ class Training {
                             }
                         });
 
-                        let Chats = this.bot.server.getModel('Chats');
+                        let Chats = this.server.getModel('Chats');
                         let chat = yield Chats.findOne({ chatId: message.chat.id });
 
                         activeTraining.status = Trainings.STATUSES.FINISHED;
@@ -221,6 +204,6 @@ class Training {
     }
 }
 
-module.exports = function(bot) {
-    return new Training(bot);
+module.exports = function(server, bot) {
+    return new Training(server, bot);
 }

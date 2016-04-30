@@ -4,8 +4,8 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 
 class Help {
-    constructor(bot) {
-        this.bot = bot;
+    constructor(server) {
+        this.server = server;
     }
 
     process(query, message) {
@@ -33,6 +33,6 @@ class Help {
     }
 }
 
-module.exports = function(bot) {
-    return new Help(bot);
+module.exports = function(server, bot) {
+    return new Help(server, bot);
 }

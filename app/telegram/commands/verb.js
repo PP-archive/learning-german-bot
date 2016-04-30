@@ -7,10 +7,10 @@ const _ = require('lodash');
 const VerbsHelper = require('telegram/helpers/verbs');
 
 class Verb {
-    constructor(bot) {
-        this.bot = bot;
-        
-        this.verbsHelper = new VerbsHelper(this.bot.KB.VERBS);
+    constructor(server) {
+        this.server = server;
+        let VerbsHelper = this.server.plugins.helpers.VerbsHelper;
+        this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
     }
 
     process(query, message) {
@@ -24,8 +24,8 @@ class Verb {
                 }
             };
 
-            if (_.has(this.bot.KB.VERBS, query)) {
-                let verb = this.bot.KB.VERBS[query];
+            if (_.has(this.server.KB.VERBS, query)) {
+                let verb = this.server.KB.VERBS[query];
                 text += `Глагол <code>${query}</code>.\n\n`;
 
                 if (_.has(verb, 'case government')) {
@@ -73,6 +73,6 @@ class Verb {
 }
 
 
-module.exports = function(bot) {
-    return new Verb(bot);
+module.exports = function(server, bot) {
+    return new Verb(server, bot);
 }

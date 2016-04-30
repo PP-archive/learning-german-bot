@@ -83,16 +83,16 @@ class Bot {
      */
     get commands() {
         return {
-            start: require('./commands/start')(this),
-            idle: require('./commands/idle')(this),
-            cancel: require('./commands/cancel')(this),
-            training: require('./commands/training')(this),
-            verb: require('./commands/verb')(this),
-            help: require('./commands/help')(this),
-            about: require('./commands/about')(this),
-            thanks: require('./commands/thanks')(this),
-            sources: require('./commands/sources')(this),
-            stats: require('./commands/stats')(this)
+            start: require('./commands/start')(this.server, this),
+            idle: require('./commands/idle')(this.server, this),
+            cancel: require('./commands/cancel')(this.server, this),
+            training: require('./commands/training')(this.server, this),
+            verb: require('./commands/verb')(this.server, this),
+            help: require('./commands/help')(this.server, this),
+            about: require('./commands/about')(this.server, this),
+            thanks: require('./commands/thanks')(this.server, this),
+            sources: require('./commands/sources')(this.server, this),
+            stats: require('./commands/stats')(this.server, this)
         }
     }
 
