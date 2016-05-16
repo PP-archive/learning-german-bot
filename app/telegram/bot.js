@@ -61,7 +61,7 @@ class Bot {
                             });
                             break;
                         default:
-                            debug('Undefined')
+                            debug('Undefined');
                             break;
                     }
                 });
@@ -103,6 +103,8 @@ class Bot {
      */
     process(message) {
         return Promise.coroutine(function *() {
+            const Chats = this.server.getModel('Chats');
+
             // In case incomming message is text one
             if (message.text) {
                 let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
@@ -124,7 +126,6 @@ class Bot {
                 let query = message.text;
 
                 // check if chat is in some special state
-                let Chats = this.server.getModel('Chats');
                 let chat = yield Chats.findOne({ chatId: message.chat.id });
 
                 if (chat && chat.state !== Chats.STATES.IDLE) {

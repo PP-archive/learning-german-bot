@@ -1,7 +1,6 @@
 'use strict';
 
 const MessageTypes = require('telegram/types/message');
-const VerbsHelper = require('telegram/helpers/verbs');
 const _ = require('lodash');
 
 class Idle {
@@ -12,7 +11,6 @@ class Idle {
         let VerbsHelper = this.server.plugins.helpers.VerbsHelper;
 
         this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
-
     }
     
     process(query, message) {

@@ -10,8 +10,8 @@ class Start {
     
     process(query, message) {
         return Promise.coroutine(function *() {
+            const Chats = this.server.server.getModel('Chats');
             let chatId = message.chat.id;
-            let Chats = this.server.server.getModel('Chats');
             let chat = yield Chats.findOne({ chatId: chatId });
 
             if (!chat) {

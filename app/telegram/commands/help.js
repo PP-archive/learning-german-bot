@@ -9,7 +9,6 @@ class Help {
     }
 
     process(query, message) {
-
         return Promise.coroutine(function *() {
             let text, options = {
                 parse_mode: 'HTML',

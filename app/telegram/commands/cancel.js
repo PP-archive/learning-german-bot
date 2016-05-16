@@ -11,12 +11,13 @@ class Cancel {
 
     process(query, message) {
         return Promise.coroutine(function *() {
-            let Chats = this.server.getModel('Chats');
+            const Trainings = this.server.getModel('Trainings');
+            const Chats = this.server.getModel('Chats');
+            
             let chat = yield Chats.findOne({ chatId: message.chat.id });
             chat.state = Chats.STATES.IDLE;
             yield chat.save();
 
-            let Trainings = this.server.getModel('Trainings');
             yield Trainings.update({ chatId: message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
                 status: Trainings.STATUSES.CLOSED,
                 finishedAt: new Date()

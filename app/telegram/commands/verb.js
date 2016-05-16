@@ -4,8 +4,6 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-const VerbsHelper = require('telegram/helpers/verbs');
-
 class Verb {
     constructor(server) {
         this.server = server;
