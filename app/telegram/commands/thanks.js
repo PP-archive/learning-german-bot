@@ -4,9 +4,11 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class Thanks {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Thanks extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
 
     process(query, message) {
@@ -28,6 +30,4 @@ class Thanks {
 }
 
 
-module.exports = function(server, bot) {
-    return new Thanks(server, bot);
-}
+module.exports = Thanks;

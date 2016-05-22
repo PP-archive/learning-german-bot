@@ -9,6 +9,7 @@ module.exports = function (server, options) {
         chatId: Number,
         from: Schema.Types.Mixed,
         state: String,
+        locale: String,
         startedAt: { type: Date, default: Date.now },
         finishedAt: { type: Date }
     });

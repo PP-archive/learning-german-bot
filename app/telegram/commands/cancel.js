@@ -4,9 +4,11 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class Cancel {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Cancel extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
 
     process(query, message) {
@@ -36,6 +38,4 @@ class Cancel {
     }
 }
 
-module.exports = function(server, bot) {
-    return new Cancel(server, bot);
-}
+module.exports = Cancel;

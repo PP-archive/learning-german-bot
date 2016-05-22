@@ -6,14 +6,11 @@ const _ = require('lodash');
 const emoji = require('node-emoji');
 const fs = require('fs');
 
-class Training {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
 
-        this.models = {
-            Chats: this.server.getModel('Chats'),
-            Trainings: this.server.getModel('Trainings')
-        }
+class Training extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
 
         this.chat = undefined;
         // stands for training model
@@ -236,6 +233,4 @@ class Training {
     }
 }
 
-module.exports = function (server, bot) {
-    return new Training(server, bot);
-}
+module.exports = Training;

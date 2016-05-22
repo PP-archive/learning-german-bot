@@ -83,16 +83,16 @@ class Bot {
      */
     get commands() {
         return {
-            start: require('./commands/start')(this.server, this),
-            idle: require('./commands/idle')(this.server, this),
-            cancel: require('./commands/cancel')(this.server, this),
-            training: require('./commands/training')(this.server, this),
-            verb: require('./commands/verb')(this.server, this),
-            help: require('./commands/help')(this.server, this),
-            about: require('./commands/about')(this.server, this),
-            thanks: require('./commands/thanks')(this.server, this),
-            sources: require('./commands/sources')(this.server, this),
-            stats: require('./commands/stats')(this.server, this)
+            start: require('./commands/start'),
+            idle: require('./commands/idle'),
+            cancel: require('./commands/cancel'),
+            training: require('./commands/training'),
+            verb: require('./commands/verb'),
+            help: require('./commands/help'),
+            about: require('./commands/about'),
+            thanks: require('./commands/thanks'),
+            sources: require('./commands/sources'),
+            stats: require('./commands/stats')
         }
     }
 
@@ -107,6 +107,8 @@ class Bot {
 
             // In case incomming message is text one
             if (message.text) {
+                let toCall = { command: undefined, query: undefined, class: undefined };
+
                 let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
 
                 // In case the message looks something like command
@@ -116,27 +118,41 @@ class Bot {
                     // Trying to process the message, if such command is already defined
                     debug('looking for ', `commands.${command}.process`);
                     debug(this.commands[command])
-                    if (_.has(this, `commands.${command}`) && this.commands[command].process) {
-                        debug(`calling the command ${command}.process`);
-                        return _.get(this, `commands.${command}`).process(query, message);
+                    if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
+                        toCall.query = query;
+                        toCall.command = command;
                     }
                 }
 
                 // If this was not a command, then we need to process it like regular query
                 let query = message.text;
 
-                // check if chat is in some special state
-                let chat = yield Chats.findOne({ chatId: message.chat.id });
+                if (!toCall.command) {
+                    // check if chat is in some special state
+                    let chat = yield Chats.findOne({ chatId: message.chat.id });
 
-                if (chat && chat.state !== Chats.STATES.IDLE) {
-                    let command = _.lowerCase(chat.state);
-                    if (_.has(this, `commands.${command}`) && this.commands[command].process) {
-                        debug(`calling the command ${command}.process`);
-                        return _.get(this, `commands.${command}`).process(query, message);
+                    if (chat && chat.state !== Chats.STATES.IDLE) {
+                        let command = _.lowerCase(chat.state);
+                        if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
+                            toCall.query = query;
+                            toCall.command = command;
+                        }
                     }
                 }
-                
-                return this.commands.idle.process(query, message);
+
+                // in case command was not yet defined - call idle command
+                if (!toCall.command) {
+                    toCall.query = query;
+                    toCall.command = 'idle';
+                }
+
+                debug(`calling the command ${toCall.command}.process`);
+                // creating an instance of the particular command
+                toCall.class = _.get(this, `commands.${toCall.command}`);
+                let instance = new toCall.class(this.server, this);
+                yield instance._prepare(toCall.query, message);
+
+                return yield instance.process(toCall.query, message);
             }
         }).bind(this)();
     }

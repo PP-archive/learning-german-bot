@@ -4,9 +4,12 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class Verb {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Verb extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
+
         let VerbsHelper = this.server.plugins.helpers.VerbsHelper;
         this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
     }
@@ -70,7 +73,4 @@ class Verb {
     }
 }
 
-
-module.exports = function(server, bot) {
-    return new Verb(server, bot);
-}
+module.exports = Verb;

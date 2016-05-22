@@ -13,6 +13,9 @@ module.exports = (function () {
         ],
         registrations: [
             {
+                plugin: process.cwd() + '/app/i18n'
+            },
+            {
                 plugin: 'models'
             },
             {

@@ -4,11 +4,13 @@ const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-class About {
-    constructor(server) {
-        this.server = server;        
+const Abstract = require('./abstract');
+
+class About extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
-    
+
     process(query, message) {
         return Promise.coroutine(function *() {
             let text, options = {
@@ -31,7 +33,4 @@ https://telegram.me/storebot?start=LearningGermanBot`;
     }
 }
 
-
-module.exports = function(server, bot) {
-    return new About(server, bot);
-}
+module.exports = About;

@@ -3,11 +3,13 @@
 const Promise = require('bluebird');
 const MessageTypes = require('telegram/types/message');
 
-class Start {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Start extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
-    
+
     process(query, message) {
         return Promise.coroutine(function *() {
             const Chats = this.server.server.getModel('Chats');
@@ -15,14 +17,17 @@ class Start {
             let chat = yield Chats.findOne({ chatId: chatId });
 
             if (!chat) {
-                yield (new Chats({ chatId: chatId, from: message.from ,status: Chats.STATES.IDLE })).save();
+                yield (new Chats({
+                    chatId: chatId,
+                    from: message.from,
+                    status: Chats.STATES.IDLE,
+                    locale: 'en-US'
+                })).save();
             }
 
-            return this.server.commands.help.process();
+            return this.bot.commands.help.process();
         }).bind(this)();
     }
 }
 
-module.exports = function(server, bot) {
-    return new Start(server, bot);
-}
+module.exports = Start;

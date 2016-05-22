@@ -3,9 +3,11 @@
 const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 
-class Help {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Help extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
 
     process(query, message) {
@@ -27,11 +29,10 @@ class Help {
 7. /stats - статистика бота
 8. /sources - исходный код бота`;
 
-            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            return [{ type: MessageTypes.MESSAGE, text: this.i18n.__('Hello'), options: options },
+                { type: MessageTypes.MESSAGE, text: text, options: options }];
         }).bind(this)();
     }
 }
 
-module.exports = function(server, bot) {
-    return new Help(server, bot);
-}
+module.exports = Help;

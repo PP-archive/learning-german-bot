@@ -1,35 +1,36 @@
 'use strict';
 
 const MessageTypes = require('telegram/types/message');
+const Promise = require('bluebird');
 const _ = require('lodash');
 
-class Idle {
+const Abstract = require('./abstract');
+class Idle extends Abstract {
     constructor(server, bot) {
-        this.server = server;
-        this.bot = bot;
+        super(server, bot);
 
         let VerbsHelper = this.server.plugins.helpers.VerbsHelper;
 
         this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
     }
-    
+
     process(query, message) {
-        let text = 'Ничего не найдено', options = {
-            parse_mode: 'HTML',
-            reply_markup: {
-                hide_keyboard: true
+        return Promise.coroutine(function *() {
+            let text = 'Ничего не найдено', options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
+
+            // Test if query looks like the verb
+            if (this.verbsHelper.testForVerb(query)) {
+                return _.get(this.bot, 'commands.verb').process(query, message);
             }
-        };
 
-        // Test if query looks like the verb
-        if (this.verbsHelper.testForVerb(query)) {
-            return _.get(this.bot, 'commands.verb').process(query, message);
-        }
-
-        return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 
-module.exports = function(server, bot) {
-    return new Idle(server, bot);
-}
+module.exports = Idle;

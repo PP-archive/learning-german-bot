@@ -5,9 +5,11 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const fs = require('fs');
 
-class Stats {
-    constructor(server) {
-        this.server = server;
+const Abstract = require('./abstract');
+
+class Stats extends Abstract {
+    constructor(server, bot) {
+        super(server, bot);
     }
 
     process(query, message) {
@@ -34,6 +36,4 @@ class Stats {
     }
 }
 
-module.exports = function(server, bot) {
-    return new Stats(server, bot);
-}
+module.exports = Stats;
