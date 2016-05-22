@@ -5,7 +5,7 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const fs = require('fs');
 
-const Abstract = require('./abstract');
+const Abstract = require('./_abstract');
 
 class Stats extends Abstract {
     constructor(server, bot) {

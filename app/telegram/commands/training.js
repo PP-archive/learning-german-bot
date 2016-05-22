@@ -6,7 +6,7 @@ const _ = require('lodash');
 const emoji = require('node-emoji');
 const fs = require('fs');
 
-const Abstract = require('./abstract');
+const Abstract = require('./_abstract');
 
 class Training extends Abstract {
     constructor(server, bot) {

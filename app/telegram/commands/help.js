@@ -3,7 +3,7 @@
 const MessageTypes = require('telegram/types/message');
 const Promise = require('bluebird');
 
-const Abstract = require('./abstract');
+const Abstract = require('./_abstract');
 
 class Help extends Abstract {
     constructor(server, bot) {
