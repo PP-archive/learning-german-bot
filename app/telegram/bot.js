@@ -102,12 +102,37 @@ class Bot {
      * @returns []
      */
     process(message) {
+
         return Promise.coroutine(function *() {
             const Chats = this.server.getModel('Chats');
 
-            // In case incomming message is text one
+            let chat = yield Chats.findOne({ chatId: message.chat.id });
+
+            if (!chat) {
+                return [{
+                    type: MessageTypes.MESSAGE, text: 'Please, first send the /start command', options: {
+                        parse_mode: 'HTML',
+                        reply_markup: {
+                            hide_keyboard: true
+                        }
+                    }
+                }];
+            }
+
+            // In case incoming message is text one
             if (message.text) {
-                let toCall = { command: undefined, query: undefined, class: undefined };
+                // what to call ?
+                let call = {
+                    what: {
+                        command: undefined,
+                        class: undefined
+                    },
+                    data: {
+                        chat: chat,
+                        query: undefined,
+                        message: message
+                    }
+                };
 
                 let matches = message.text.match(/\/(.*?)(\s|$)(.*)/);
 
@@ -116,43 +141,38 @@ class Bot {
                     let [,command,,query] = matches;
 
                     // Trying to process the message, if such command is already defined
-                    debug('looking for ', `commands.${command}.process`);
-                    debug(this.commands[command])
+                    debug('looking for %s', `commands.${command}.process`);
                     if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
-                        toCall.query = query;
-                        toCall.command = command;
+                        call.data.query = query;
+                        call.what.command = command;
                     }
                 }
 
                 // If this was not a command, then we need to process it like regular query
-                let query = message.text;
+                // setting the query
+                call.data.query ? null : call.data.query = message.text;
 
-                if (!toCall.command) {
+                if (!call.what.command) {
                     // check if chat is in some special state
-                    let chat = yield Chats.findOne({ chatId: message.chat.id });
-
                     if (chat && chat.state !== Chats.STATES.IDLE) {
                         let command = _.lowerCase(chat.state);
                         if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
-                            toCall.query = query;
-                            toCall.command = command;
+                            call.what.command = command;
                         }
                     }
                 }
 
                 // in case command was not yet defined - call idle command
-                if (!toCall.command) {
-                    toCall.query = query;
-                    toCall.command = 'idle';
+                if (!call.what.command) {
+                    call.what.command = 'idle';
                 }
 
-                debug(`calling the command ${toCall.command}.process`);
+                debug(`calling the command ${call.what.command}.process`);
                 // creating an instance of the particular command
-                toCall.class = _.get(this, `commands.${toCall.command}`);
-                let instance = new toCall.class(this.server, this);
-                yield instance._prepare(toCall.query, message);
+                call.what.class = _.get(this, `commands.${call.what.command}`);
+                let instance = new call.what.class(this.server, this);
 
-                return yield instance.process(toCall.query, message);
+                return yield instance.process(call.data);
             }
         }).bind(this)();
     }

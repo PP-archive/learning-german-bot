@@ -19,7 +19,22 @@ module.exports = function (server, options) {
         TRAINING: 'TRAINING'
     };
 
-    ChatsSchema.methods.setState = function(state) {
+    ChatsSchema.post('init', function(doc, next) {
+        return Promise.coroutine(function *() {
+            if(!doc) {
+                return next();
+            }
+            // defining the locale
+            // trick i18n with the empty headers
+            this.i18n = {};
+            server.i18n.init({ headers: {} }, this.i18n);
+            this.i18n.setLocale(this.locale || 'ru-RU');
+
+            return next();
+        }).bind(this)();
+    });
+
+    ChatsSchema.methods.setState = function (state) {
         this.state = state;
         return this.save();
     }

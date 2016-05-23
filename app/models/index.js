@@ -57,5 +57,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-    pkg: require('./package.json')
+    pkg: require('./package.json'),
+    dependencies: ['i18n']
 };

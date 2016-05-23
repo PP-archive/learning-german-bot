@@ -18,11 +18,11 @@ class Training extends Abstract {
         this.active = undefined;
     }
 
-    _emptyQuery(query, message) {
+    _emptyQuery() {
         return Promise.coroutine(function *() {
             const { Chats, Trainings } = this.models;
 
-            this.chat = yield Chats.findOne({ chatId: message.chat.id });
+            this.chat = yield Chats.findOne({ chatId: this.message.chat.id });
 
             let text, options;
 
@@ -32,7 +32,7 @@ class Training extends Abstract {
                 return [{ type: MessageTypes.MESSAGE, text: text }];
             }
 
-            this.active = yield Trainings.getActiveByChatId(message.chat.id);
+            this.active = yield Trainings.getActiveByChatId(this.message.chat.id);
             if (this.active) {
                 return [{
                     type: MessageTypes.MESSAGE,
@@ -72,12 +72,12 @@ class Training extends Abstract {
         }).bind(this)();
     }
 
-    _setTraining(query, message) {
+    _setTraining() {
         return Promise.coroutine(function *() {
             const { Chats, Trainings } = this.models;
 
             this.tModel = _.find(this.server.plugins.trainings.engine.trainings, (training, key) => {
-                return query === training.LABEL;
+                return this.query === training.LABEL;
             });
 
             if (this.tModel) {
@@ -96,7 +96,7 @@ class Training extends Abstract {
                 });
 
                 this.active = yield (new Trainings({
-                    chatId: message.chat.id,
+                    chatId: this.message.chat.id,
                     type: this.tModel.TYPE,
                     status: Trainings.STATUSES.IN_PROGRESS
                 })).save();
@@ -124,7 +124,7 @@ class Training extends Abstract {
         }).bind(this)();
     }
 
-    _training(query, message) {
+    _training() {
         return Promise.coroutine(function *() {
             const { Chats, Trainings } = this.models;
 
@@ -141,7 +141,7 @@ class Training extends Abstract {
                 return [{ type: MessageTypes.MESSAGE, text: text }];
             }
 
-            let result = this.tModel.validateAnswer(lastQuestion, query);
+            let result = this.tModel.validateAnswer(lastQuestion, this.query);
             lastQuestion.result = result;
 
             this.active.history.push(lastQuestion);
@@ -202,7 +202,7 @@ class Training extends Abstract {
                 yield this.active.save();
 
                 // store the new chat state
-                this.chat = yield Chats.findOne({ chatId: message.chat.id });
+                this.chat = yield Chats.findOne({ chatId: this.message.chat.id });
                 yield this.chat.setState(Chats.STATES.IDLE);
             }
 
@@ -210,26 +210,27 @@ class Training extends Abstract {
         }).bind(this)();
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            const { Chats, Trainings } = this.models;
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
+                const { Chats, Trainings } = this.models;
 
-            // in case it's simple /training call
-            if (!query) {
-                return this._emptyQuery(query, message);
-            } else {
-                this.active = yield Trainings.getActiveByChatId(message.chat.id);
+                // in case it's simple /training call
+                if (!this.query) {
+                    return this._emptyQuery();
+                } else {
+                    this.active = yield Trainings.getActiveByChatId(this.message.chat.id);
 
-                // probably this should be an attempt to choose the training
-                if (!this.active) {
-                    return this._setTraining(query, message);
+                    // probably this should be an attempt to choose the training
+                    if (!this.active) {
+                        return this._setTraining();
+                    }
+                    // in case there is an active training
+                    else {
+                        return this._training();
+                    }
                 }
-                // in case there is an active training
-                else {
-                    return this._training(query, message);
-                }
-            }
-        }).bind(this)();
+            }).bind(this));
     }
 }
 

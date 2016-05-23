@@ -10,23 +10,24 @@ class Start extends Abstract {
         super(server, bot);
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            const Chats = this.server.server.getModel('Chats');
-            let chatId = message.chat.id;
-            let chat = yield Chats.findOne({ chatId: chatId });
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
+                const { Chats } = this.models;
 
-            if (!chat) {
-                yield (new Chats({
-                    chatId: chatId,
-                    from: message.from,
-                    status: Chats.STATES.IDLE,
-                    locale: 'en-US'
-                })).save();
-            }
+                if (!this.chat) {
+                    yield (new Chats({
+                        chatId: this.message.chat.id,
+                        from: this.message.from,
+                        status: Chats.STATES.IDLE,
+                        locale: 'en-US'
+                    })).save();
+                }
 
-            return this.bot.commands.help.process();
-        }).bind(this)();
+                let r = (yield (new this.bot.commands.help(this.server, this.bot)).process({ chat, query, message }));
+
+                return r;
+            }).bind(this));
     }
 }
 

@@ -11,21 +11,23 @@ class Thanks extends Abstract {
         super(server, bot);
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            let text, options = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    hide_keyboard: true
-                }
-            };
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
 
-            text = `Используются материалы:
+                let text, options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                text = `Используются материалы:
 * http://www.de-online.ru/`;
 
 
-            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-        }).bind(this)();
+                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            }).bind(this));
     }
 }
 

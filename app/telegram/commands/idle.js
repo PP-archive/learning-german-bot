@@ -14,22 +14,28 @@ class Idle extends Abstract {
         this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            let text = 'Ничего не найдено', options = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    hide_keyboard: true
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
+
+                let text = 'Ничего не найдено', options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                // Test if query looks like the verb
+                if (this.verbsHelper.testForVerb(query)) {
+                    // defining what to call
+                    let toCall = { class: _.get(this.bot, 'commands.verb'), query: this.query };
+                    let instance = new toCall.class(this.server, this.bot);
+                    yield instance.init(toCall.query, this.message);
+                    return instance.process();
                 }
-            };
 
-            // Test if query looks like the verb
-            if (this.verbsHelper.testForVerb(query)) {
-                return _.get(this.bot, 'commands.verb').process(query, message);
-            }
-
-            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-        }).bind(this)();
+                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            }).bind(this));
     }
 }
 

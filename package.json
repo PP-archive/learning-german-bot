@@ -9,8 +9,8 @@
   "main": "index.js",
   "scripts": {
     "ngrok": "ngrok http -subdomain=lgb-dev 3000",
-    "app": "DEBUG=* node --harmony --harmony_destructuring index.js",
-    "cli": "DEBUG=* node --harmony --harmony_destructuring cli.js",
+    "app": "DEBUG=* node --harmony index.js",
+    "cli": "DEBUG=* node --harmony cli.js",
     "test-unit": "node $NODE_DEBUG_OPTION ./node_modules/lab/bin/lab ./test/unit --pattern \"^[^_]\" --verbose",
     "test-integration": "lab ./test/integration --pattern \"^[^_]\" --verbose",
     "test-coverage": "lab ./test/ --pattern \"^[^_]\" --reporter html --output ./test/coverage.html"

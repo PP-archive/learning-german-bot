@@ -30,9 +30,9 @@ module.exports = (function () {
             {
                 plugin: 'telegram'
             },
-            {
-                plugin: 'notificator'
-            },
+            // {
+            //     plugin: 'notificator'
+            // },
             {
                 plugin: 'web/index'
             },

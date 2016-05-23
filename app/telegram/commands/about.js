@@ -11,16 +11,18 @@ class About extends Abstract {
         super(server, bot);
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            let text, options = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    hide_keyboard: true
-                }
-            };
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
 
-            text = `Бот, который поможет вам в изучении немецкого.
+                let text, options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                text = `Бот, который поможет вам в изучении немецкого.
 Пожелания отправляйте на me@pavelpolyakov.com .
 Узнайте, кому благодарен бот /thanks.
 
@@ -28,8 +30,8 @@ class About extends Abstract {
 https://telegram.me/storebot?start=LearningGermanBot`;
 
 
-            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-        }).bind(this)();
+                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            }).bind(this));
     }
 }
 

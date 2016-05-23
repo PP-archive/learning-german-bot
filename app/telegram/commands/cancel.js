@@ -11,30 +11,29 @@ class Cancel extends Abstract {
         super(server, bot);
     }
 
-    process(query, message) {
-        return Promise.coroutine(function *() {
-            const Trainings = this.server.getModel('Trainings');
-            const Chats = this.server.getModel('Chats');
-            
-            let chat = yield Chats.findOne({ chatId: message.chat.id });
-            chat.state = Chats.STATES.IDLE;
-            yield chat.save();
+    process({ chat, query, message }) {
+        return super.process({ chat, query, message }).then(
+            Promise.coroutine(function *() {
 
-            yield Trainings.update({ chatId: message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
-                status: Trainings.STATUSES.CLOSED,
-                finishedAt: new Date()
-            });
+                const { Chats, Trainings } = this.models;
 
-            let text = 'Сделано! Теперь с чистого листа.';
-            let options = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    hide_keyboard: true
-                }
-            };
+                yield this.chat.setState(Chats.STATES.IDLE);
 
-            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-        }).bind(this)();
+                yield Trainings.update({ chatId: this.message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
+                    status: Trainings.STATUSES.CLOSED,
+                    finishedAt: new Date()
+                });
+
+                let text = 'Сделано! Теперь с чистого листа.';
+                let options = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        hide_keyboard: true
+                    }
+                };
+
+                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+            }).bind(this));
     }
 }
 
