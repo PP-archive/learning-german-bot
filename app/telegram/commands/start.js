@@ -24,9 +24,7 @@ class Start extends Abstract {
                     })).save();
                 }
 
-                let r = (yield (new this.bot.commands.help(this.server, this.bot)).process({ chat, query, message }));
-
-                return r;
+                return (yield (new this.bot.commands.help(this.server, this.bot)).process({ chat, query, message }));
             }).bind(this));
     }
 }

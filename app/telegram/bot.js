@@ -123,10 +123,8 @@ class Bot {
             if (message.text) {
                 // what to call ?
                 let call = {
-                    what: {
-                        command: undefined,
-                        class: undefined
-                    },
+                    command: undefined,
+                    class: undefined,
                     data: {
                         chat: chat,
                         query: undefined,
@@ -143,8 +141,8 @@ class Bot {
                     // Trying to process the message, if such command is already defined
                     debug('looking for %s', `commands.${command}.process`);
                     if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
+                        call.command = command;
                         call.data.query = query;
-                        call.what.command = command;
                     }
                 }
 
@@ -152,27 +150,28 @@ class Bot {
                 // setting the query
                 call.data.query ? null : call.data.query = message.text;
 
-                if (!call.what.command) {
+                if (!call.command) {
                     // check if chat is in some special state
                     if (chat && chat.state !== Chats.STATES.IDLE) {
                         let command = _.lowerCase(chat.state);
                         if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
-                            call.what.command = command;
+                            call.command = command;
                         }
                     }
                 }
 
                 // in case command was not yet defined - call idle command
-                if (!call.what.command) {
-                    call.what.command = 'idle';
+                if (!call.command) {
+                    call.command = 'idle';
                 }
 
-                debug(`calling the command ${call.what.command}.process`);
+                debug(`calling the command ${call.command}.process`);
                 // creating an instance of the particular command
-                call.what.class = _.get(this, `commands.${call.what.command}`);
-                let instance = new call.what.class(this.server, this);
+                call.class = _.get(this, `commands.${call.command}`);
+                let command = new call.class(this.server, this);
+                command.init(call.data);
 
-                return yield instance.process(call.data);
+                return yield command.process();
             }
         }).bind(this)();
     }

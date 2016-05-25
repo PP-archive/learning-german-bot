@@ -15,7 +15,7 @@ class Abstract {
         };
     }
 
-    process({chat, query, message}) {
+    init({chat, query, message}) {
        return Promise.coroutine(function *() {
            this.chat = chat;
            this.query = query;

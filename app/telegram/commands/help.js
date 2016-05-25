@@ -10,18 +10,17 @@ class Help extends Abstract {
         super(server, bot);
     }
 
-    process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
+    process() {
+        // in order to be able to call super method inside the coroutine
+        return Promise.coroutine(function *() {
+            let text, options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
 
-                let text, options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                };
-
-                text = `Пользоваться ботом можно так:
+            text = `Пользоваться ботом можно так:
 1. <code>[что-то]</code> - бот попробует сам догадаться о чем вы его спросили. Например: <pre>sprechen</pre>.
 2. /verb [глагол] - все про глагол. Например: <pre>/verb sprechen</pre>.
 3. /training - тренируйся! Учим ТОП 200 слов либо управление глаголов.
@@ -31,9 +30,9 @@ class Help extends Abstract {
 7. /stats - статистика бота
 8. /sources - исходный код бота`;
 
-                return [{ type: MessageTypes.MESSAGE, text: chat.i18n.__('Hello'), options: options },
-                    { type: MessageTypes.MESSAGE, text: text, options: options }];
-            }).bind(this));
+            return [{ type: MessageTypes.MESSAGE, text: this.chat.i18n.__('Hello'), options: options },
+                { type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 
