@@ -11,27 +11,27 @@ class About extends Abstract {
         super(server, bot);
     }
 
-    process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
+    process() {
+        return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
 
-                let text, options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                };
+            let text, options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
 
-                text = `Бот, который поможет вам в изучении немецкого.
-Пожелания отправляйте на me@pavelpolyakov.com .
-Узнайте, кому благодарен бот /thanks.
+            text = `${i18n.__('Bot, who will help you to learn german.')}
+${i18n.__('Send your suggestions to me@pavelpolyakov.com.')}
+${i18n.__('Find out, who the bot is grateful to: /thanks.')}
 
-Оцените бота:
+${i18n.__('Rate the Bot:')}
 https://telegram.me/storebot?start=LearningGermanBot`;
 
 
-                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-            }).bind(this));
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 

@@ -1,484 +1,882 @@
 das Leben:
-  translation: жизнь
+  translation:
+    ru-RU: жизнь
+    en-US:
   gender: n
 lesen:
-  translation: читать
+  translation:
+    ru-RU: читать
+    en-US:
 machen:
-  translation: делать
+  translation:
+    ru-RU: делать
+    en-US:
 denken:
-  translation: думать
+  translation:
+    ru-RU: думать
+    en-US:
 reisen:
-  translation: путешествовать
+  translation:
+    ru-RU: путешествовать
+    en-US:
 spielen:
-  translation: играть
+  translation:
+    ru-RU: играть
+    en-US:
 warten:
-  translation: ждать, дожидаться
+  translation:
+    ru-RU: ждать, дожидаться
+    en-US:
 werden:
-  translation: становиться, делаться
+  translation:
+    ru-RU: становиться, делаться
+    en-US:
 wohnen:
-  translation: жить, обитать; проживать
+  translation:
+    ru-RU: жить, обитать; проживать
+    en-US:
 das Alter:
-  translation: возраст
+  translation:
+    ru-RU: возраст
+    en-US:
   gender: n
 wollen:
-  translation: хотеть
+  translation:
+    ru-RU: хотеть
+    en-US:
 die Eltern:
-  translation: родители
+  translation:
+    ru-RU: родители
+    en-US:
   gender: f
 die Familie:
-  translation: семья
+  translation:
+    ru-RU: семья
+    en-US:
   gender: f
 die Frau:
-  translation: женщина, жена
+  translation:
+    ru-RU: женщина, жена
+    en-US:
   gender: f
 das Kind:
-  translation: ребенок
+  translation:
+    ru-RU: ребенок
+    en-US:
   gender: n
 das Jahr:
-  translation: год
+  translation:
+    ru-RU: год
+    en-US:
   gender: n
 der Tag:
-  translation: день
+  translation:
+    ru-RU: день
+    en-US:
   gender: m
 der Monat:
-  translation: месяц
+  translation:
+    ru-RU: месяц
+    en-US:
   gender: m
 ich:
-  translation: я
+  translation:
+    ru-RU: я
+    en-US:
 die Welt:
-  translation: мир
+  translation:
+    ru-RU: мир
+    en-US:
   gender: f
 weiter:
-  translation: дальше
+  translation:
+    ru-RU: дальше
+    en-US:
 alles:
-  translation: всё
+  translation:
+    ru-RU: всё
+    en-US:
 weit:
-  translation: далеко
+  translation:
+    ru-RU: далеко
+    en-US:
 bald:
-  translation: скоро
+  translation:
+    ru-RU: скоро
+    en-US:
 die Seite:
-  translation: сторона; страница
+  translation:
+    ru-RU: сторона; страница
+    en-US:
   gender: f
 durch:
-  translation: через, сквозь
+  translation:
+    ru-RU: через, сквозь
+    en-US:
 die Zahl:
-  translation: число
+  translation:
+    ru-RU: число
+    en-US:
   gender: f
 alt:
-  translation: старый; пожилой; древний; старинный
+  translation:
+    ru-RU: старый; пожилой; древний; старинный
+    en-US:
 die Arbeit:
-  translation: труд, работа
+  translation:
+    ru-RU: труд, работа
+    en-US:
   gender: f
 frei:
-  translation: свободный, независимый
+  translation:
+    ru-RU: свободный, независимый
+    en-US:
 immer:
-  translation: всегда
+  translation:
+    ru-RU: всегда
+    en-US:
 klein:
-  translation: маленький, малый, небольшой
+  translation:
+    ru-RU: маленький, малый, небольшой
+    en-US:
 du:
-  translation: ты
+  translation:
+    ru-RU: ты
+    en-US:
 neu:
-  translation: новый; недавний
+  translation:
+    ru-RU: новый; недавний
+    en-US:
 verheiratet:
-  translation: женатый; замужняя
+  translation:
+    ru-RU: женатый; замужняя
+    en-US:
 verwitwet:
-  translation: овдовевший
+  translation:
+    ru-RU: овдовевший
+    en-US:
 da:
-  translation: тут; там; здесь
+  translation:
+    ru-RU: тут; там; здесь
+    en-US:
 erst:
-  translation: сперва; только
+  translation:
+    ru-RU: сперва; только
+    en-US:
 etwa:
-  translation: около, приблизительно; разве
+  translation:
+    ru-RU: около, приблизительно; разве
+    en-US:
 etwas:
-  translation: нечто; что-нибудь; немного
+  translation:
+    ru-RU: нечто; что-нибудь; немного
+    en-US:
 hier:
-  translation: здесь, тут; вот
+  translation:
+    ru-RU: здесь, тут; вот
+    en-US:
 jetzt:
-  translation: теперь, сейчас
+  translation:
+    ru-RU: теперь, сейчас
+    en-US:
 leider:
-  translation: к сожалению
+  translation:
+    ru-RU: к сожалению
+    en-US:
 noch:
-  translation: (пока) ещё; по-прежнему; всё ещё
+  translation:
+    ru-RU: (пока) ещё; по-прежнему; всё ещё
+    en-US:
 kein:
-  translation: никакой
+  translation:
+    ru-RU: никакой
+    en-US:
 schon:
-  translation: уже
+  translation:
+    ru-RU: уже
+    en-US:
 übrigens:
-  translation: впрочем, вообще
+  translation:
+    ru-RU: впрочем, вообще
+    en-US:
 aber:
-  translation: но
+  translation:
+    ru-RU: но
+    en-US:
 aus:
-  translation: из
+  translation:
+    ru-RU: из
+    en-US:
 das (es):
-  translation: это
+  translation:
+    ru-RU: это
+    en-US:
   gender: n
 dein:
-  translation: твой (твоя, твоё, твои)
+  translation:
+    ru-RU: твой (твоя, твоё, твои)
+    en-US:
 von:
-  translation: от
+  translation:
+    ru-RU: от
+    en-US:
 was:
-  translation: что?
+  translation:
+    ru-RU: что?
+    en-US:
 wer:
-  translation: кто?
+  translation:
+    ru-RU: кто?
+    en-US:
 wie:
-  translation: как?
+  translation:
+    ru-RU: как?
+    en-US:
 wieviel:
-  translation: сколько?
+  translation:
+    ru-RU: сколько?
+    en-US:
 ach so!:
-  translation: вот как!, значит так!, ах так!
+  translation:
+    ru-RU: вот как!, значит так!, ах так!
+    en-US:
 auf Wiedersehen!:
-  translation: до свидания!
+  translation:
+    ru-RU: до свидания!
+    en-US:
 schön:
-  translation: красивый, прекрасный
+  translation:
+    ru-RU: красивый, прекрасный
+    en-US:
 stehen:
-  translation: стоять
+  translation:
+    ru-RU: стоять
+    en-US:
 der Abend:
-  translation: вечер
+  translation:
+    ru-RU: вечер
+    en-US:
   gender: m
 zur Zeit:
-  translation: в настоящее время
+  translation:
+    ru-RU: в настоящее время
+    en-US:
 der Mann:
-  translation: мужчина, супруг
+  translation:
+    ru-RU: мужчина, супруг
+    en-US:
   gender: m
 fest:
-  translation: крепкий, прочный, твердый
+  translation:
+    ru-RU: крепкий, прочный, твердый
+    en-US:
 nicht:
-  translation: не, ни
+  translation:
+    ru-RU: не, ни
+    en-US:
 der Lehrer:
-  translation: учитель; преподаватель; наставник
+  translation:
+    ru-RU: учитель; преподаватель; наставник
+    en-US:
   gender: m
 und:
-  translation: и
+  translation:
+    ru-RU: и
+    en-US:
 das Land:
-  translation: страна; край
+  translation:
+    ru-RU: страна; край
+    en-US:
   gender: n
 auch:
-  translation: также, тоже; и; впрочем
+  translation:
+    ru-RU: также, тоже; и; впрочем
+    en-US:
 später:
-  translation: поздний; позднеe; после этого
+  translation:
+    ru-RU: поздний; позднеe; после этого
+    en-US:
 dort:
-  translation: там
+  translation:
+    ru-RU: там
+    en-US:
 kaufen:
-  translation: купить; покупать
+  translation:
+    ru-RU: купить; покупать
+    en-US:
 verkaufen:
-  translation: продавать
+  translation:
+    ru-RU: продавать
+    en-US:
 zusammen:
-  translation: вместе; сообща
+  translation:
+    ru-RU: вместе; сообща
+    en-US:
 dann:
-  translation: тогда; потом, затем
+  translation:
+    ru-RU: тогда; потом, затем
+    en-US:
 die Stunde:
-  translation: час
+  translation:
+    ru-RU: час
+    en-US:
   gender: f
 möglich:
-  translation: возможный (возможно)
+  translation:
+    ru-RU: возможный (возможно)
+    en-US:
 die Liebe:
-  translation: любовь
+  translation:
+    ru-RU: любовь
+    en-US:
   gender: f
 liegen:
-  translation: лежать; быть расположенным
+  translation:
+    ru-RU: лежать; быть расположенным
+    en-US:
 antworten:
-  translation: отвечать; давать ответ
+  translation:
+    ru-RU: отвечать; давать ответ
+    en-US:
 kommen:
-  translation: приходить, прибывать
+  translation:
+    ru-RU: приходить, прибывать
+    en-US:
 entschuldigen:
-  translation: извинять, прощать
+  translation:
+    ru-RU: извинять, прощать
+    en-US:
 funktionieren:
-  translation: функционировать; действовать; работать
+  translation:
+    ru-RU: функционировать; действовать; работать
+    en-US:
 kosten:
-  translation: стоить; пробовать
+  translation:
+    ru-RU: стоить; пробовать
+    en-US:
 sagen:
-  translation: сказать; говорить
+  translation:
+    ru-RU: сказать; говорить
+    en-US:
 spülen:
-  translation: полоскать, промывать, мыть
+  translation:
+    ru-RU: полоскать, промывать, мыть
+    en-US:
 stimmen:
-  translation: соответствовать (истине); быть верным
+  translation:
+    ru-RU: соответствовать (истине); быть верным
+    en-US:
 waschen:
-  translation: мыть; стирать; промывать
+  translation:
+    ru-RU: мыть; стирать; промывать
+    en-US:
 wechseln:
-  translation: менять(ся); обменивать; разменивать
+  translation:
+    ru-RU: менять(ся); обменивать; разменивать
+    en-US:
 die Antwort:
-  translation: ответ; отклик
+  translation:
+    ru-RU: ответ; отклик
+    en-US:
   gender: f
 das Benzin:
-  translation: бензин
+  translation:
+    ru-RU: бензин
+    en-US:
   gender: n
 das Bett:
-  translation: постель; кровать
+  translation:
+    ru-RU: постель; кровать
+    en-US:
   gender: n
 das Bild:
-  translation: картина; рисунок
+  translation:
+    ru-RU: картина; рисунок
+    en-US:
   gender: n
 der Fehler:
-  translation: ошибка
+  translation:
+    ru-RU: ошибка
+    en-US:
   gender: m
 heißen:
-  translation: называть, зваться
+  translation:
+    ru-RU: называть, зваться
+    en-US:
 das Geld:
-  translation: деньги
+  translation:
+    ru-RU: деньги
+    en-US:
   gender: n
 das Geschäft:
-  translation: дело, занятие; сделка; магазин
+  translation:
+    ru-RU: дело, занятие; сделка; магазин
+    en-US:
   gender: n
 das Haus:
-  translation: дом, здание, строение
+  translation:
+    ru-RU: дом, здание, строение
+    en-US:
   gender: n
 der Haushalt:
-  translation: домашнее хозяйство
+  translation:
+    ru-RU: домашнее хозяйство
+    en-US:
   gender: m
 der Herd:
-  translation: очаг, плита
+  translation:
+    ru-RU: очаг, плита
+    en-US:
   gender: m
 die Idee:
-  translation: идея; мысль; замысел; намерение
+  translation:
+    ru-RU: идея; мысль; замысел; намерение
+    en-US:
   gender: f
 können:
-  translation: мочь, уметь
+  translation:
+    ru-RU: мочь, уметь
+    en-US:
 schnell:
-  translation: быстро
+  translation:
+    ru-RU: быстро
+    en-US:
 sein:
-  translation: быть
+  translation:
+    ru-RU: быть
+    en-US:
 das Regal:
-  translation: полка; стеллаж
+  translation:
+    ru-RU: полка; стеллаж
+    en-US:
   gender: n
 anders:
-  translation: по другому
+  translation:
+    ru-RU: по другому
+    en-US:
 in:
-  translation: в, внутри
+  translation:
+    ru-RU: в, внутри
+    en-US:
 haben:
-  translation: иметь
+  translation:
+    ru-RU: иметь
+    en-US:
 der Stuhl:
-  translation: стул
+  translation:
+    ru-RU: стул
+    en-US:
   gender: m
 der Tisch:
-  translation: стол
+  translation:
+    ru-RU: стол
+    en-US:
   gender: m
 der Topf:
-  translation: горшок; кастрюля
+  translation:
+    ru-RU: горшок; кастрюля
+    en-US:
   gender: m
 die Uhr:
-  translation: часы
+  translation:
+    ru-RU: часы
+    en-US:
   gender: f
 die Sonne:
-  translation: солнце
+  translation:
+    ru-RU: солнце
+    en-US:
   gender: f
 gehen:
-  translation: идти, ходить; уходить
+  translation:
+    ru-RU: идти, ходить; уходить
+    en-US:
 die Zeit:
-  translation: время
+  translation:
+    ru-RU: время
+    en-US:
   gender: f
 ähnlich:
-  translation: похожий; сходный; подобный
+  translation:
+    ru-RU: похожий; сходный; подобный
+    en-US:
 sehen:
-  translation: смотреть, глядеть
+  translation:
+    ru-RU: смотреть, глядеть
+    en-US:
 ehrlich:
-  translation: честный; порядочный
+  translation:
+    ru-RU: честный; порядочный
+    en-US:
 kaputt:
-  translation: разбитый; сломанный; разорванный; погибший
+  translation:
+    ru-RU: разбитый; сломанный; разорванный; погибший
+    en-US:
 groß:
-  translation: большой, крупный
+  translation:
+    ru-RU: большой, крупный
+    en-US:
 lustig:
-  translation: весёлый; радостный; забавный, смешной
+  translation:
+    ru-RU: весёлый; радостный; забавный, смешной
+    en-US:
 originell:
-  translation: оригинальный, своеобразный; странный
+  translation:
+    ru-RU: оригинальный, своеобразный; странный
+    en-US:
 sehr:
-  translation: очень, весьма; крайне
+  translation:
+    ru-RU: очень, весьма; крайне
+    en-US:
 heute:
-  translation: сегодня
+  translation:
+    ru-RU: сегодня
+    en-US:
 viel:
-  translation: много; многие; многое
+  translation:
+    ru-RU: много; многие; многое
+    en-US:
 oder:
-  translation: или
+  translation:
+    ru-RU: или
+    en-US:
 sondern:
-  translation: а, но
+  translation:
+    ru-RU: а, но
+    en-US:
 zu:
-  translation: к, на; в
+  translation:
+    ru-RU: к, на; в
+    en-US:
 raus:
-  translation: наружу
+  translation:
+    ru-RU: наружу
+    en-US:
 danke:
-  translation: спасибо
+  translation:
+    ru-RU: спасибо
+    en-US:
 bitte:
-  translation: пожалуйста
+  translation:
+    ru-RU: пожалуйста
+    en-US:
 die Lampe:
-  translation: лампа
+  translation:
+    ru-RU: лампа
+    en-US:
   gender: f
 trinken:
-  translation: пить
+  translation:
+    ru-RU: пить
+    en-US:
 essen:
-  translation: есть, кушать
+  translation:
+    ru-RU: есть, кушать
+    en-US:
 der Bleistift:
-  translation: карандаш
+  translation:
+    ru-RU: карандаш
+    en-US:
   gender: m
 ordnen:
-  translation: приводить в порядок; систематизировать
+  translation:
+    ru-RU: приводить в порядок; систематизировать
+    en-US:
 der Beruf:
-  translation: профессия; специальность
+  translation:
+    ru-RU: профессия; специальность
+    en-US:
   gender: m
 der Arzt:
-  translation: врач; доктор
+  translation:
+    ru-RU: врач; доктор
+    en-US:
   gender: m
 der Baum:
-  translation: дерево
+  translation:
+    ru-RU: дерево
+    en-US:
   gender: m
 auf:
-  translation: на (горизонтальной пов-ти)
+  translation:
+    ru-RU: на (горизонтальной пов-ти)
+    en-US:
 gegen:
-  translation: против; около
+  translation:
+    ru-RU: против; около
+    en-US:
 als:
-  translation: как, когда
+  translation:
+    ru-RU: как, когда
+    en-US:
 das Auto:
-  translation: автомобиль
+  translation:
+    ru-RU: автомобиль
+    en-US:
   gender: n
 er:
-  translation: он
+  translation:
+    ru-RU: он
+    en-US:
 bestellen:
-  translation: заказывать
+  translation:
+    ru-RU: заказывать
+    en-US:
 bezahlen:
-  translation: платить; выплачивать; расплачиваться
+  translation:
+    ru-RU: платить; выплачивать; расплачиваться
+    en-US:
 brauchen:
-  translation: нуждаться
+  translation:
+    ru-RU: нуждаться
+    en-US:
 genau:
-  translation: точно, именно
+  translation:
+    ru-RU: точно, именно
+    en-US:
 glauben:
-  translation: полагать, думать; верить
+  translation:
+    ru-RU: полагать, думать; верить
+    en-US:
 kochen:
-  translation: варить, готовить (пищу); стряпать; кипятить
+  translation:
+    ru-RU: варить, готовить (пищу); стряпать; кипятить
+    en-US:
 mögen:
-  translation: любить; чувствовать расположение
+  translation:
+    ru-RU: любить; чувствовать расположение
+    en-US:
 über:
-  translation: над
+  translation:
+    ru-RU: над
+    en-US:
 üben:
-  translation: упражняться
+  translation:
+    ru-RU: упражняться
+    en-US:
 das Abendessen:
-  translation: ужин
+  translation:
+    ru-RU: ужин
+    en-US:
   gender: n
 die Anzeige:
-  translation: объявление; заявление, уведомление
+  translation:
+    ru-RU: объявление; заявление, уведомление
+    en-US:
   gender: f
 der Apfel:
-  translation: яблоко
+  translation:
+    ru-RU: яблоко
+    en-US:
   gender: m
 müssen:
-  translation: быть должным
+  translation:
+    ru-RU: быть должным
+    en-US:
 das Brot:
-  translation: хлеб
+  translation:
+    ru-RU: хлеб
+    en-US:
   gender: n
 zwischen:
-  translation: между
+  translation:
+    ru-RU: между
+    en-US:
 die Butter:
-  translation: масло (животное)
+  translation:
+    ru-RU: масло (животное)
+    en-US:
   gender: f
 unter:
-  translation: под
+  translation:
+    ru-RU: под
+    en-US:
 das Ei:
-  translation: яйцо
+  translation:
+    ru-RU: яйцо
+    en-US:
   gender: n
 das Eis:
-  translation: лёд; мороженое
+  translation:
+    ru-RU: лёд; мороженое
+    en-US:
   gender: n
 die Erdbeere:
-  translation: клубника, земляника
+  translation:
+    ru-RU: клубника, земляника
+    en-US:
   gender: f
 die Flasche:
-  translation: бутылка; фляжка
+  translation:
+    ru-RU: бутылка; фляжка
+    en-US:
   gender: f
 das Fleisch:
-  translation: мясо
+  translation:
+    ru-RU: мясо
+    en-US:
   gender: n
 die Frage:
-  translation: вопрос
+  translation:
+    ru-RU: вопрос
+    en-US:
   gender: f
 selbst:
-  translation: сам
+  translation:
+    ru-RU: сам
+    en-US:
 das Frühstück:
-  translation: завтрак
+  translation:
+    ru-RU: завтрак
+    en-US:
   gender: n
 die Gabel:
-  translation: вилка
+  translation:
+    ru-RU: вилка
+    en-US:
   gender: f
 die Zeitung:
-  translation: газета
+  translation:
+    ru-RU: газета
+    en-US:
   gender: f
 das Gemüse:
-  translation: овощи, зелень
+  translation:
+    ru-RU: овощи, зелень
+    en-US:
   gender: n
 das Gericht:
-  translation: блюдо, кушанье; суд
+  translation:
+    ru-RU: блюдо, кушанье; суд
+    en-US:
   gender: n
 das Gespräch:
-  translation: разговор; беседа
+  translation:
+    ru-RU: разговор; беседа
+    en-US:
   gender: n
 das Getränk:
-  translation: напиток; питьё
+  translation:
+    ru-RU: напиток; питьё
+    en-US:
   gender: n
 das Gewürz:
-  translation: пряности; приправа
+  translation:
+    ru-RU: пряности; приправа
+    en-US:
   gender: n
 das Glas:
-  translation: стекло; стакан; рюмка
+  translation:
+    ru-RU: стекло; стакан; рюмка
+    en-US:
   gender: n
 das Prozent:
-  translation: процент
+  translation:
+    ru-RU: процент
+    en-US:
   gender: n
 der Käse:
-  translation: сыр; творог
+  translation:
+    ru-RU: сыр; творог
+    en-US:
   gender: m
 der Kuchen:
-  translation: пирог; пирожное
+  translation:
+    ru-RU: пирог; пирожное
+    en-US:
   gender: m
 der Löffel:
-  translation: ложка
+  translation:
+    ru-RU: ложка
+    en-US:
   gender: m
 mehr:
-  translation: больше
+  translation:
+    ru-RU: больше
+    en-US:
 das Messer:
-  translation: нож
+  translation:
+    ru-RU: нож
+    en-US:
   gender: n
 der Nachtisch:
-  translation: десерт
+  translation:
+    ru-RU: десерт
+    en-US:
   gender: m
 das Öl:
-  translation: масло (растительное)
+  translation:
+    ru-RU: масло (растительное)
+    en-US:
   gender: n
 der Pfeffer:
-  translation: перец
+  translation:
+    ru-RU: перец
+    en-US:
   gender: m
 die Blume:
-  translation: цветок
+  translation:
+    ru-RU: цветок
+    en-US:
   gender: f
 der Preis:
-  translation: цена
+  translation:
+    ru-RU: цена
+    en-US:
   gender: m
 der Reis:
-  translation: рис
+  translation:
+    ru-RU: рис
+    en-US:
   gender: m
 der Saft:
-  translation: сок
+  translation:
+    ru-RU: сок
+    en-US:
   gender: m
 die Sahne:
-  translation: сливки
+  translation:
+    ru-RU: сливки
+    en-US:
   gender: f
 der Schinken:
-  translation: ветчина
+  translation:
+    ru-RU: ветчина
+    en-US:
   gender: m
 die Soße:
-  translation: соус, подливка
+  translation:
+    ru-RU: соус, подливка
+    en-US:
   gender: f
 langsam:
-  translation: медленно
+  translation:
+    ru-RU: медленно
+    en-US:
 das Wasser:
-  translation: вода
+  translation:
+    ru-RU: вода
+    en-US:
   gender: n
 die Suppe:
-  translation: суп; похлёбка
+  translation:
+    ru-RU: суп; похлёбка
+    en-US:
   gender: f
 die Tasse:
-  translation: чашка (чайная)
+  translation:
+    ru-RU: чашка (чайная)
+    en-US:
   gender: f
 der Teller:
-  translation: тарелка
+  translation:
+    ru-RU: тарелка
+    en-US:
   gender: m
 die Tomate:
-  translation: помидор
+  translation:
+    ru-RU: помидор
+    en-US:
   gender: f
 nach:
   translation: после

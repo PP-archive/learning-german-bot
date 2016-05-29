@@ -13,10 +13,12 @@ class Trainings {
                 let file = value;
 
                 /*Get model name for Sequalize from file name*/
-                let training = require('./trainings/' + file)(server.KB);
-
-                if (training.ACTIVE) {
-                    this.trainings[training.TYPE] = training;
+                let training = require('./trainings/' + file);
+                
+                for(let locale in training.LOCALES) {
+                    if (training.ACTIVE) {
+                        this.trainings[locale][training.TYPE] = new training(server.KB, server.i18n, locale);
+                    }    
                 }
             }
         });

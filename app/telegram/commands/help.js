@@ -13,6 +13,8 @@ class Help extends Abstract {
     process() {
         // in order to be able to call super method inside the coroutine
         return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
+
             let text, options = {
                 parse_mode: 'HTML',
                 reply_markup: {
@@ -20,18 +22,17 @@ class Help extends Abstract {
                 }
             };
 
-            text = `Пользоваться ботом можно так:
-1. <code>[что-то]</code> - бот попробует сам догадаться о чем вы его спросили. Например: <pre>sprechen</pre>.
-2. /verb [глагол] - все про глагол. Например: <pre>/verb sprechen</pre>.
-3. /training - тренируйся! Учим ТОП 200 слов либо управление глаголов.
-4. /cancel - прервать тренировку
-5. /help - расскажет как пользоваться ботом
-6. /about - про бота в целом
-7. /stats - статистика бота
-8. /sources - исходный код бота`;
+            text = `${i18n.__('You can use Bot the next way:')}
+1. ${i18n.__('<code>[something]</code> - Bot will try to guess what have you asked for. Example: <pre>sprechen</pre>.')}
+2. ${i18n.__('/verb [verb] - everything about the verb. Example: <pre>/verb sprechen</pre>.')}
+3. ${i18n.__('/training - train yourself! Learn TOP 200 german words or case government.')}
+4. ${i18n.__('/cancel - stop the training.')}
+5. ${i18n.__('/help - how to use Bot.')}
+6. ${i18n.__('/about - about Bot in general.')}
+7. ${i18n.__('/stats - bot\'s statistics.')}
+8. ${i18n.__('/sources - source code of Bot.')}`;
 
-            return [{ type: MessageTypes.MESSAGE, text: this.chat.i18n.__('Hello'), options: options },
-                { type: MessageTypes.MESSAGE, text: text, options: options }];
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
         }).bind(this)();
     }
 }

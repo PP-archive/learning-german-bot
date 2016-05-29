@@ -19,6 +19,8 @@ $('#appos_dictation_settings tr:not(.appos_dictation_settings_header)').each(fun
         result += '  '.repeat(2)+verbPlusPreposition.toLowerCase()+':\n';
         result += '  '.repeat(3)+'case: '+verbCase+'\n';
         result += '  '.repeat(3)+'translation:'+'\n';
+        result += '  '.repeat(4)+'ru-RU:'+'\n';
+        result += '  '.repeat(4)+'en-US:'+'\n';
         result += '  '.repeat(3)+'example:'+'\n';
     });
 });

@@ -14,64 +14,64 @@ class Verb extends Abstract {
         this.verbsHelper = new VerbsHelper(this.server.KB.VERBS);
     }
 
-    process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
+    process() {
+        return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
 
-                this.query = this.query.toLowerCase();
+            this.query = this.query.toLowerCase();
 
-                let text = '', options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                };
-
-                if (_.has(this.server.KB.VERBS, this.query)) {
-                    let verb = this.server.KB.VERBS[this.query];
-                    text += `Глагол <code>${this.query}</code>.\n\n`;
-
-                    if (_.has(verb, 'case government')) {
-                        text += `Управление: \n`;
-
-                        let i = 1;
-                        _.forEach(_.get(verb, 'case government'), (value, key) => {
-                            text += `${i}. <b>${key} + ${value.case}</b>`;
-
-                            // translation
-                            text += value.translation ? ` (${value.translation})` : '';
-                            text += value.example ? `\n<i>Пример: ${value.example}</i>` : ``;
-                            text += `\n`;
-
-                            i++;
-                        });
-                    }
-                } else {
-                    let suggestions = this.verbsHelper.getVerbSuggestions(this.query);
-
-                    if (suggestions.length) {
-                        text = 'Мы не нашли такой глагол, но вот похожие';
-                        options = {
-                            reply_markup: {
-                                keyboard: ((suggestions) => {
-                                    let keyboard = [];
-                                    _.forEach(suggestions, (record) => {
-                                        keyboard.push([record.key]);
-                                    });
-
-                                    return keyboard;
-                                })(suggestions),
-                                resize_keyboard: true,
-                                one_time_keyboard: true
-                            }
-                        };
-                    } else {
-                        text = 'Ничего не найдено';
-                    }
+            let text = '', options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
                 }
+            };
 
-                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-            }).bind(this));
+            if (_.has(this.server.KB.VERBS, this.query)) {
+                let verb = this.server.KB.VERBS[this.query];
+                text += `Глагол <code>${this.query}</code>.\n\n`;
+
+                if (_.has(verb, 'case government')) {
+                    text += `${i18n.__('Case government:')} \n`;
+
+                    let i = 1;
+                    _.forEach(_.get(verb, 'case government'), (value, key) => {
+                        text += `${i}. <b>${key} + ${value.case}</b>`;
+
+                        // translation
+                        text += value.translation ? ` (${value.translation})` : '';
+                        text += value.example ? `\n${i18n.__('<i>Example: %s</i>', value.example)}` : ``;
+                        text += `\n`;
+
+                        i++;
+                    });
+                }
+            } else {
+                let suggestions = this.verbsHelper.getVerbSuggestions(this.query);
+
+                if (suggestions.length) {
+                    text = i18n.__('We haven\'t found this verb, but these are alike:');
+                    options = {
+                        reply_markup: {
+                            keyboard: ((suggestions) => {
+                                let keyboard = [];
+                                _.forEach(suggestions, (record) => {
+                                    keyboard.push([record.key]);
+                                });
+
+                                return keyboard;
+                            })(suggestions),
+                            resize_keyboard: true,
+                            one_time_keyboard: true
+                        }
+                    };
+                } else {
+                    text = i18n.__('Nothing was found');
+                }
+            }
+
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 

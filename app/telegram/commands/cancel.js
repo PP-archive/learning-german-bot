@@ -12,28 +12,28 @@ class Cancel extends Abstract {
     }
 
     process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
+        return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
 
-                const { Chats, Trainings } = this.models;
+            const { Chats, Trainings } = this.models;
 
-                yield this.chat.setState(Chats.STATES.IDLE);
+            yield this.chat.setState(Chats.STATES.IDLE);
 
-                yield Trainings.update({ chatId: this.message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
-                    status: Trainings.STATUSES.CLOSED,
-                    finishedAt: new Date()
-                });
+            yield Trainings.update({ chatId: this.message.chat.id, status: Trainings.STATUSES.IN_PROGRESS }, {
+                status: Trainings.STATUSES.CLOSED,
+                finishedAt: new Date()
+            });
 
-                let text = 'Сделано! Теперь с чистого листа.';
-                let options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                };
+            let text = i18n.__('Done!');
+            let options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
 
-                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-            }).bind(this));
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 

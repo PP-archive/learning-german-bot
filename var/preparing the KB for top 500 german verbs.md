@@ -6,7 +6,9 @@ var result = '';
 
 Cards.data.terms.forEach(function(record) {
    result += '  '.repeat(0) + record.word.trim() + ':\n';
-   result += '  '.repeat(1) + 'translation: ' + record.definition.trim() + '\n';
+   result += '  '.repeat(1) + 'translation: \n';
+   result += '  '.repeat(2) + 'ru-RU: ' + record.definition.trim() + '\n';
+   result += '  '.repeat(2) + 'en-US: \n';
 });
 
 console.log(result);

@@ -11,20 +11,21 @@ class Sources extends Abstract {
         super(server, bot);
     }
 
-    process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
-                let text, options = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        hide_keyboard: true
-                    }
-                };
+    process() {
+        return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
 
-                text = `Исходники бота: https://github.com/PavelPolyakov/learning-german-server .`;
+            let text, options = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    hide_keyboard: true
+                }
+            };
 
-                return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
-            }).bind(this));
+            text = `${i18n.__('Source code:')} https://github.com/PavelPolyakov/learning-german-server.`;
+
+            return [{ type: MessageTypes.MESSAGE, text: text, options: options }];
+        }).bind(this)();
     }
 }
 

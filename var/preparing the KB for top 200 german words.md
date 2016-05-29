@@ -11,7 +11,9 @@ $('table.eBlock table:eq(0) ol').each(function(key, ol) {
         }
         var translation = $(li).text().split('- ').pop().trim();
         result += word + ':\n';
-        result += '  '.repeat(1) + 'translation: ' + translation + '\n'
+        result += '  '.repeat(1) + 'translation: \n';
+        result += '  '.repeat(2) + 'ru-RU: ' + translation + '\n';
+        result += '  '.repeat(2) + 'en-US: \n';
         var genderMatches = word.match(/(der|die|das) /);
         if (genderMatches) {
             var gender;

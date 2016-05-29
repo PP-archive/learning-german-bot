@@ -3,30 +3,43 @@
 const MessageTypes = require('telegram/types/message');
 const _ = require('lodash');
 
-class Top200 {
-    constructor(KB) {
-        this.KB = KB;
+const Abstract = require('./_abstract');
 
-        this.ACTIVE = true;
+class Top200 extends Abstract {
+    static get LOCALES() {
+        return ['en-US', 'ru-RU'];
+    }
+
+    static get ACTIVE() {
+        return true;
+    }
+
+    constructor(KB, i18n, locale) {
+        super(KB, i18n, locale);
+
         this.TYPE = 'TOP200';
-        this.LABEL = 'ТОП 200';
-        this.DESCRIPTION = 'тренируем топ 200 немецких слов';
+
+        this.LABEL = this.i18n.__('TOP 200');
+        this.DESCRIPTION = this.i18n.__('training the TOP 200 german words');
+
         this.ITERATIONS = 10;
     }
 
     getTask() {
-        let flows = ['TO_RUSSIAN', 'TO_GERMAN'];
+        const i18n = this.i18n;
+
+        let flows = ['TO_LOCALE', 'TO_GERMAN'];
         let flow = _.sample(flows);
 
         let question, keyboard, variants, answer;
 
         let word, content;
         switch (flow) {
-            case 'TO_RUSSIAN':
+            case 'TO_LOCALE':
                 word = _(this.KB.TOP200).keys().sample();
                 content = this.KB.TOP200[word];
 
-                question = `Как на русский переводится слово <code>${word}</code> ?`;
+                question = i18n.__('How you will translate the word <code>%s</code> in english?', word);
                 answer = content.translation.split(';').map((v)=> {
                     return v.trim();
                 });
@@ -35,7 +48,7 @@ class Top200 {
                 variants.push(_.head(answer));
 
                 while (variants.length < 3) {
-                    let variant = _(_.sample(this.KB.TOP200).translation.split(';')).head().trim();
+                    let variant = _(_.sample(this.KB.TOP200).translation[this.locale].split(';')).head().trim();
 
                     if (variants.indexOf(variant) === -1) {
                         variants.push(variant);
@@ -50,7 +63,7 @@ class Top200 {
                 word = _(this.KB.TOP200).keys().sample();
                 content = this.KB.TOP200[word];
 
-                question = `Как на немецкий переводится <code>${content.translation}</code> ?`;
+                question = i18n.__('How you will translate the word <code>%s</code> to german?', content.translation[this.locale]);
                 answer = word;
 
                 variants = [];
@@ -96,7 +109,7 @@ class Top200 {
 
     validateAnswer(question, answer) {
         switch (question.answer.flow) {
-            case 'TO_RUSSIAN':
+            case 'TO_LOCALE':
                 return !(_(question.answer.value).indexOf(answer) === -1);
                 break;
             case 'TO_GERMAN':

@@ -3,32 +3,36 @@
 const MessageTypes = require('telegram/types/message');
 const _ = require('lodash');
 
-class Top500Verbs {
-    constructor(KB) {
-        this.KB = KB;
+const Abstract = require('./_abstract');
 
-        this.ACTIVE = true;
+class Top500Verbs extends Abstract {
+
+    constructor(KB, i18n, locale) {
+        super(KB, i18n, locale);
+
         this.TYPE = 'TOP500_VERBS';
-        this.LABEL = 'ТОП 500 глаголов';
-        this.DESCRIPTION = 'тренируем топ 500 немецких глаголов';
+
+        this.LABEL = this.i18n.__('TOP 500 verbs');
+        this.DESCRIPTION = this.i18n.__('training the TOP 500 german verbs');
+
         this.ITERATIONS = 10;
     }
 
     getTask() {
-        let flows = ['TO_RUSSIAN', 'TO_GERMAN'];
+        let flows = ['TO_LOCALE', 'TO_GERMAN'];
         let flow = _.sample(flows);
 
         let question, keyboard, variants, answer;
 
         let word, content;
         switch (flow) {
-            case 'TO_RUSSIAN':
+            case 'TO_LOCALE':
                 word = _(this.KB.TOP500_VERBS).keys().sample();
                 content = this.KB.TOP500_VERBS[word];
 
-                question = `Как на русский переводится слово <code>${word}</code> ?`;
-                answer = content.translation.split(',').map((v)=> {
-                    v.replace(/\(.*?\)/gi,'');
+                question = i18n.__('How would you translate the verb <code>%s</code> in english?', word);
+                answer = content.translation[this.locale].split(',').map((v)=> {
+                    v.replace(/\(.*?\)/gi, '');
                     return v.trim();
                 });
 
@@ -36,7 +40,7 @@ class Top500Verbs {
                 variants.push(_.head(answer));
 
                 while (variants.length < 3) {
-                    let variant = _(_.sample(this.KB.TOP500_VERBS).translation.split(',')).head().replace(/\(.*?\)/gi,'').trim();
+                    let variant = _(_.sample(this.KB.TOP500_VERBS).translation[this.locale].split(',')).head().replace(/\(.*?\)/gi, '').trim();
 
                     if (variants.indexOf(variant) === -1) {
                         variants.push(variant);
@@ -51,7 +55,7 @@ class Top500Verbs {
                 word = _(this.KB.TOP500_VERBS).keys().sample();
                 content = this.KB.TOP500_VERBS[word];
 
-                question = `Как на немецкий переводится <code>${content.translation}</code> ?`;
+                question = i18n.__('How would you translate the verb <code>%s</code> to german?', word);
                 answer = word;
 
                 variants = [];
@@ -97,7 +101,7 @@ class Top500Verbs {
 
     validateAnswer(question, answer) {
         switch (question.answer.flow) {
-            case 'TO_RUSSIAN':
+            case 'TO_LOCALE':
                 return !(_(question.answer.value).indexOf(answer) === -1);
                 break;
             case 'TO_GERMAN':

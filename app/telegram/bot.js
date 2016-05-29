@@ -110,7 +110,9 @@ class Bot {
 
             if (!chat) {
                 return [{
-                    type: MessageTypes.MESSAGE, text: 'Please, first send the /start command', options: {
+                    type: MessageTypes.MESSAGE,
+                    text: server.i18n.__({phrase: 'Please, first send the /start command', locale: 'en-US'}),
+                    options: {
                         parse_mode: 'HTML',
                         reply_markup: {
                             hide_keyboard: true

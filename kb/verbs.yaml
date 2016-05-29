@@ -4,6 +4,8 @@ bestehen:
     bestehen aus:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 helfen:
   translation:
@@ -11,6 +13,8 @@ helfen:
     helfen bei:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 anfangen:
   translation:
@@ -18,6 +22,8 @@ anfangen:
     anfangen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 aufhören:
   translation:
@@ -25,6 +31,8 @@ aufhören:
     aufhören mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 beginnen:
   translation:
@@ -32,6 +40,8 @@ beginnen:
     beginnen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sich beschäftigen:
   translation:
@@ -39,6 +49,8 @@ sich beschäftigen:
     sich beschäftigen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 spielen:
   translation:
@@ -46,6 +58,8 @@ spielen:
     spielen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sprechen:
   translation:
@@ -53,10 +67,14 @@ sprechen:
     sprechen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     sprechen über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 telefonieren:
   translation:
@@ -64,6 +82,8 @@ telefonieren:
     telefonieren mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 vergleichen:
   translation:
@@ -71,6 +91,8 @@ vergleichen:
     vergleichen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 fragen:
   translation:
@@ -78,10 +100,14 @@ fragen:
     fragen bei:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     fragen nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 riechen:
   translation:
@@ -89,6 +115,8 @@ riechen:
     riechen nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 schauen:
   translation:
@@ -96,6 +124,8 @@ schauen:
     schauen nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 schmeken:
   translation:
@@ -103,6 +133,8 @@ schmeken:
     schmeken nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 suchen:
   translation:
@@ -110,6 +142,8 @@ suchen:
     suchen nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 erzählen:
   translation:
@@ -117,6 +151,8 @@ erzählen:
     erzählen von:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 träumen:
   translation:
@@ -124,6 +160,8 @@ träumen:
     träumen von:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sich verabschieden:
   translation:
@@ -131,6 +169,8 @@ sich verabschieden:
     sich verabschieden von:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sich anmelden:
   translation:
@@ -138,6 +178,8 @@ sich anmelden:
     sich anmelden zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 benutzen:
   translation:
@@ -145,6 +187,8 @@ benutzen:
     benutzen zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 einladen:
   translation:
@@ -152,6 +196,8 @@ einladen:
     einladen zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sich entschließen:
   translation:
@@ -159,6 +205,8 @@ sich entschließen:
     sich entschließen zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 gratulieren:
   translation:
@@ -166,6 +214,8 @@ gratulieren:
     gratulieren zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 passen:
   translation:
@@ -173,6 +223,8 @@ passen:
     passen zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 verwenden:
   translation:
@@ -180,6 +232,8 @@ verwenden:
     verwenden zu:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 teilnehmen:
   translation:
@@ -187,6 +241,8 @@ teilnehmen:
     teilnehmen an:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 schützen:
   translation:
@@ -194,6 +250,8 @@ schützen:
     schützen vor:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 angst haben:
   translation:
@@ -201,6 +259,8 @@ angst haben:
     angst haben vor:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 halten:
   translation:
@@ -208,6 +268,8 @@ halten:
     halten für:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich interessieren:
   translation:
@@ -215,6 +277,8 @@ sich interessieren:
     sich interessieren für:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich entscheiden:
   translation:
@@ -222,6 +286,8 @@ sich entscheiden:
     sich entscheiden gegen:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich bemühen:
   translation:
@@ -229,6 +295,8 @@ sich bemühen:
     sich bemühen um:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich bewerben:
   translation:
@@ -236,10 +304,14 @@ sich bewerben:
     sich bewerben bei:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     sich bewerben um:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich kümmern:
   translation:
@@ -247,6 +319,8 @@ sich kümmern:
     sich kümmern um:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 weinen:
   translation:
@@ -254,6 +328,8 @@ weinen:
     weinen um:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich verlieben:
   translation:
@@ -261,6 +337,8 @@ sich verlieben:
     sich verlieben in:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich erinnern:
   translation:
@@ -268,6 +346,8 @@ sich erinnern:
     sich erinnern an:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 glauben:
   translation:
@@ -275,6 +355,8 @@ glauben:
     glauben an:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 schicken:
   translation:
@@ -282,6 +364,8 @@ schicken:
     schicken an:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 schreiben:
   translation:
@@ -289,6 +373,8 @@ schreiben:
     schreiben an:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 achten:
   translation:
@@ -296,6 +382,8 @@ achten:
     achten auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 antworten:
   translation:
@@ -303,6 +391,8 @@ antworten:
     antworten auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 hoffen:
   translation:
@@ -310,6 +400,8 @@ hoffen:
     hoffen auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 hören:
   translation:
@@ -317,6 +409,8 @@ hören:
     hören auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich vorbereiten:
   translation:
@@ -324,6 +418,8 @@ sich vorbereiten:
     sich vorbereiten auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 warten:
   translation:
@@ -331,6 +427,8 @@ warten:
     warten auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich ärgern:
   translation:
@@ -338,6 +436,8 @@ sich ärgern:
     sich ärgern über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich aufregen:
   translation:
@@ -345,6 +445,8 @@ sich aufregen:
     sich aufregen über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich beschweren:
   translation:
@@ -352,6 +454,8 @@ sich beschweren:
     sich beschweren über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 diskutieren:
   translation:
@@ -359,6 +463,8 @@ diskutieren:
     diskutieren über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 lachen:
   translation:
@@ -366,6 +472,8 @@ lachen:
     lachen über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 berichten:
   translation:
@@ -373,10 +481,14 @@ berichten:
     berichten über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
     berichten von:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 demonstrieren:
   translation:
@@ -384,10 +496,14 @@ demonstrieren:
     demonstrieren für:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
     demonstrieren gegen:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 denken:
   translation:
@@ -395,6 +511,8 @@ denken:
     denken an:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 reden:
   translation:
@@ -402,10 +520,14 @@ reden:
     reden über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
     reden von:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 schimpfen:
   translation:
@@ -413,10 +535,14 @@ schimpfen:
     schimpfen mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     schimpfen über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sein:
   translation:
@@ -424,10 +550,14 @@ sein:
     sein für:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
     sein gegen:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich entschuldigen:
   translation:
@@ -435,10 +565,14 @@ sich entschuldigen:
     sich entschuldigen bei:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     sich entschuldigen für:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich erkundigen:
   translation:
@@ -446,10 +580,14 @@ sich erkundigen:
     sich erkundigen bei:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     sich erkundigen nach:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
 sich freuen:
   translation:
@@ -457,10 +595,14 @@ sich freuen:
     sich freuen auf:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
     sich freuen über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:
 sich unterhalten:
   translation:
@@ -468,8 +610,12 @@ sich unterhalten:
     sich unterhalten mit:
       case: D
       translation:
+        ru-RU:
+        en-US:
       example:
     sich unterhalten über:
       case: A
       translation:
+        ru-RU:
+        en-US:
       example:

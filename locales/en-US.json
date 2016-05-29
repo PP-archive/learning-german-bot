@@ -1,4 +1,21 @@
 {
-  "Hello": "Hello",
-  "Success, %s answers from %s are correct": "Success, %s answers from %s are correct"
+	"You can use Bot the next way:": "You can use Bot the next way:",
+	"<code>[something]</code> - Bot will try to guess what have you asked for. Example: <pre>sprechen</pre>.": "<code>[something]</code> - Bot will try to guess what have you asked for. Example: <pre>sprechen</pre>.",
+	"/verb [verb] - everything about the verb. Example: <pre>/verb sprechen</pre>.": "/verb [verb] - everything about the verb. Example: <pre>/verb sprechen</pre>.",
+	"/training - train yourself! Learn TOP 200 german words or case government.": "/training - train yourself! Learn TOP 200 german words or case government.",
+	"/cancel - stop the training.": "/cancel - stop the training.",
+	"/help - how to use Bot.": "/help - how to use Bot.",
+	"/about - about Bot in general.": "/about - about Bot in general.",
+	"/stats - bot's statistics.": "/stats - bot's statistics.",
+	"/sources - source code of Bot.": "/sources - source code of Bot.",
+	"Пользоваться ботом можно так:": "Пользоваться ботом можно так:",
+	"Source code:": "Source code:",
+	"Statistics:": "Statistics:",
+	"Verbs in the database <i>%s</i>": "Verbs in the database <i>%s</i>",
+	"TOP 200: <i>%s</i>": "TOP 200: <i>%s</i>",
+	"TOP 500 verbs: <i>%s</i>": "TOP 500 verbs: <i>%s</i>",
+	"Bot, who will help you to learn german.": "Bot, who will help you to learn german.",
+	"Send your suggestions to me@pavelpolyakov.com.": "Send your suggestions to me@pavelpolyakov.com.",
+	"Find out, who the bot is grateful to: /thanks.": "Find out, who the bot is grateful to: /thanks.",
+	"Rate the Bot:": "Rate the Bot:"
 }

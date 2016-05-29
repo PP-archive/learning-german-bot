@@ -20,37 +20,32 @@ class Training extends Abstract {
 
     _emptyQuery() {
         return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
+            const locale = i18n.getLocale();
+
             const { Chats, Trainings } = this.models;
 
-            this.chat = yield Chats.findOne({ chatId: this.message.chat.id });
-
             let text, options;
-
-            // in case user is not yet registered
-            if (!this.chat) {
-                text = `По какой-то причине вы еще не зарегистриованы. Вы можете зарегистрироваться этой командой: /start`;
-                return [{ type: MessageTypes.MESSAGE, text: text }];
-            }
 
             this.active = yield Trainings.getActiveByChatId(this.message.chat.id);
             if (this.active) {
                 return [{
                     type: MessageTypes.MESSAGE,
-                    text: `В данный момент вы уже находитесь в режиме тренировки. Отвечайте на вопрос, либо пошлите команду /cancel`
+                    text: i18n.__('At this moment you are in the middle of training. Answer the question, or sent the /cancel command.')
                 }];
             }
 
             this.chat.setState(Chats.STATES.TRAINING);
 
-            text = `Выберите тип тренировки:\n`;
+            text = i18n.__('Choose the training type:') + '\n';
 
             let i = 1;
-            _.forEach(this.server.plugins.trainings.engine.trainings, (training) => {
-                text += `${i}. <code>${training.LABEL}</code> - ${training.DESCRIPTION}\n`;
+            _.forEach(this.server.plugins.trainings.engine.trainings[locale], (training) => {
+                text += `${i}. ${i18n.__('<code>%s</code> - %s', training.LABEL, training.DESCRIPTION)}\n`;
                 i++;
             });
 
-            text += `\nЕсли хотите прервать - /cancel\n`;
+            text += `\n${i18n.__('In case you want to stop - /cancel')}\n`;
 
             options = {
                 parse_mode: 'HTML',
@@ -74,9 +69,12 @@ class Training extends Abstract {
 
     _setTraining() {
         return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
+            const locale = i18n.getLocale();
+
             const { Chats, Trainings } = this.models;
 
-            this.tModel = _.find(this.server.plugins.trainings.engine.trainings, (training, key) => {
+            this.tModel = _.find(this.server.plugins.trainings.engine.trainings[locale], (training, key) => {
                 return this.query === training.LABEL;
             });
 
@@ -86,7 +84,7 @@ class Training extends Abstract {
                 // initial message
                 messages.push({
                     type: MessageTypes.MESSAGE,
-                    text: `Начинаем тренировку <code>${this.tModel.LABEL}</code>, вас ждет ${this.tModel.ITERATIONS} заданий.`,
+                    text: i18n.__('We are going to start the <code>%s</code> training, there would be %s questions', this.tModel.LABEL, this.tModel.ITERATIONS),
                     options: {
                         parse_mode: 'HTML',
                         reply_markup: {
@@ -118,7 +116,7 @@ class Training extends Abstract {
                 //messages
                 return messages;
             } else {
-                let text = `Увы такой тренировки мы не нашли, попробуйте еще разок. Либо /cancel, чтобы прервать эту операцию.`;
+                let text = i18n.__('Unfortunately we haven\'t found such training, try one more time. Or /cancel, in order to stop this command.');
                 return [{ type: MessageTypes.MESSAGE, text: text }];
             }
         }).bind(this)();
@@ -126,10 +124,13 @@ class Training extends Abstract {
 
     _training() {
         return Promise.coroutine(function *() {
+            const { i18n } = this.chat;
+            const locale = i18n.getLocale();
+
             const { Chats, Trainings } = this.models;
 
             let messages = [];
-            this.tModel = _.find(this.server.plugins.trainings.engine.trainings, (training, key) => {
+            this.tModel = _.find(this.server.plugins.trainings.engine.trainings[locale], (training, key) => {
                 return this.active.type === training.TYPE;
             });
 
@@ -137,7 +138,7 @@ class Training extends Abstract {
 
             // check if some question is already there
             if (!lastQuestion) {
-                let text = `Увы что-то пошло не так. Сделайте /cancel.`;
+                let text = i18n.__('Unfortunately, something went wrong. Make /cansel, please.')
                 return [{ type: MessageTypes.MESSAGE, text: text }];
             }
 
@@ -150,13 +151,13 @@ class Training extends Abstract {
             if (result) {
                 messages.push({
                     type: MessageTypes.MESSAGE,
-                    text: `${emoji.get(':white_check_mark:')} верно!`
+                    text: i18n.__('%s correct', emoji.get(':white_check_mark:'))
                 });
             } else {
-                let text = `${emoji.get(':x:')} не очень верно :(\n`;
+                let text = i18n.__('% incorrect\n', emoji.get(':x:'));
                 let answer = lastQuestion.answer.value;
 
-                text += `Правильно: <code>${_.isArray(answer) ? answer.join(' или ') : answer }</code>`;
+                text += i18n.__('Correct: <code>%s</code>', _.isArray(answer) ? answer.join(i18n.__(' or ')) : answer)
                 messages.push({
                     type: MessageTypes.MESSAGE,
                     text: text,
@@ -184,7 +185,7 @@ class Training extends Abstract {
                     return sum + (object.result ? 1 : 0);
                 }, 0);
 
-                let text = `Тренирка закончена с результатом: ${correctResults} из ${this.tModel.ITERATIONS}!`;
+                let text = i18n.__('Training was finished, with the result: %s from %s', correctResults, this.tModel.ITERATIONS);
 
                 messages.push({
                     type: MessageTypes.MESSAGE,
@@ -210,27 +211,26 @@ class Training extends Abstract {
         }).bind(this)();
     }
 
-    process({ chat, query, message }) {
-        return super.process({ chat, query, message }).then(
-            Promise.coroutine(function *() {
-                const { Chats, Trainings } = this.models;
+    process() {
+        return Promise.coroutine(function *() {
+            const { Chats, Trainings } = this.models;
 
-                // in case it's simple /training call
-                if (!this.query) {
-                    return this._emptyQuery();
-                } else {
-                    this.active = yield Trainings.getActiveByChatId(this.message.chat.id);
+            // in case it's simple /training call
+            if (!this.query) {
+                return this._emptyQuery();
+            } else {
+                this.active = yield Trainings.getActiveByChatId(this.message.chat.id);
 
-                    // probably this should be an attempt to choose the training
-                    if (!this.active) {
-                        return this._setTraining();
-                    }
-                    // in case there is an active training
-                    else {
-                        return this._training();
-                    }
+                // probably this should be an attempt to choose the training
+                if (!this.active) {
+                    return this._setTraining();
                 }
-            }).bind(this));
+                // in case there is an active training
+                else {
+                    return this._training();
+                }
+            }
+        }).bind(this)();
     }
 }
 

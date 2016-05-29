@@ -3,18 +3,24 @@
 const MessageTypes = require('telegram/types/message');
 const _ = require('lodash');
 
-class CaseGovernment {
-    constructor(KB) {
-        this.KB = KB;
+const Abstract = require('./_abstract');
 
-        this.ACTIVE = true;
+class CaseGovernment extends Abstract {
+
+    constructor(KB, i18n, locale) {
+        super(KB, i18n, locale);
+
         this.TYPE = 'CASE_GOVERNMENT';
-        this.LABEL = 'Управление';
-        this.DESCRIPTION = 'тренируем управление глаголов';
+
+        this.LABEL = i18n.__('Case government');
+        this.DESCRIPTION = i18n.__('training the case government');
+
         this.ITERATIONS = 5;
     }
 
     getTask() {
+        const i18n = this.i18n;
+
         let flows = ['PREPOSITION', 'CASE'];
         let flow = _.sample(flows);
 
@@ -23,11 +29,11 @@ class CaseGovernment {
         let verb, content, caseGovernment;
         switch (flow) {
             case 'PREPOSITION':
-                let prepositions = ['über', 'nach', 'um', 'an', 'wegen', 'bevor', 'neben', 'zwischen', 'aber', 'unten', 'während', 'für', 'von', 'aus', 'in', 'vor', 'anstatt', 'wie', 'nahe', 'neben', 'auf', 'auf', 'aus', 'aussen', 'über', 'seit', 'als', 'zu', 'unter', 'bis', 'oben', 'ohne'];
+                let prepositions = ["über", "nach", "um", "an", "wegen", "bevor", "neben", "zwischen", "aber", "unten", "während", "für", "von", "aus", "in", "vor", "anstatt", "wie", "nahe", "auf", "aussen", "seit", "als", "zu", "unter", "bis", "oben", "ohne"];
                 verb = _(this.KB.VERBS).keys().sample();
                 content = this.KB.VERBS[verb];
 
-                question = `С каким предлогом употребляется глагол <code>${verb}</code> ?`;
+                question = i18n.__('Which preposition is used with the verb <code>%s</code> ?', verb);
                 answer = [];
                 _.forEach(content['case government'], (value, key) => {
                     answer.push(_.chain(key).trim().split(' ').last().value());
@@ -54,7 +60,7 @@ class CaseGovernment {
                 caseGovernment = content['case government'];
                 let government = _(caseGovernment).keys().sample();
 
-                question = `Какой падеж требует <code>${government}</code> ?`;
+                question = i18n.__('Which case is required by %s?', government);
                 answer = caseGovernment[government].case;
 
                 variants = _.shuffle(['A', 'D']);

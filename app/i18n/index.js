@@ -9,7 +9,8 @@ exports.register = function (server, options, next) {
     i18n.configure({
         locales: ['en-US', 'ru-RU'],
         directory: config.get('i18n.locales'),
-        defaultLocale: 'en-US'
+        defaultLocale: 'en-US',
+        objectNotation: false
     });
 
     server.decorate('server', 'i18n', i18n);
@@ -19,9 +20,9 @@ exports.register = function (server, options, next) {
 
     i18n.init(req, req.i18n);
 
-    req.i18n.setLocale('ru-RU');
-    console.log(i18n.__('Hello'));
-    console.log(req.i18n.__('Hello'));
+    req.i18n.setLocale('en-US');
+    console.log(i18n.__('Пользоваться ботом можно так:'));
+    //process.exit();
 
     next();
 };
