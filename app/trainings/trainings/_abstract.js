@@ -19,3 +19,5 @@ class Abstract {
         this.i18n.setLocale(this.locale);
     }
 }
+
+module.exports = Abstract;

@@ -26,7 +26,7 @@ class Idle extends Abstract {
             };
 
             // Test if query looks like the verb
-            if (this.verbsHelper.testForVerb(query)) {
+            if (this.verbsHelper.testForVerb(this.query)) {
                 // defining what to call
                 let toCall = { class: _.get(this.bot, 'commands.verb'), query: this.query };
                 let instance = new toCall.class(this.server, this.bot);

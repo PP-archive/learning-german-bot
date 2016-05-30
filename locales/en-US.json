@@ -17,5 +17,9 @@
 	"Bot, who will help you to learn german.": "Bot, who will help you to learn german.",
 	"Send your suggestions to me@pavelpolyakov.com.": "Send your suggestions to me@pavelpolyakov.com.",
 	"Find out, who the bot is grateful to: /thanks.": "Find out, who the bot is grateful to: /thanks.",
-	"Rate the Bot:": "Rate the Bot:"
+	"Rate the Bot:": "Rate the Bot:",
+	"Nothing was found": "Nothing was found",
+	"Used materials from:": "Used materials from:",
+	"Done!": "Done!",
+	"Unfortunately we haven't found such training, try one more time. Or /cancel, in order to stop this command.": "Unfortunately we haven't found such training, try one more time. Or /cancel, in order to stop this command."
 }

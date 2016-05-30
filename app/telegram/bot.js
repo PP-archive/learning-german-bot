@@ -142,7 +142,7 @@ class Bot {
 
                     // Trying to process the message, if such command is already defined
                     debug('looking for %s', `commands.${command}.process`);
-                    if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
+                    if (_.hasIn(this, `commands.${command}`) && this.commands[command].prototype.process) {
                         call.command = command;
                         call.data.query = query;
                     }
@@ -156,7 +156,7 @@ class Bot {
                     // check if chat is in some special state
                     if (chat && chat.state !== Chats.STATES.IDLE) {
                         let command = _.lowerCase(chat.state);
-                        if (_.has(this, `commands.${command}`) && this.commands[command].prototype.process) {
+                        if (_.hasIn(this, `commands.${command}`) && this.commands[command].prototype.process) {
                             call.command = command;
                         }
                     }

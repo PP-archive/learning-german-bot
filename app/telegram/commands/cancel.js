@@ -11,7 +11,7 @@ class Cancel extends Abstract {
         super(server, bot);
     }
 
-    process({ chat, query, message }) {
+    process() {
         return Promise.coroutine(function *() {
             const { i18n } = this.chat;
 
