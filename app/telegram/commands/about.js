@@ -23,7 +23,7 @@ class About extends Abstract {
             };
 
             text = `${i18n.__('Bot, who will help you to learn german.')}
-${i18n.__('Send your suggestions to me@pavelpolyakov.com.')}
+${i18n.__('Send your suggestions to %s.',  'me@pavelpolyakov.com')}
 ${i18n.__('Find out, who the bot is grateful to: /thanks.')}
 
 ${i18n.__('Rate the Bot:')}
