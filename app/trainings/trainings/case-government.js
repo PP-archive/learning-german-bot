@@ -5,12 +5,19 @@ const _ = require('lodash');
 
 const Abstract = require('./_abstract');
 
+const TYPE = 'CASE_GOVERNMENT';
+
+
 class CaseGovernment extends Abstract {
 
+    static get TYPE() {
+        return TYPE;
+    }
+    
     constructor(KB, i18n, locale) {
         super(KB, i18n, locale);
 
-        this.TYPE = 'CASE_GOVERNMENT';
+        this.TYPE = TYPE;
 
         this.LABEL = i18n.__('Case government');
         this.DESCRIPTION = i18n.__('training the case government');
@@ -60,7 +67,7 @@ class CaseGovernment extends Abstract {
                 caseGovernment = content['case government'];
                 let government = _(caseGovernment).keys().sample();
 
-                question = i18n.__('Which case is required by %s?', government);
+                question = i18n.__('Which case is required by <code>%s</code>?', government);
                 answer = caseGovernment[government].case;
 
                 variants = _.shuffle(['A', 'D']);
@@ -93,18 +100,16 @@ class CaseGovernment extends Abstract {
         return task;
     }
 
-    validateAnswer(question, answer) {
-        switch (question.answer.flow) {
+    validateAnswer(task, answer) {
+        switch (task.answer.flow) {
             case 'PREPOSITION':
-                return !(_(question.answer.value).indexOf(answer) === -1);
+                return !(_(task.answer.value).indexOf(answer) === -1);
                 break;
             case 'CASE':
-                return question.answer.value === answer;
+                return task.answer.value === answer;
                 break;
         }
     }
 }
 
-module.exports = function (KB) {
-    return new CaseGovernment(KB);
-};
+module.exports = CaseGovernment;

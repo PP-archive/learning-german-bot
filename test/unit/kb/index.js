@@ -14,7 +14,7 @@ require(`${__dirname}/../_common.js`);
 /**
  * This test suite is here to show, the tests basics
  */
-lab.experiment('KB module', () => {
+lab.experiment.skip('KB module', () => {
     let server;
 
     lab.before((done) => {

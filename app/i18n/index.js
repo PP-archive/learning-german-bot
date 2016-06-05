@@ -20,8 +20,8 @@ exports.register = function (server, options, next) {
 
     i18n.init(req, req.i18n);
 
-    req.i18n.setLocale('en-US');
-    console.log(i18n.__('Пользоваться ботом можно так:'));
+    // req.i18n.setLocale('en-US');
+    // console.log(i18n.__('Пользоваться ботом можно так:'));
     //process.exit();
 
     next();

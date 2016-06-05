@@ -17,6 +17,7 @@ class Verb extends Abstract {
     process() {
         return Promise.coroutine(function *() {
             const { i18n } = this.chat;
+            const locale = i18n.getLocale();
 
             this.query = this.query.toLowerCase();
 
@@ -29,7 +30,7 @@ class Verb extends Abstract {
 
             if (_.has(this.server.KB.VERBS, this.query)) {
                 let verb = this.server.KB.VERBS[this.query];
-                text += `Глагол <code>${this.query}</code>.\n\n`;
+                text += i18n.__('Verb <code>%s</code>.\n\n', this.query);
 
                 if (_.has(verb, 'case government')) {
                     text += `${i18n.__('Case government:')} \n`;
@@ -39,7 +40,7 @@ class Verb extends Abstract {
                         text += `${i}. <b>${key} + ${value.case}</b>`;
 
                         // translation
-                        text += value.translation ? ` (${value.translation})` : '';
+                        text += value.translation[locale] ? ` (${value.translation[locale]})` : '';
                         text += value.example ? `\n${i18n.__('<i>Example: %s</i>', value.example)}` : ``;
                         text += `\n`;
 

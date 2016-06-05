@@ -5,6 +5,8 @@ const Glue = require('glue');
 const Promise = require('bluebird');
 
 module.exports = (manifest) => {
+    console.log('HELLO');
+    
     return new Promise((resolve, reject) => {
         let options = {
             relativeTo: __dirname
@@ -19,7 +21,12 @@ module.exports = (manifest) => {
                     throw err;
                 }
 
-                resolve(server);
+                server.initialize((err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    resolve(server);
+                });
             });
     });
 }

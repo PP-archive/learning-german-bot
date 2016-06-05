@@ -5,12 +5,18 @@ const _ = require('lodash');
 
 const Abstract = require('./_abstract');
 
+const TYPE = 'TOP500_VERBS';
+
 class Top500Verbs extends Abstract {
+
+    static get TYPE() {
+        return TYPE;
+    }
 
     constructor(KB, i18n, locale) {
         super(KB, i18n, locale);
 
-        this.TYPE = 'TOP500_VERBS';
+        this.TYPE = TYPE;
 
         this.LABEL = this.i18n.__('TOP 500 verbs');
         this.DESCRIPTION = this.i18n.__('training the TOP 500 german verbs');
@@ -99,18 +105,16 @@ class Top500Verbs extends Abstract {
         return task;
     }
 
-    validateAnswer(question, answer) {
-        switch (question.answer.flow) {
+    validateAnswer(task, answer) {
+        switch (task.answer.flow) {
             case 'TO_LOCALE':
-                return !(_(question.answer.value).indexOf(answer) === -1);
+                return !(_(task.answer.value).indexOf(answer) === -1);
                 break;
             case 'TO_GERMAN':
-                return question.answer.value === answer;
+                return task.answer.value === answer;
                 break;
         }
     }
 }
 
-module.exports = function (KB) {
-    return new Top500Verbs(KB);
-};
+module.exports = Top500Verbs;

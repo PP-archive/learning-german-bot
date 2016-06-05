@@ -2,29 +2,30 @@
 
 const fs = require('fs');
 
-class Trainings {
-    constructor(server, options) {
-        // load trainings
-        let trainingsPath = __dirname + '/trainings';
-        this.trainings = {};
-        fs.readdirSync(trainingsPath).forEach((value) => {
-            if (fs.lstatSync(trainingsPath + '/' + value).isFile() && (value.charAt(0) !== '_')) {
+module.exports = function (server, options) {
+    let trainingsPath = __dirname + '/trainings';
+    let trainings = {};
 
-                let file = value;
+    fs.readdirSync(trainingsPath).forEach((value) => {
+        if (fs.lstatSync(trainingsPath + '/' + value).isFile() && (value.charAt(0) !== '_')) {
 
-                /*Get model name for Sequalize from file name*/
-                let training = require('./trainings/' + file);
-                
-                for(let locale in training.LOCALES) {
-                    if (training.ACTIVE) {
-                        this.trainings[locale][training.TYPE] = new training(server.KB, server.i18n, locale);
-                    }    
+            let file = value;
+
+            /*Get model name for Sequalize from file name*/
+            let training = require('./trainings/' + file);
+
+            for (let locale of training.LOCALES) {
+                // create nested object, if needed
+                if (!trainings[locale]) {
+                    trainings[locale] = {};
+                }
+
+                if (training.ACTIVE) {
+                    trainings[locale][training.TYPE] = new training(server.KB, server.i18n, locale);
                 }
             }
-        });
-    }
-}
-
-module.exports = function(server, options) {
-    return new Trainings(server, options);
+        }
+    });
+    
+    return trainings;
 }

@@ -10,13 +10,15 @@ require(`${__dirname}/../_common.js`);
 /**
  * This test suite is here to show, the tests basics
  */
-lab.experiment('example', () => {
+lab.experiment.skip('example', () => {
     let server;
 
     /**
      * Preparing the server for the further usage
      */
     lab.before((done) => {
+        delete require.cache[require.resolve(`${process.cwd()}/server`)];
+
         require(`${process.cwd()}/server`)(require(`${process.cwd()}/config/manifests/web`))
             .then((instantiated) => {
                 server = instantiated;

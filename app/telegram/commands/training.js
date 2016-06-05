@@ -40,7 +40,7 @@ class Training extends Abstract {
             text = i18n.__('Choose the training type:') + '\n';
 
             let i = 1;
-            _.forEach(this.server.plugins.trainings.engine.trainings[locale], (training) => {
+            _.forEach(this.server.plugins.trainings[locale], (training) => {
                 text += `${i}. ${i18n.__('<code>%s</code> - %s', training.LABEL, training.DESCRIPTION)}\n`;
                 i++;
             });
@@ -52,7 +52,7 @@ class Training extends Abstract {
                 reply_markup: {
                     keyboard: (() => {
                         let keyboard = [];
-                        _.forEach(this.server.plugins.trainings.engine.trainings, (training) => {
+                        _.forEach(this.server.plugins.trainings, (training) => {
                             keyboard.push([training.LABEL]);
                         });
 
@@ -74,7 +74,7 @@ class Training extends Abstract {
 
             const { Chats, Trainings } = this.models;
 
-            this.tModel = _.find(this.server.plugins.trainings.engine.trainings[locale], (training, key) => {
+            this.tModel = _.find(this.server.plugins.trainings[locale], (training, key) => {
                 return this.query === training.LABEL;
             });
 
@@ -130,7 +130,7 @@ class Training extends Abstract {
             const { Chats, Trainings } = this.models;
 
             let messages = [];
-            this.tModel = _.find(this.server.plugins.trainings.engine.trainings[locale], (training, key) => {
+            this.tModel = _.find(this.server.plugins.trainings[locale], (training, key) => {
                 return this.active.type === training.TYPE;
             });
 
@@ -138,7 +138,7 @@ class Training extends Abstract {
 
             // check if some question is already there
             if (!lastQuestion) {
-                let text = i18n.__('Unfortunately, something went wrong. Make /cansel, please.')
+                let text = i18n.__('Unfortunately, something went wrong. Make /cancel, please.')
                 return [{ type: MessageTypes.MESSAGE, text: text }];
             }
 

@@ -5,19 +5,17 @@ const _ = require('lodash');
 
 const Abstract = require('./_abstract');
 
-class Top200 extends Abstract {
-    static get LOCALES() {
-        return ['en-US', 'ru-RU'];
-    }
+const TYPE = 'TOP200';
 
-    static get ACTIVE() {
-        return true;
+class Top200 extends Abstract {
+    static get TYPE() {
+        return TYPE;
     }
 
     constructor(KB, i18n, locale) {
         super(KB, i18n, locale);
 
-        this.TYPE = 'TOP200';
+        this.TYPE = TYPE;
 
         this.LABEL = this.i18n.__('TOP 200');
         this.DESCRIPTION = this.i18n.__('training the TOP 200 german words');
@@ -40,7 +38,7 @@ class Top200 extends Abstract {
                 content = this.KB.TOP200[word];
 
                 question = i18n.__('How you will translate the word <code>%s</code> in english?', word);
-                answer = content.translation.split(';').map((v)=> {
+                answer = content.translation[this.locale].split(';').map((v)=> {
                     return v.trim();
                 });
 
@@ -107,18 +105,16 @@ class Top200 extends Abstract {
         return task;
     }
 
-    validateAnswer(question, answer) {
-        switch (question.answer.flow) {
+    validateAnswer(task, answer) {
+        switch (task.answer.flow) {
             case 'TO_LOCALE':
-                return !(_(question.answer.value).indexOf(answer) === -1);
+                return !(_(task.answer.value).indexOf(answer) === -1);
                 break;
             case 'TO_GERMAN':
-                return question.answer.value === answer;
+                return task.answer.value === answer;
                 break;
         }
     }
 }
 
-module.exports = function (KB) {
-    return new Top200(KB);
-};
+module.exports = Top200;

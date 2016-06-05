@@ -27,11 +27,21 @@ class Idle extends Abstract {
 
             // Test if query looks like the verb
             if (this.verbsHelper.testForVerb(this.query)) {
-                // defining what to call
-                let toCall = { class: _.get(this.bot, 'commands.verb'), query: this.query };
-                let instance = new toCall.class(this.server, this.bot);
-                yield instance.init(toCall.query, this.message);
-                return instance.process();
+                let call = {
+                    command: undefined,
+                    class: undefined,
+                    data: {
+                        chat: this.chat,
+                        query: this.query,
+                        message: this.message
+                    }
+                };
+
+                call.class = _.get(this.bot, `commands.verb`);
+                let command = new call.class(this.server, this.bot);
+                command.init(call.data);
+
+                return yield command.process();
             }
 
             return [{ type: MessageTypes.MESSAGE, text: text, options: options }];

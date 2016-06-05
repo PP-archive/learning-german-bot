@@ -2,7 +2,7 @@
 
 const debug = require('debug')('web/index');
 const fs = require('fs');
-
+const Promise = require('bluebird');
 /**
  *
  * @param {{plugins : *, preferences : *}} server
@@ -24,8 +24,12 @@ exports.register = function (server, options, next) {
         method: 'POST',
         path: '/',
         handler: function (request, reply) {
-            server.telegram.bot.processUpdate(request.payload);
-            return reply();
+            return Promise.coroutine(function *(){
+                console.log("HELLO WE ARE HERE");
+                server.telegram.bot.processUpdate(request.payload);
+                yield Promise.delay(5000);
+                return reply();
+            }).bind(this)();
         }
     });
 

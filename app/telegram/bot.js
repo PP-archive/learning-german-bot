@@ -42,38 +42,51 @@ class Bot {
 
         // receiving each message
         this.bot.on('message', (message) => {
-            debug('sending the message to botan');
-            // setting up the tracking by botan
-            this.botan.track(message);
+            Promise.coroutine(function *() {
+                debug('sending the message to botan');
+                // setting up the tracking by botan
+                this.botan.track(message);
 
-            const chatId = message.chat.id;
+                const chatId = message.chat.id;
 
-            // processing the message
-            this.process(message).then((messages) => {
-                let promises = [];
-                _.forEach(messages, (reply) => {
-                    switch (reply.type) {
-                        case MessageTypes.MESSAGE:
-                            promises.push({
-                                method: this.bot.sendMessage,
-                                context: this.bot,
-                                args: [chatId, reply.text, reply.options || {}]
-                            });
-                            break;
-                        default:
-                            debug('Undefined');
-                            break;
-                    }
+                console.log(config);
+                let chat = yield this.server.getModel('Chats').findOne({ chatId: message.chat.id });
+
+                console.log(chat);
+
+                // processing the message
+                this.process(message)
+                    .then((messages) => {
+                        let promises = [];
+                        _.forEach(messages, (reply) => {
+                            switch (reply.type) {
+                                case MessageTypes.MESSAGE:
+                                    promises.push({
+                                        method: this.bot.sendMessage,
+                                        context: this.bot,
+                                        args: [chatId, reply.text, reply.options || {}]
+                                    });
+                                    break;
+                                default:
+                                    debug('Undefined');
+                                    break;
+                            }
+                        });
+
+                        Promise.coroutine(function *() {
+                            while (promises.length) {
+                                let promise = promises.shift();
+
+                                let result = yield promise.method.apply(promise.context, promise.args);
+                                console.log(result);
+                            }
+                        })();
+                    }).catch((error) => {
+                    debug('Wow, error');
+                    debug(error);
                 });
+            }).bind(this)();
 
-                Promise.coroutine(function *() {
-                    while (promises.length) {
-                        let promise = promises.shift();
-
-                        let result = yield promise.method.apply(promise.context, promise.args);
-                    }
-                })();
-            });
         });
     }
 
@@ -106,12 +119,22 @@ class Bot {
         return Promise.coroutine(function *() {
             const Chats = this.server.getModel('Chats');
 
-            let chat = yield Chats.findOne({ chatId: message.chat.id });
+            console.log('before the search');
+            let chat;
+            try {
+                chat = yield Chats.findOne({ chatId: message.chat.id });
+                //chat = yield Promise.resolve(22);
+                console.log(chat);
+            } catch (error) {
+                console.log('+++');
+                console.log(error);
+            }
+            console.log(chat);
 
             if (!chat) {
                 return [{
                     type: MessageTypes.MESSAGE,
-                    text: server.i18n.__({phrase: 'Please, first send the /start command', locale: 'en-US'}),
+                    text: server.i18n.__({ phrase: 'Please, first send the /start command', locale: 'en-US' }),
                     options: {
                         parse_mode: 'HTML',
                         reply_markup: {
@@ -150,7 +173,7 @@ class Bot {
 
                 // If this was not a command, then we need to process it like regular query
                 // setting the query
-                call.data.query ? null : call.data.query = message.text;
+                _.isUndefined(call.data.query) ? call.data.query = message.text : null;
 
                 if (!call.command) {
                     // check if chat is in some special state
@@ -175,7 +198,11 @@ class Bot {
 
                 return yield command.process();
             }
-        }).bind(this)();
+        }).bind(this)().catch(error => {
+            console.log('---');
+            console.log(error);
+            console.log('---');
+        });
     }
 }
 
