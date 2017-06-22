@@ -3,7 +3,7 @@
     {
       "name": "bot",
       "script": "index.js",
-      "node_args"   : "--harmony --harmony_destructuring",
+      "node_args"   : "",
       "env": {
         "DEBUG": "*"
       },
